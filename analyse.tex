@@ -1,0 +1,128 @@
+\documentclass[12pt,pdftex,oneside]{article}
+% Mes ajouts pour les accents
+\usepackage[utf8]{inputenc}%
+\usepackage[T1]{fontenc}%
+\usepackage[french]{babel}%
+
+\include{mes_macros}
+%\include{graphicx}
+
+\renewcommand{\theenumii}{\roman{enumii}}%
+
+\begin{document}
+
+  \section {Classe Belligérant}
+
+  Un belligérant capable de combattre à mains nues (et en pagne).
+
+  \begin{itemize}
+  \item Propriétés : 
+    \begin{enumerate}
+    \item nom : Le nom du belligérant.
+          \begin{itemize}
+          \item Type : str
+          \item Accès : lecture seule
+          \end{itemize}
+    \item pts\_vies : Le nombre de points de vie du belligérant.
+          \begin{itemize}
+          \item Type : int
+          \item Accès : accès complet
+          \end{itemize}
+    \item défense : Le facteur de défense du belligérant. Plus ce facteur est
+      élevé, plus le belligérant pourra résister aux attaques.
+          \begin{itemize}
+          \item Type : int
+          \item Accès : lecture seule
+          \end{itemize}
+    \item force : Le facteur de force du belligérant. Plus ce facteur est
+      élevé, plus les attaques du belligérant seront efficaces.
+          \begin{itemize}
+          \item Type : int
+          \item Accès : lecture seule
+          \end{itemize}
+
+    \end{enumerate}
+
+  \item Constructeur : 
+
+    \begin{enumerate}
+    \item \_\_init\_\_ : Instancie un belligérant. Outre le nom, fournit en
+paramètre, les valeurs de force, défense et de points de vie sont calculés de la
+façon suivante :
+        \begin{itemize}
+          \item force : 1 dé12
+          \item défense : 1 dé12
+          \item pts\_vie : 2 dé12 + 20
+        \end{itemize}
+
+      \begin{itemize}
+      \item Paramètres : 
+        \begin{enumerate}
+        \item param : description
+          \begin{itemize}
+          \item Type : type
+          \end{itemize}
+        \end{enumerate}
+      \item Assertions : 
+        \begin{enumerate}
+          \item Condition : condition de l'assertion
+          \item Message : message de l'assertion
+        \end{enumerate}
+      \end{itemize}
+    \end{enumerate}
+
+  \item Méthodes : 
+
+    \begin{enumerate}
+    \item nom : \_\_str\_\_ : Fournit une chaîne de caractère représentant le belligérant.
+      \begin{itemize}
+      \item Retour : Une chaîne représentant le belligérant de la forme «nom
+        (F:\emph{force} D:\emph{défense} V:\emph{pts\_vie})
+          \begin{itemize}
+          \item Type de retour: str
+          \end{itemize}
+      \end{itemize}
+
+    \item attaquer : Calcule le coefficient d'attaque d'un assaut.
+      \begin{itemize}
+      \item Retour : Le coefficient d'attaque d'un assaut calculé par la formule
+        : \emph{force} + 1 dé12
+          \begin{itemize}
+          \item Type de retour: int
+          \end{itemize}
+      \end{itemize}
+
+    \item parer : Calcule le coefficient de parade lors d'un assaut.
+      \begin{itemize}
+      \item Retour : Le coefficient de parade lors d'un assaut calculé par la
+        formule : \emph{défense} + 2 dé6
+          \begin{itemize}
+          \item Type de retour: int
+          \end{itemize}
+      \end{itemize}
+
+    \item subir\_dégâts : Après avoir reçu une attaque, cette méthode calcule les
+      dégâts subis par le belligérant et les déduit de ses points de vie.
+      \begin{itemize}
+      \item Paramètres : 
+        \begin{enumerate}
+        \item impact : La force d'impact de l'attaque reçue.
+          \begin{itemize}
+          \item Type : int
+          \end{itemize}
+        \end{enumerate}
+      \end{itemize}
+
+    \item est\_mort : détermine si un belligérant est mort.
+      \begin{itemize}
+      \item Retour : Vrai si et seulement si pts\_vie est 0 ou moins.
+          \begin{itemize}
+          \item Type de retour: bool
+          \end{itemize}
+      \end{itemize}
+
+  \end{itemize}
+
+  \end{itemize}
+\end{document}
+
