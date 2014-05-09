@@ -4,7 +4,7 @@
 \usepackage[T1]{fontenc}%
 \usepackage[french]{babel}%
 
-\include{mes_macros}
+\include{mes\_macros}
 %\include{graphicx}
 
 \renewcommand{\theenumii}{\roman{enumii}}%
@@ -46,7 +46,7 @@
   \item Constructeur : 
 
     \begin{enumerate}
-    \item \_\_init\_\_ : Instancie un belligérant. Outre le nom, fournit en
+    \item \_\_init\_\_ : Initialise un belligérant. Outre le nom, fournit en
 paramètre, les valeurs de force, défense et de points de vie sont calculés de la
 façon suivante :
         \begin{itemize}
@@ -54,21 +54,6 @@ façon suivante :
           \item défense : 1 dé12
           \item pts\_vie : 2 dé12 + 20
         \end{itemize}
-
-      \begin{itemize}
-      \item Paramètres : 
-        \begin{enumerate}
-        \item param : description
-          \begin{itemize}
-          \item Type : type
-          \end{itemize}
-        \end{enumerate}
-      \item Assertions : 
-        \begin{enumerate}
-          \item Condition : condition de l'assertion
-          \item Message : message de l'assertion
-        \end{enumerate}
-      \end{itemize}
     \end{enumerate}
 
   \item Méthodes : 
@@ -83,9 +68,9 @@ façon suivante :
           \end{itemize}
       \end{itemize}
 
-    \item attaquer : Calcule le coefficient d'attaque d'un assaut.
+    \item attaquer : Calcule le coefficient d'attaque d'un assaut  par la formule.
       \begin{itemize}
-      \item Retour : Le coefficient d'attaque d'un assaut calculé par la formule
+      \item Retour : Le coefficient d'attaque d'un assaut calculé.
         : \emph{force} + 1 dé12
           \begin{itemize}
           \item Type de retour: int
@@ -102,14 +87,12 @@ façon suivante :
       \end{itemize}
 
     \item subir\_dégâts : Après avoir reçu une attaque, cette méthode calcule les
-      dégâts subis par le belligérant et les déduit de ses points de vie.
+      dégâts subis par le belligérant et les déduit de ses points de vie selon
+      la formule : dégâts = impact.
       \begin{itemize}
       \item Paramètres : 
         \begin{enumerate}
-        \item impact : La force d'impact de l'attaque reçue.
-          \begin{itemize}
-          \item Type : int
-          \end{itemize}
+        \item impact (int) : La force d'impact de l'attaque reçue.
         \end{enumerate}
       \end{itemize}
 
@@ -124,5 +107,450 @@ façon suivante :
   \end{itemize}
 
   \end{itemize}
+
+  \section {Classe Équipe}
+
+  Regroupe les belligérants d'une même équipe (d'un même joueur).
+
+  \begin{itemize}
+  \item Propriétés : 
+    \begin{enumerate}
+    \item nom : nom de l'équipe
+          \begin{itemize}
+          \item Type : str
+          \item Accès : Lecture seule
+          \end{itemize}
+
+    \end{enumerate}
+
+  \item Constructeur : 
+
+  \begin{enumerate}
+  \item \_\_init\_\_ : Initialise une équipe avec un nom mais sans belligérants
+    immédiatement.
+    \begin{itemize}
+    \item Paramètres : 
+      \begin{enumerate}
+      \item nom (str) : Le nom de la nouvelle équipe.
+      \end{enumerate}
+    \end{itemize}
+
+  \end{enumerate}
+
+  \item Méthodes : 
+
+    \begin{enumerate}
+    \item \_\_len\_\_ : Retourne le nombre d'éléments dans l'équipe.
+      \begin{itemize}
+      \item Retour : Le nombre de belligérants dans l'équipe
+          \begin{itemize}
+          \item Type de retour: int
+          \end{itemize}
+      \end{itemize}
+
+    \item ajouter\_belligérant : Ajoute un belligérant à l'équipe
+      \begin{itemize}
+      \item Paramètres : 
+        \begin{enumerate}
+        \item un\_belligérant : le nouveau belligérant à ajouter à l'équipe.
+          \begin{itemize}
+          \item Type : Belligérant
+          \end{itemize}
+        \end{enumerate}
+      \end{itemize}
+    \item belligérant : Accesseur des belligérants
+      \begin{itemize}
+      \item Paramètres : 
+        \begin{enumerate}
+        \item indice : numéro du belligérant à retourner
+          \begin{itemize}
+          \item Type : int
+          \item Valeur par défaut : None
+          \end{itemize}
+        \item nom : nom du belligérant à retourner
+          \begin{itemize}
+          \item Type : str
+          \item Valeur par défaut : None
+          \end{itemize}
+        \end{enumerate}
+      \item Retour : Si \emp{indice} n'est pas None, retourne le belligérant numéro
+        \emph{indice} dans la liste, sinon, retourne le belligérant dont le nom
+        correspond à \emph{nom}. Si \emph{indice} et \emph{nom} sont None, retourne None.
+          \begin{itemize}
+          \item Type de retour: Belligérant
+          \end{itemize}
+      \item Assertions : 
+        \begin{enumerate}
+            \item \emph{indice} est None ou représente un élément existant de la liste de
+            Belligérants
+            \begin{itemize}
+              \item Message : «indice \{\emph{indice}\} invalide»
+            \end{itemize}
+            \item \emph{nom} est None ou représente le nom d'un élément existant de la liste de
+            Belligérants
+            \begin{itemize}
+              \item Message : «nom '\{\emph{indice}\}' est invalide»
+            \end{itemize}
+        \end{enumerate}
+      \end{itemize}
+    \end{enumerate}
+
+  \end{itemize}
+  \end{itemize}
+
+  \section {Classe Guerrier}
+
+  Un belligérant de type Guerrier. Il peut porter une armure et manier une arme.
+
+  \begin{itemize}
+  \item Hérite de : Belligérant
+  \item Propriétés : 
+    \begin{enumerate}
+    \item armure : L'armure que porte actuellement le guerrier
+          \begin{itemize}
+          \item Type : Armure
+          \item Accès : complet
+          \end{itemize}
+    \item arme : L'arme qu'utilise actuellement le guerrier
+          \begin{itemize}
+          \item Type : Arme
+          \item Accès : complet
+          \end{itemize}
+
+    \end{enumerate}
+
+  \item Constructeur : 
+
+  \begin{enumerate}
+  \item \_\_init\_\_ : Initialise un Guerrier, d'abord sans arme ni armure. Ses
+    facteurs de force et de défense obtiennent un boni d'un dé12 par rapport au
+    Belligérant et ses points de vie de 2xDé20.
+    \begin{itemize}
+    \item Paramètres : 
+      \begin{enumerate}
+      \item un\_nom (str) : Le nom du nouveau Guerrier
+      \end{enumerate}
+    \end{itemize}
+
+  \end{enumerate}
+
+  \item Méthodes : 
+
+    \begin{enumerate}
+    \item calculer\_dégâts : Surdéfinition de la méthode
+      Belligérant.calculer\_dégâts(). En plus du calcul des dégâts comme pour
+      n'importe quel belligérant, les dégâts réels sont réduits de le moitié de
+      la classe de l'armure portée par le guerrier.
+      \begin{itemize}
+      \item Paramètres : 
+        \begin{enumerate}
+        \item impact (int) : La force d'impact de l'attaque reçue.
+        \end{enumerate}
+      \end{itemize}
+      \item Retour : Le nombre de points de vie qui doivent être retirés au
+        Guerrier suite à l'attaque.
+          \begin{itemize}
+          \item Type de retour: int
+          \end{itemize}
+
+    \item attaquer : Surdéfinition de la méthode Belligérant.attaquer. Le
+      coefficient d'attaque du belligérant est multiplié par la classe de l'arme
+      qu'il utilise au moment de l'attaque.
+      \begin{itemize}
+      \item Retour : Le coefficient d'attaque d'un assaut.
+          \begin{itemize}
+          \item Type de retour: int
+          \end{itemize}
+      \end{itemize}
+
+    \item subir\_dégâts : Surdéfinition de la méthode
+      Belligérant.subir\_dégâts(). Soustrait au Guerrier le nombre de points de
+      vie calculé par calculer\_dégâts. L'armure subit ensuite autant
+      d'usure qu'un cinquième de l'impact.
+      \begin{itemize}
+      \item Paramètres : 
+        \begin{enumerate}
+        \item impact (int) : La force d'impact de l'attaque reçue.
+        \end{enumerate}
+      \end{itemize}
+    \end{enumerate}
+
+  \end{itemize}
+
+  \section {Classe Mage}
+
+  Un belligérant de type mage capable de jeter des sorts.
+
+  \begin{itemize}
+  \item Hérite de : Belligérant
+  \item Propriétés : 
+    \begin{enumerate}
+    \item puissance : La puissance du mage. Pour lancer un sort, il ne peut
+      jeter que des sorts dont la classe est inférieure ou égale à sa puissance.
+          \begin{itemize}
+          \item Type : int
+          \item Accès : complet
+          \end{itemize}
+    \item mana : La quantité d'«énergie» magique que possède le Mage. Il ne peut
+      lancer de sort qui demande plus de mana que la quantité qu'il possède.
+          \begin{itemize}
+          \item Type : int
+          \item Accès : complet
+          \end{itemize}
+
+    \end{enumerate}
+
+  \item Constructeur : 
+
+  \begin{enumerate}
+  \item \_\_init\_\_ : Initialise un Mage. Sa puissance est donnée par un dé6 et
+    sa mana par 2xDé20. Initialement, il ne possède aucun sort.
+    \begin{itemize}
+    \item Paramètres : 
+      \begin{enumerate}
+      \item param (un\_nom) : Le nom du Mage.
+      \end{enumerate}
+    \end{itemize}
+
+  \end{enumerate}
+
+  \item Méthodes : 
+
+    \begin{enumerate}
+    \item jeter\_sort : Jete un sort vers une cible. Pour réussir à lancer son sort, la
+      différence entre la puissance du mage et la classe du sort doit être plus
+      grande que le lancé d'un dé6. Dans tous les cas, la mana du mage est diminuée d'autant qu'il est requis par le sort.
+      \begin{itemize}
+      \item Paramètres : 
+        \begin{enumerate}
+        \item sort (Sort) : Le sort qui doit être jeté par le Mage
+        \item cible (Belligérant) : Le belligérant vers qui le sort est jeté.
+        \end{enumerate}
+      \item Assertions : 
+        \begin{enumerate}
+        \item La puissance du Mage doit être au moins aussi grande que le classe
+          de \emph{sort}
+          \begin{itemize}
+          \item Message : «Puissance (\emph{puissance}) < Sort.classe
+            (\emph{sorte.classe})        
+        \item La man du Mage doit être au moins aussi grande que la mana requise
+          par le \emph{sort}
+          \begin{itemize}
+          \item Message : «Mana (\emph{mana}) < Sort.mana\_requise (\emph{sorte.mana\_requise})
+          \end{itemize}
+        \end{enumerate}
+      \end{itemize}
+
+    \item parer : Calcule le coefficient de parade lors d'un assaut. Puisque le
+      Mage est plus agile que le Belligérant moyen, son coefficient est 10\% par
+      point de puissance de plus que celui calculé par Belligérant.parer.
+      \begin{itemize}
+      \item Retour : Le coefficient de parade lors d'un assaut.
+          \begin{itemize}
+          \item Type de retour: int
+          \end{itemize}
+      \end{itemize}
+    \end{enumerate}
+
+    \item ajouter\_sort : Ajoute un sort à la liste des sorts connus par le Mage.
+      \begin{itemize}
+      \item Paramètres : 
+        \begin{enumerate}
+        \item un\_sort (sort) : Le nouveau Sort à ajouter au Mage.
+        \end{enumerate}
+      \item Assertions : 
+        \begin{enumerate}
+        \item Le mage ne doit pas déjà posséder ce sort
+          \begin{itemize}
+          \item Message : «Le Sort (\emph{un\_sort}) existe déjà»
+          \end{itemize}
+        \end{enumerate}
+      \end{itemize}
+
+  \end{itemize}
+
+  \section {Classe Sort}
+
+  Classe abstraite représentant un sort qui peut être jeté par un Mage.
+
+  \begin{itemize}
+  \item Propriétés : 
+    \begin{enumerate}
+    \item mana\_requise : quantité de mana requise pour jeter ce sort
+          \begin{itemize}
+          \item Type : int
+          \item Accès : lecture seule
+          \end{itemize}
+    \item classe : la classe du sort, représente la difficulté à jeter ce sort.
+          \begin{itemize}
+          \item Type : int
+          \item Accès : lecture seule
+          \end{itemize}
+
+    \end{enumerate}
+
+  \item Méthodes : 
+
+    \begin{enumerate}
+    \item activer : Méthode abstraite. Active le sort qui agit alors sur sa cible.
+      \begin{itemize}
+      \item Paramètres : 
+        \begin{enumerate}
+        \item cible (Belligérant) : Le belligérant ciblé par le sort.
+        \end{enumerate}
+      \end{itemize}
+    \end{enumerate}
+
+  \end{itemize}
+
+  \section {Classe SortDartDeFeu}
+
+  Sort qui lance un dart de feu vers un belligérant.
+
+  \begin{itemize}
+  \item Hérite de : Sort
+
+
+  \item Constructeur : 
+
+  \begin{enumerate}
+  \item \_\_init\_\_ : Initialise le Sort avec sa classe et sa mana.
+    \begin{itemize}
+    \item Paramètres : 
+      \begin{enumerate}
+      \item une\_classe (int) : La classe du sort (1)
+      \item une\_mana\_requise (int) : La quantité de mana requise par le sort (2)
+      \end{enumerate}
+    \end{itemize}
+
+  \end{enumerate}
+
+  \item Méthodes : 
+
+    \begin{enumerate}
+    \item activer : Active le sort qui agit alors sur sa cible. Il porte une
+      attaque de puissance de 2xDé12. La cible peut parer le sort comme
+      pour une attaque physique.
+      \begin{itemize}
+      \item Paramètres : 
+        \begin{enumerate}
+        \item cible (Belligérant) : Le belligérant ciblé par le sort.
+        \end{enumerate}
+      \end{itemize}
+    \end{enumerate}
+
+  \end{itemize}
+
+  \section {Classe SortGuérison}
+
+  Sort qui permet d'augmenter le nombre de points de vie d'un belligérant.
+
+  \begin{itemize}
+  \item Hérite de : Sort
+
+
+  \item Constructeur : 
+
+  \begin{enumerate}
+  \item \_\_init\_\_ : Initialise le Sort avec sa classe et sa mana.
+    \begin{itemize}
+    \item Paramètres : 
+      \begin{enumerate}
+      \item une\_classe (int) : La classe du sort (1)
+      \item une\_mana\_requise (int) : La quantité de mana requise par le sort (4)
+      \end{enumerate}
+    \end{itemize}
+
+  \end{enumerate}
+
+  \item Méthodes : 
+
+    \begin{enumerate}
+    \item activer : Active le sort qui agit alors sur sa cible. Il porte redonne
+      1 dé20 de points de vie à sa cible.
+      \begin{itemize}
+      \item Paramètres : 
+        \begin{enumerate}
+        \item cible (Belligérant) : Le belligérant ciblé par le sort.
+        \end{enumerate}
+      \end{itemize}
+    \end{enumerate}
+
+  \end{itemize}
+
+  \section {Classe SortProtection}
+
+  Sort qui augmente la protection d'un belligérant.
+
+  \begin{itemize}
+  \item Hérite de : Sort
+
+
+  \item Constructeur : 
+
+  \begin{enumerate}
+  \item \_\_init\_\_ : Initialise le Sort avec sa classe et sa mana.
+    \begin{itemize}
+    \item Paramètres : 
+      \begin{enumerate}
+      \item une\_classe (int) : La classe du sort (2)
+      \item une\_mana\_requise (int) : La quantité de mana requise par le sort (8)
+      \end{enumerate}
+    \end{itemize}
+
+  \end{enumerate}
+
+  \item Méthodes : 
+
+    \begin{enumerate}
+    \item activer : Active le sort qui agit alors sur sa cible. Il augmente la
+      défense du belligérant de 50\%.
+      \begin{itemize}
+      \item Paramètres : 
+        \begin{enumerate}
+        \item cible (Belligérant) : Le belligérant ciblé par le sort.
+        \end{enumerate}
+      \end{itemize}
+    \end{enumerate}
+
+  \end{itemize}
+
+  \section {Classe SortRésurrection}
+
+  Description
+
+  \begin{itemize}
+  \item Hérite de : Sort
+
+
+  \item Constructeur : 
+
+  \begin{enumerate}
+  \item \_\_init\_\_ : Initialise le Sort avec sa classe et sa mana.
+    \begin{itemize}
+    \item Paramètres : 
+      \begin{enumerate}
+      \item une\_classe (int) : La classe du sort (4)
+      \item une\_mana\_requise (int) : La quantité de mana requise par le sort (15)
+      \end{enumerate}
+    \end{itemize}
+
+  \end{enumerate}
+
+  \item Méthodes : 
+
+    \begin{enumerate}
+    \item activer : Active le sort qui agit alors sur sa cible. Il redonne à sa
+      cible 2xDé20 points de vie.
+      \begin{itemize}
+      \item Paramètres : 
+        \begin{enumerate}
+        \item cible (Belligérant) : Le belligérant ciblé par le sort.
+        \end{enumerate}
+      \end{itemize}
+    \end{enumerate}
+
+  \end{itemize}
+
 \end{document}
 
