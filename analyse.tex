@@ -4,7 +4,7 @@
 \usepackage[T1]{fontenc}%
 \usepackage[french]{babel}%
 
-\include{mes\_macros}
+\include{mes_macros}
 %\include{graphicx}
 
 \renewcommand{\theenumii}{\roman{enumii}}%
@@ -546,6 +546,177 @@ façon suivante :
       \item Paramètres : 
         \begin{enumerate}
         \item cible (Belligérant) : Le belligérant ciblé par le sort.
+        \end{enumerate}
+      \end{itemize}
+    \end{enumerate}
+
+  \end{itemize}
+
+  \section {Classe Arme}
+
+  Classe abstraite représentant une arme générique.
+
+  \begin{itemize}
+  \item Propriétés : 
+    \begin{enumerate}
+    \item classe : La classe de l'arme. Plus la classe est élevée, plus elle est destructrice.
+          \begin{itemize}
+          \item Type : int
+          \item Accès : lecture seule
+          \end{itemize}
+    \item bonus : Le bonus d'attaque accordé par l'arme. Cette propriété est
+      calculée par les sous-classes.
+          \begin{itemize}
+          \item Type : int
+          \item Accès : lecture seule
+          \end{itemize}
+
+    \end{enumerate}
+
+  \item Constructeur : 
+
+  \begin{enumerate}
+  \item \_\_init\_\_ : Initialise un Arme avec sa classe.
+    \begin{itemize}
+    \item Paramètres : 
+      \begin{enumerate}
+      \item une\_classe (int) : La classe de l'arme.
+      \end{enumerate}
+      \item Assertions : 
+        \begin{enumerate}
+        \item La classe ne peut être négative
+          \begin{itemize}
+          \item Message : «La classe (\emph{une\_classe}) est invalide»
+          \end{itemize}
+        \end{enumerate}
+    \end{itemize}
+
+  \end{enumerate}
+
+  \item Méthodes : 
+
+    \begin{enumerate}
+    \item \_\_str\_\_ : Méthode abstraite qui retourne une représentation en chaîne de caractère de l'arme
+      sous la forme «Type d'arme (classe)».
+      \begin{itemize}
+      \item Retour :  une représentation en chaîne de caractère de l'arme
+      sous la forme «Type d'arme (classe)».
+          \begin{itemize}
+          \item Type de retour: str
+          \end{itemize}
+      \end{itemize}
+    \item bonus : Méthode abstraite qui calcule le bonus accordé par cette arme
+      pour une attaque.
+      \begin{itemize}
+      \item Retour : Le bonus accordé par cette arme.
+          \begin{itemize}
+          \item Type de retour: int
+          \end{itemize}
+      \end{itemize}
+    \end{enumerate}
+
+  \end{itemize}
+
+  \section {Classe Armure}
+
+  Classe abstraite représentant une armure générique.
+
+  \begin{itemize}
+  \item Propriétés : 
+    \begin{enumerate}
+    \item classe : La classe de l'armure. Plus la classe est élevée, plus elle
+      protège celui qui la porte.
+          \begin{itemize}
+          \item Type : int
+          \item Accès : lecture seule
+          \end{itemize}
+    \item bonus : Le bonus de défense accordé par l'arme. Cette propriété est
+      calculée par les sous-classes.
+          \begin{itemize}
+          \item Type : int
+          \item Accès : lecture seule
+          \end{itemize}
+    \item usure : Le pourcentage d'usure de l'armure. Initialement à 0, elle
+      augent progressivement jusqu'à 100; l'armure est alors rendue inutile.
+          \begin{itemize}
+          \item Type : int
+          \item Accès : complet
+          \end{itemize}
+
+    \end{enumerate}
+
+  \item Constructeur : 
+
+  \begin{enumerate}
+  \item \_\_init\_\_ : Initialise un Armure avec sa classe.
+    \begin{itemize}
+    \item Paramètres : 
+      \begin{enumerate}
+      \item une\_classe (int) : La classe de l'armure.
+      \end{enumerate}
+      \item Assertions : 
+        \begin{enumerate}
+        \item La classe ne peut être négative
+          \begin{itemize}
+          \item Message : «La classe (\emph{une\_classe}) est invalide»
+          \end{itemize}
+        \end{enumerate}
+    \end{itemize}
+
+  \end{enumerate}
+
+  \item Méthodes : 
+
+    \begin{enumerate}
+    \item \_\_str\_\_ : Méthode abstraite qui retourne une représentation en chaîne de caractère de l'armure.
+      sous la forme «Type d'armure (classe)».
+      \begin{itemize}
+      \item Retour :  une représentation en chaîne de caractère de l'armure
+      sous la forme «Type d'armure (classe)».
+          \begin{itemize}
+          \item Type de retour: str
+          \end{itemize}
+      \end{itemize}
+    \item bonus : Méthode abstraite qui calcule le bonus accordé par cette armure
+      pour une attaque.
+      \begin{itemize}
+      \item Retour : Le bonus accordé par cette armure.
+          \begin{itemize}
+          \item Type de retour: int
+          \end{itemize}
+      \end{itemize}
+    \end{enumerate}
+
+  \end{itemize}
+
+  \section {Classe Dé}
+
+  Description
+
+  \begin{itemize}
+
+  \item Méthodes : 
+
+    \begin{enumerate}
+    \item lancer : Méthode de classe qui simule un lancer de dé.
+      \begin{itemize}
+      \item Paramètres : 
+        \begin{enumerate}
+        \item faces (int) : le nombre de faces du dé à lancer.
+          \begin{itemize}
+          \item Valeur par défaut : 6
+          \end{itemize}
+      \end{enumerate}
+      \item Retour : Un nombre au hasard entre 1 et \emph{faces} inclusivement.
+          \begin{itemize}
+          \item Type de retour: int
+          \end{itemize}
+      \item Assertions : 
+        \begin{enumerate}
+        \item \emph{faces} doit être > 1
+          \begin{itemize}
+          \item Message : «Le nombre de faces doit être > 1»
+          \end{itemize}
         \end{enumerate}
       \end{itemize}
     \end{enumerate}
