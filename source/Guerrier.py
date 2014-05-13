@@ -2,8 +2,8 @@
 # Andrew Caron
 # 13 may 2014
 
-import Belligérant from Belligérant
-import Dé from Dé
+from Belligérant import Belligérant
+from Dé import Dé
 
 class Guerrier(Belligérant):
     """
@@ -50,7 +50,8 @@ class Guerrier(Belligérant):
         Soustrait au Guerrier le nombre de points de vie calculé par calculer_dégâts
 
         Paramètres :
-           impact : int, La force d’impact de l’attaque reçue.
+           impact : int, La force d’impact de l’attaque reçue.
+
 
         
         """
