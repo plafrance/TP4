@@ -14,17 +14,18 @@ class Belligérant:
     _défense:Le facteur de défense du belligérant. Plus ce facteur est élevé, plus le belligérant pourra résister aux attaques.
     _force:Le facteur de force du belligérant. Plus ce facteur est élevé, plus les attaques du belligérant seront efficaces.
     
-    Exemple:
-    >>> Alex=Belligérant("Alex")
-    >>> Alex.nom
-    'Alex'
     """
     def __init__(self,un_nom):
         """
-        Initialise un belligérant.
+        Initialise un belligérant. 
         
         Paramètre:
         un_nom:Nom qui sera attibué au belligérant.
+
+        Exemple:
+        >>> Alex=Belligérant("Alex")
+        >>> Alex.nom
+        'Alex'
         """
         assert un_nom!=None or un_nom.trim()!="","Le nom du béligérant ne peut pas être vide"
         self._nom=un_nom
@@ -55,7 +56,13 @@ class Belligérant:
         Retour:Le coefficient de parade lors d’un assaut calculé par la formule.
         """
         return self.défense+Dé.lancer()+Dé.lancer()
-    
+        
+    def calculer_dégâts(self,impact):
+        """
+        Calcule le dégât subis par le belligérant.
+        """
+        return impact
+
     def subir_dégâts(self,impact):
         """
         Après avoir reçu une attaque, cette méthode calcule les dégâts subis 
@@ -64,7 +71,7 @@ class Belligérant:
         Paramètre:
         impact:La force d'impact de l'attaque reçue.
         """
-        self.pts_vie=self.pts_vie-impact
+        self.pts_vie=self.pts_vie-calculer_dégâts(impact)
 
     def est_mort(self):
         """
