@@ -16,7 +16,10 @@ import time
 time.sleep(5)
 p.stop(True)
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 #Initialisation de l'API
 API = API()
 API.clear()
@@ -73,6 +76,7 @@ if choix_menu == "A":
     choix_menu_2 = API.choix_menu(['A', 'B', 'C'])
     if choix_menu_2 == "A":
         API.clear()
+<<<<<<< Updated upstream
         print('''
 +--------------------------------------------+
 | a. Jouer contre une autre personne localement
@@ -112,11 +116,32 @@ if choix_menu == "A":
                 ''' % session["id"])
 
         if choix_menu_3 == 'D':
+=======
+    print('''
++--------------------------------------------+
+| a. Jouer contre une autre personne localement
+| b. Jouer contre un adversaire en ligne
+| c. Quitter
++--------------------------------------------+
+    ''')
+        #----- MENU 3 -----#
+        choix_menu_3 = API.choix_menu(['A', 'B', 'C'])
+        if choix_menu_3 == 'A':
+            print("Le blabla local qui n'existe pas encore")
+
+        if choix_menu_3 == 'B':
+            session = API.getUniqueSessionGame()
+
+        if choix_menu_3 == 'C':
+>>>>>>> Stashed changes
             quit()
     if choix_menu_2 == "B":
         options = []
         data_store = API.getStore()
+<<<<<<< Updated upstream
         API.clear()
+=======
+>>>>>>> Stashed changes
         print('''
 +--------------------------------------------+
 |

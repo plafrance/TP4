@@ -97,6 +97,7 @@ class Utils:
                 reponse = input(message+"\n"+question)
         return reponse
 
+
 class progress_bar_loading(threading.Thread):
     _stop = False
     def run(self):
@@ -122,8 +123,6 @@ class progress_bar_loading(threading.Thread):
 
     def stop(self, value):
         self._stop = value
-
-
 
 """
     Class API
@@ -207,3 +206,4 @@ class API(Utils):
 
     def startGame(self, type_of_character):
         return Utils.json_decode(Utils.post("http://tournoipytonesque.tk/api/?startGame&PHPSESSID=%s" % self.SID, {"type_of_chracter": type_of_character}))
+
