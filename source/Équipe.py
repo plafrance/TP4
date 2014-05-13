@@ -1,0 +1,80 @@
+﻿#Équipe.py
+#07/05/2104
+#Alexandre Lambert
+#
+#Contient la classe Équipe pour faire une équipe de belligérant
+class Équipe :
+    def __init__( self , un_nom ):
+        """
+        Initialise une équipe avec un nom mais sans belligérants immédiatement.
+        Exemples:
+        >>> équipe1 = Équipe("Toto")
+        >>> équipe1.nom
+        'Toto'
+        """
+        self._nom = un_nom
+        self._combattants = []
+
+    def __len__( self ):
+        """
+        Retourne le nombre d’éléments dans l’équipe.
+
+        >>> import belligérant
+        >>> équipe_test = Équipe("Toto")
+        >>> Bob = Belligérant("Bob")
+        >>> Boby = Belligérant("Boby")
+        >>> équipe_test.ajouter_belligérant(Bob)
+        >>> équipe_test.ajouter_belligérant(Boby)
+        '2'
+        """
+        return len(self._combattants)
+
+    def ajouter_bélligérant( self , un_belligérant ):
+        """
+        Ajoute un belligérant dans une équipe
+        """
+        self._combattants += [un_belligérant]
+
+    
+    def belligérant( self , indice : int = None , nom : str = None):
+        """
+        Vérifie si un combattant est présent dans l'équipe
+
+        Paramètre :
+            indice : indice d'un belligérant dans l'équipe
+            nom : nom d'un belligérant
+
+        retourne le belligérant si l'indice est présent
+        retourne le belligérant si le nom est dans la liste de belligérant
+
+        Exemple:
+        >>> import belligérant
+        >>> équipe_test = Équipe("Toto")
+        >>> Bob = Belligérant("Bob")
+        >>> équipe_test.ajouter_belligérant(Bob)
+        >>> équipe_test.belligérant( None , "blablablablabla")
+        «nom ' { blablablablabla }' est invalide»
+        >>> équipe_test.belligérant( 4578 )
+        «indice { " 4578 " } invalide»
+        >>> équipe_test.belligérant()
+        None
+        >>> équipe_test.belligérant( nom = "Bob" ) == Bob
+        True
+        """
+        assert(indice == None) , "«indice { " + indice + " } invalide»"
+        assert(nom == None or nom not in [un_combattant.nom for un_combattant in self._combattants]), "«nom ' { " + nom + " }' est invalide»"
+        if indice != None :
+            return self._combattants[indice]
+        if nom != None :
+            for un_combattant in self._combattants:
+                if un_combattant.nom == nom :
+                    return un_combattant
+        else :
+            return None
+    @property
+    def nom( self ):
+        return self._nom
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
