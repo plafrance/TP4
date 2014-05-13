@@ -1,4 +1,6 @@
-#SortGuérison.py
+# coding: utf-8
+
+#sortguérison.py
 #Médard Jonathas
 #13/05/2014
 #
@@ -23,8 +25,17 @@ class SortGuérison(Sort):
         
 
     def __str__(self):
+        """
+        Fournit une représentation en chaîne de caractères du Sort.
 
-        return "Guérison:" + super().__str__()
+        Exemple:
+        >>> objet_test=SortGuérison()
+        >>> objet_test.__str__()
+        'Guérison: c=1;m=4'
+        
+        """
+
+        return "Guérison: " + super().__str__()
 
     def activer(self, cible):
         """
@@ -49,10 +60,10 @@ class SortGuérison(Sort):
         # Si la cible a plus que 0 points de vie alors il recoit les pts de guérison détermniné par le dé
         if cible.pts_vie > 0:
             cible.pts_vie += pts_guérison
-        
-            
-            
-                
-                
+
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
             
         
