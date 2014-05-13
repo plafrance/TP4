@@ -20,9 +20,9 @@ class SortRésurrection(Sort):
         activer(cible)
     """
     
-    # --------------------------- #
-    #         __init__()          #
-    # --------------------------- #
+    # ---------------------------
+    #         __init__()
+    # ---------------------------
     def __init__(self):
         """
         Instancie le sort de résurrection
@@ -35,9 +35,10 @@ class SortRésurrection(Sort):
         """
         super().__init__(une_classe = 4, une_mana_requise = 15)        
 
-    # --------------------------- #
-    #       activer(cible)        #
-    # --------------------------- #
+
+    # ---------------------------
+    #       activer(cible)
+    # ---------------------------
     def activer(self, cible):
         """
         Active le sort de résurrection sur une cible.
