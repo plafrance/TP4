@@ -1,7 +1,14 @@
-__author__ = 'gilbert'
+# -*- encoding:utf-8 -*-
+#start.py
+#Gilbert Paquin
+#2014/05/13
+#
+# Fichier principale
+
 import getpass
 from api import API
 
+#Initialisation de l'API
 API = API()
 API.clear()
 #Debut du programme
@@ -15,15 +22,8 @@ print('''
 +--------------------------------------------+
 ''')
 
-choix_menu = None
-while choix_menu == None:
-    choix_menu = input("Choisir une option: ")
-    if choix_menu[:1].upper() not in ['A', 'B']:
-        choix_menu = None
-
-choix_menu = choix_menu[:1].upper()
-
-
+#premier menu
+choix_menu = API.choix_menu(['A', 'B'])
 
 if choix_menu == "A":
     API.clear()
@@ -54,9 +54,56 @@ if choix_menu == "A":
 | Nombre de victoire: %i
 | Nombre de defaite: %i
 |
+| a. Jouer
+| b. Aller dans le magasin
+| c. Quitter
 +--------------------------------------------+
-    ''' % (data_user['firstname']+" "+data_user['lastname'], 0, 0, 0))
-elif choix_menu == "B":
+    ''' % (data_user['firstname']+" "+data_user['lastname'], int(data_user['money']), int(data_user['win']), int(data_user['loose'])))
+
+    #------ MENU 2 ------#
+    choix_menu_2 = API.choix_menu(['A', 'B', 'C'])
+    if choix_menu_2 == "A":
+        API.clear()
+    print('''
++--------------------------------------------+
+| a. Jouer contre une autre personne localement
+| b. Jouer contre un adversaire en ligne
+| c. Quitter
++--------------------------------------------+
+    ''')
+        #----- MENU 3 -----#
+        choix_menu_3 = API.choix_menu(['A', 'B', 'C'])
+        if choix_menu_3 == 'A':
+            print("Le blabla local qui n'existe pas encore")
+
+        if choix_menu_3 == 'B':
+            session = API.getUniqueSessionGame()
+
+        if choix_menu_3 == 'C':
+            quit()
+    if choix_menu_2 == "B":
+        options = []
+        data_store = API.getStore()
+        print('''
++--------------------------------------------+
+|
+| Les armes''')
+        for arme in data_store["weapons"]:
+            options += [arme["code"]]
+            print("| %s) %s <%s py> Attaque min: %s max: %s" % (arme["code"], arme["name"], arme["price"], arme["min"], arme["max"]))
+        print("|\n| Les boucliers")
+        for arme in data_store["shields"]:
+            options += [arme["code"]]
+            print("| %s) %s <%s py> Protection: %s" % (arme["code"], arme["name"], arme["price"], arme["strength"]))
+        print('''|
++--------------------------------------------+''')
+        choix_achat = API.choix_menu(options)
+        #A faire
+        #API.buy(choix_achat)
+
+    if choix_menu_2 == "C":
+        quit()
+if choix_menu == "B":
     API.clear()
     print('''
 +--------------------------------------------+
