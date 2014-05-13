@@ -6,7 +6,7 @@
 # API
 
 #Importation des différents libraires requise
-import urllib.request, urllib.parse, json, os, getpass
+import urllib.request, urllib.parse, json, os, getpass, sys, time, threading
 
 """
     Class Utils
@@ -97,6 +97,34 @@ class Utils:
                 reponse = input(message+"\n"+question)
         return reponse
 
+class progress_bar_loading(threading.Thread):
+    _stop = False
+    def run(self):
+            print('Loading....  ',sys.stdout.flush())
+            i = 0
+            while self._stop != True:
+                    if (i%4) == 0:
+                        sys.stdout.write('\b/')
+                    elif (i%4) == 1:
+                        sys.stdout.write('\b-')
+                    elif (i%4) == 2:
+                        sys.stdout.write('\b\\')
+                    elif (i%4) == 3:
+                        sys.stdout.write('\b|')
+
+                    sys.stdout.flush()
+                    time.sleep(0.2)
+                    i+=1
+
+
+            print('\b\b done!')
+
+
+    def stop(self, value):
+        self._stop = value
+
+
+
 """
     Class API
     Les différentes fonctions afin de faciliter l'utilisation de l'API
@@ -177,5 +205,5 @@ class API(Utils):
         data_decoded = Utils.json_decode(data)
         return data_decoded
 
-    def startGame(self):
-        return Utils.json_decode(Utils.get("http://tournoipytonesque.tk/api/?startGame&PHPSESSID=%s" % self.SID))
+    def startGame(self, type_of_character):
+        return Utils.json_decode(Utils.post("http://tournoipytonesque.tk/api/?startGame&PHPSESSID=%s" % self.SID, {"type_of_chracter": type_of_character}))
