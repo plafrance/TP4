@@ -342,8 +342,8 @@ façon suivante :
       \end{itemize}
 
     \item parer : Calcule le coefficient de parade lors d'un assaut. Puisque le
-      Mage est plus agile que le Belligérant moyen, son coefficient est 10\% par
-      point de puissance de plus que celui calculé par Belligérant.parer.
+      Mage est plus agile que le Belligérant moyen, son coefficient la valeur arrondie de 10\% par
+      point de puissance de plus que celui calculé par Belligérant.parer().
       \begin{itemize}
       \item Retour : Le coefficient de parade lors d'un assaut.
           \begin{itemize}
@@ -392,6 +392,10 @@ façon suivante :
   \item Méthodes : 
 
     \begin{enumerate}
+    \item __str__ : Fournit une représentation en chaîne de caractères du Sort.
+      \begin{itemize}
+      \item Retour : Une représentation du Sort sous la forme «classe \emph{classe}; mana requise : \emph{mana_requise}»
+      \end{itemize}
     \item activer : Méthode abstraite. Active le sort qui agit alors sur sa cible.
       \begin{itemize}
       \item Paramètres : 
@@ -414,20 +418,17 @@ façon suivante :
   \item Constructeur : 
 
   \begin{enumerate}
-  \item \_\_init\_\_ : Initialise le Sort avec sa classe et sa mana.
-    \begin{itemize}
-    \item Paramètres : 
-      \begin{enumerate}
-      \item une\_classe (int) : La classe du sort (1)
-      \item une\_mana\_requise (int) : La quantité de mana requise par le sort (2)
-      \end{enumerate}
-    \end{itemize}
+  \item \_\_init\_\_ : Initialise le Sort avec sa classe (1) et sa mana (2).
 
   \end{enumerate}
 
   \item Méthodes : 
 
     \begin{enumerate}
+    \item __str__ : Fournit une représentation en chaîne de caractères du Sort.
+      \begin{itemize}
+      \item Retour : Une représentation du Sort sous la forme «Dart de feu: classe \emph{classe}; mana requise : \emph{mana_requise}»
+      \end{itemize}
     \item activer : Active le sort qui agit alors sur sa cible. Il porte une
       attaque de puissance de 2xDé12. La cible peut parer le sort comme
       pour une attaque physique.
@@ -452,22 +453,19 @@ façon suivante :
   \item Constructeur : 
 
   \begin{enumerate}
-  \item \_\_init\_\_ : Initialise le Sort avec sa classe et sa mana.
-    \begin{itemize}
-    \item Paramètres : 
-      \begin{enumerate}
-      \item une\_classe (int) : La classe du sort (1)
-      \item une\_mana\_requise (int) : La quantité de mana requise par le sort (4)
-      \end{enumerate}
-    \end{itemize}
+  \item \_\_init\_\_ : Initialise le Sort avec sa classe (1) et sa mana (4).
 
   \end{enumerate}
 
   \item Méthodes : 
 
     \begin{enumerate}
+    \item __str__ : Fournit une représentation en chaîne de caractères du Sort.
+      \begin{itemize}
+      \item Retour : Une représentation du Sort sous la forme «Guérison : classe \emph{classe}; mana requise : \emph{mana_requise}»
+      \end{itemize}
     \item activer : Active le sort qui agit alors sur sa cible. Il porte redonne
-      1 dé20 de points de vie à sa cible.
+      1 dé20 de points de vie à sa cible seulement si elle n'est pas morte, sinon, elle ne fait rien.
       \begin{itemize}
       \item Paramètres : 
         \begin{enumerate}
@@ -489,20 +487,17 @@ façon suivante :
   \item Constructeur : 
 
   \begin{enumerate}
-  \item \_\_init\_\_ : Initialise le Sort avec sa classe et sa mana.
-    \begin{itemize}
-    \item Paramètres : 
-      \begin{enumerate}
-      \item une\_classe (int) : La classe du sort (2)
-      \item une\_mana\_requise (int) : La quantité de mana requise par le sort (8)
-      \end{enumerate}
-    \end{itemize}
+  \item \_\_init\_\_ : Initialise le Sort avec sa classe (2) et sa mana (8).
 
   \end{enumerate}
 
   \item Méthodes : 
 
     \begin{enumerate}
+    \item __str__ : Fournit une représentation en chaîne de caractères du Sort.
+      \begin{itemize}
+      \item Retour : Une représentation du Sort sous la forme «Protection : classe \emph{classe}; mana requise : \emph{mana_requise}»
+      \end{itemize}
     \item activer : Active le sort qui agit alors sur sa cible. Il augmente la
       défense du belligérant de 50\%.
       \begin{itemize}
@@ -526,20 +521,17 @@ façon suivante :
   \item Constructeur : 
 
   \begin{enumerate}
-  \item \_\_init\_\_ : Initialise le Sort avec sa classe et sa mana.
-    \begin{itemize}
-    \item Paramètres : 
-      \begin{enumerate}
-      \item une\_classe (int) : La classe du sort (4)
-      \item une\_mana\_requise (int) : La quantité de mana requise par le sort (15)
-      \end{enumerate}
-    \end{itemize}
+  \item \_\_init\_\_ : Initialise le Sort avec sa classe (4) et sa mana (15).
 
   \end{enumerate}
 
   \item Méthodes : 
 
     \begin{enumerate}
+    \item __str__ : Fournit une représentation en chaîne de caractères du Sort.
+      \begin{itemize}
+      \item Retour : Une représentation du Sort sous la forme «Résurrection : classe \emph{classe}; mana requise : \emph{mana_requise}»
+      \end{itemize}
     \item activer : Active le sort qui agit alors sur sa cible. Il redonne à sa
       cible 2xDé20 points de vie.
       \begin{itemize}
