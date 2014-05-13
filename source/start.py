@@ -6,7 +6,16 @@
 # Fichier principale
 
 import getpass
-from api import API
+from api import API, progress_bar_loading
+
+
+p = progress_bar_loading()
+p.start()
+
+import time
+time.sleep(5)
+p.stop(True)
+
 
 #Initialisation de l'API
 API = API()
@@ -64,11 +73,12 @@ if choix_menu == "A":
     choix_menu_2 = API.choix_menu(['A', 'B', 'C'])
     if choix_menu_2 == "A":
         API.clear()
-    print('''
+        print('''
 +--------------------------------------------+
 | a. Jouer contre une autre personne localement
-| b. Jouer contre un adversaire en ligne
-| c. Quitter
+| b. Crée contre un adversaire en ligne (HOST)
+| c. Rejoindre une partie
+| d. Quitter
 +--------------------------------------------+
     ''')
         #----- MENU 3 -----#
@@ -77,13 +87,36 @@ if choix_menu == "A":
             print("Le blabla local qui n'existe pas encore")
 
         if choix_menu_3 == 'B':
-            session = API.getUniqueSessionGame()
+            API.clear()
+            print('''
++--------------------------------------------+
+| Choissisez votre personnage
+|
+| a. Un mage
+| b. Un guerrier
++--------------------------------------------+
+            ''')
+            choix_personnage = API.choix_menu(['A', 'B'])
 
-        if choix_menu_3 == 'C':
+            session = API.startGame(choix_personnage)
+            API.clear()
+            if session["messageCode"] != 13:
+                print("ERROR: %s" % session["message"])
+            else:
+                print('''
++--------------------------------------------+
+|
+| Le numéro de votre partie est: #%s
+|
++--------------------------------------------+
+                ''' % session["id"])
+
+        if choix_menu_3 == 'D':
             quit()
     if choix_menu_2 == "B":
         options = []
         data_store = API.getStore()
+        API.clear()
         print('''
 +--------------------------------------------+
 |
