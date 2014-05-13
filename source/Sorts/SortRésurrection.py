@@ -11,18 +11,32 @@
 import Sort
 
 class SortRésurrection(Sort):
+    """
+    Classe permettant l'utilisation du sort de résurrection
+
+    Méthodes:
+        __init__()
+        activer(cible)
+    """
+    
     # ---------------------------
-    #          __init__()
+    #         __init__()
     # ---------------------------
     def __init__(self):
         """
         Instancie le sort de résurrection
+
+        Exemple:
+            >>> sort = SortRésurrection()
+            >>> print(sort)
+            Résurrection C=4 M=15
+            
         """
         super().__init__(une_classe = 4, une_mana_requise = 15)        
 
 
     # ---------------------------
-    #          activer(cible)
+    #       activer(cible)
     # ---------------------------
     def activer(self, cible):
         """
@@ -42,6 +56,7 @@ class SortRésurrection(Sort):
             >>> résurecteur.jeter_sort(sort, cible)
             >>> return True if cible.pts_vie > 0 else return False
             True
+            
         """
         if cible.pts_vie == 0:
             cible.pts_vie(2*Dé(20))
