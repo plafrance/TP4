@@ -10,12 +10,12 @@
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
 
 
-'''
+    '''
     Classe Armure qui est l'armure du guerrier
 
     Contient la classe, l'usure, le bonus, l'ajustement de l'usure et le nom de l'armure
 
-'''
+    '''
 
 class Armure :
 
@@ -25,18 +25,18 @@ class Armure :
 
     @property
     def usure(self) :
-'''
+    '''
     Usure de l'armure en pourcentage
 
     Retourne l'usure de l'armure
-'''
+    '''
         return self._usure
 
     @property
     def bonus(self) :
-'''
+    '''
    Retourne bonus 0 
-'''       
+    '''       
         return 0
 
 # --------------------- #
@@ -50,19 +50,19 @@ class Armure :
         self._usure = 0
 
     def __str__(self) :
-'''
+    '''
     Sert à afficher le nom de l'armure
 
     Retour en string du nom de l'armure
-'''
+    '''
         
         return "Armure" + str(self._classe)
 
     @usure.setter
     def usure(self, ajustement) :
-'''
-
-'''
+    '''
+    Retour ajustement de l'usure
+    '''
         self._usure += ajustement
 
 if __name__ == "__main__":

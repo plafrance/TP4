@@ -1,7 +1,26 @@
-__author__ = 'gilbert'
-import getpass
-from api import API
+# -*- encoding:utf-8 -*-
+#start.py
+#Gilbert Paquin
+#2014/05/13
+#
+# Fichier principale
 
+import getpass
+from api import API, progress_bar_loading
+
+
+p = progress_bar_loading()
+p.start()
+
+import time
+time.sleep(5)
+p.stop(True)
+
+<<<<<<< Updated upstream
+
+=======
+>>>>>>> Stashed changes
+#Initialisation de l'API
 API = API()
 API.clear()
 #Debut du programme
@@ -15,15 +34,8 @@ print('''
 +--------------------------------------------+
 ''')
 
-choix_menu = None
-while choix_menu == None:
-    choix_menu = input("Choisir une option: ")
-    if choix_menu[:1].upper() not in ['A', 'B']:
-        choix_menu = None
-
-choix_menu = choix_menu[:1].upper()
-
-
+#premier menu
+choix_menu = API.choix_menu(['A', 'B'])
 
 if choix_menu == "A":
     API.clear()
@@ -54,9 +66,102 @@ if choix_menu == "A":
 | Nombre de victoire: %i
 | Nombre de defaite: %i
 |
+| a. Jouer
+| b. Aller dans le magasin
+| c. Quitter
 +--------------------------------------------+
-    ''' % (data_user['firstname']+" "+data_user['lastname'], 0, 0, 0))
-elif choix_menu == "B":
+    ''' % (data_user['firstname']+" "+data_user['lastname'], int(data_user['money']), int(data_user['win']), int(data_user['loose'])))
+
+    #------ MENU 2 ------#
+    choix_menu_2 = API.choix_menu(['A', 'B', 'C'])
+    if choix_menu_2 == "A":
+        API.clear()
+<<<<<<< Updated upstream
+        print('''
++--------------------------------------------+
+| a. Jouer contre une autre personne localement
+| b. Crée contre un adversaire en ligne (HOST)
+| c. Rejoindre une partie
+| d. Quitter
++--------------------------------------------+
+    ''')
+        #----- MENU 3 -----#
+        choix_menu_3 = API.choix_menu(['A', 'B', 'C'])
+        if choix_menu_3 == 'A':
+            print("Le blabla local qui n'existe pas encore")
+
+        if choix_menu_3 == 'B':
+            API.clear()
+            print('''
++--------------------------------------------+
+| Choissisez votre personnage
+|
+| a. Un mage
+| b. Un guerrier
++--------------------------------------------+
+            ''')
+            choix_personnage = API.choix_menu(['A', 'B'])
+
+            session = API.startGame(choix_personnage)
+            API.clear()
+            if session["messageCode"] != 13:
+                print("ERROR: %s" % session["message"])
+            else:
+                print('''
++--------------------------------------------+
+|
+| Le numéro de votre partie est: #%s
+|
++--------------------------------------------+
+                ''' % session["id"])
+
+        if choix_menu_3 == 'D':
+=======
+    print('''
++--------------------------------------------+
+| a. Jouer contre une autre personne localement
+| b. Jouer contre un adversaire en ligne
+| c. Quitter
++--------------------------------------------+
+    ''')
+        #----- MENU 3 -----#
+        choix_menu_3 = API.choix_menu(['A', 'B', 'C'])
+        if choix_menu_3 == 'A':
+            print("Le blabla local qui n'existe pas encore")
+
+        if choix_menu_3 == 'B':
+            session = API.getUniqueSessionGame()
+
+        if choix_menu_3 == 'C':
+>>>>>>> Stashed changes
+            quit()
+    if choix_menu_2 == "B":
+        options = []
+        data_store = API.getStore()
+<<<<<<< Updated upstream
+        API.clear()
+=======
+>>>>>>> Stashed changes
+        print('''
++--------------------------------------------+
+|
+| Les armes''')
+        for arme in data_store["weapons"]:
+            options += [arme["code"]]
+            print("| %s) %s <%s py> Attaque min: %s max: %s" % (arme["code"], arme["name"], arme["price"], arme["min"], arme["max"]))
+        print("|\n| Les boucliers")
+        for arme in data_store["shields"]:
+            options += [arme["code"]]
+            print("| %s) %s <%s py> Protection: %s" % (arme["code"], arme["name"], arme["price"], arme["strength"]))
+        print('''|
++--------------------------------------------+''')
+        choix_achat = API.choix_menu(options)
+        #A faire
+        #API.buy(choix_achat)
+
+    if choix_menu_2 == "C":
+        quit()
+if choix_menu == "B":
     API.clear()
     print('''
 +--------------------------------------------+
