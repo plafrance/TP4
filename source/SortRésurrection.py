@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # =========================================================== #
 #                    Classe SortRésurrection                  #
 #                                                             #
@@ -8,7 +9,7 @@
 #                                                             #
 # =========================================================== #
 
-import Sort
+from Sort import Sort
 
 class SortRésurrection(Sort):
     """
