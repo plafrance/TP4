@@ -1,13 +1,14 @@
 Alex, Thibeault         : Classe Belligérant
-Alexandre, Lambert      : Classe Équipe
-Alexandre, Sansoucy     : Classe Dé
-Andrew, Caron           : Classe Guerrier
-Billy, Chamberland      : Classe Mage
-Dan, Doroga             : Classe Arme
-Émile, Brunelle         : Classe Armure
-Frédérik, Dumulong      : Classe Sort
-Gilbert, Paquin         : Classe Protection
-Jean-Philippe, Mongeau  : Classe Resurection
-Jérôme, Laporte         : Classe DartDeFeu
+Alexandre, Lambert      : Joueur
+Alexandre, Sansoucy     : PotionGuérison
+Andrew, Caron           : Joueur
+Benjamin                : Item
+Billy, Chamberland      : Partie
+Dan, Doroga             : Partie
+Émile, Brunelle         : Contrôle
+Frédérik, Dumulong      : ContrôleConsole
+Gilbert, Paquin         : ContrôleHTTP/ContrôleFichier
+Jean-Philippe, Mongeau  : Contrôle
+Jérôme, Laporte         : Joueur
 Jessy, Bertin           : 
-Médard, Jonathas        : Classe Guérison
+Médard, Jonathas        : Potion

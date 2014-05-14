@@ -1,0 +1,14 @@
+Belligérant : 
+  - ajouté pts_vie_max en lecture seule, le nb de pts-vie initial du belligérant.
+  - subir_dégâts retourne le nb de pts de vie réellement perdus.
+  - ajouté les items
+  - ajouté l'attribut classe
+
+Mage
+  - remplacé puissance par Belligérant.classe
+
+Guerrier
+  - ne peut utiliser une Arme dont la classe est plus élevée que la sienne.
+
+Armure et Arme
+  - héritent de Item
