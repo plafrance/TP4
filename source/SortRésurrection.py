@@ -3,13 +3,14 @@
 #                    Classe SortRésurrection                  #
 #                                                             #
 # Jean-Philippe Mongeau                                       #
-# SortRésurrection.py                                         #
+# sortrésurrection.py                                         #
 # Dernière modification: 13 mai 2014                          #
 #                   Par: Jean-Philippe Mongeau                #
 #                                                             #
 # =========================================================== #
 
-from Sort import Sort
+from sort import Sort
+from dé import Dé
 
 class SortRésurrection(Sort):
     """
@@ -30,10 +31,16 @@ class SortRésurrection(Sort):
         Exemple:
             >>> sort = SortRésurrection()
             >>> print(sort)
-            Résurrection C=4 M=15
+            Résurrection: c=4;m=15
             
         """
-        super().__init__(une_classe = 4, une_mana_requise = 15)        
+        super().__init__(une_classe = 4, une_mana_requise = 15)
+
+    def __str__(self):
+        """
+        Un retour en string
+        """
+        return "Résurrection: " + super().__str__()
 
 
     # ---------------------------
@@ -50,16 +57,21 @@ class SortRésurrection(Sort):
             Aucun
 
         Exemple:
+            >>> from guerrier import Guerrier
+            >>> from mage import Mage
             >>> cible = Guerrier("Patrick Lafrance")
             >>> résurecteur = Mage("Émile Brunelle")
-            >>> cible.pts_vie(0)
+            >>> résurecteur.puissance = 5
+            >>> cible.pts_vie = 0
             >>> sort = SortRésurrection()
             >>> résurecteur.jeter_sort(sort, cible)
-            >>> return True if cible.pts_vie > 0 else return False
+            >>> print(True if cible.pts_vie > 0 else False)
             True
             
         """
         if cible.pts_vie == 0:
-            cible.pts_vie(2*Dé(20))
+            dé1 = Dé.lancer(20)
+            dé2 = Dé.lancer(20)
+            cible.pts_vie = dé1+dé2
         else:
             return "\n\nLa cible n'est pas morte, vous ne pouvez pas la faire revivre!\n\n"

@@ -1,10 +1,11 @@
 # -*- encoding:utf-8 -*-
-#SortProtection.py
+#sortprotection.py
 #Gilbert Paquin
 #2014/05/13
 #
 # Sort de protection
-import sort
+from sort import Sort
+
 """
 Class SortProtection
 Sort qui augmente la protection d’un belligérant.
@@ -21,21 +22,25 @@ class SortProtection(Sort):
         """
         Un retour en string
         """
-        return "SortProtection: c=%i,c=%i" % (super().classe, super().mana_requise)
+        return "SortProtection: " + super().__str__()
 
-    """
-    Active le sort qui agit alors sur sa cible. Il augmente
-    la défense du belligérant de 50%.
-    — Paramètres :
-    (i) cible (Belligérant) : Le belligérant ciblé par le sort.
+    def activer(self, cible):
+        """
+        Active le sort qui agit alors sur sa cible. Il augmente
+        la défense du belligérant de 50%.
+        — Paramètres :
+        (i) cible (Belligérant) : Le belligérant ciblé par le sort.
 
-    Exemple
-    >>> cible = Guerrier("Patrick Lafrance")
-    >>> mage = Mage("Émile Brunelle")
-    >>> sort = SortProtection()
-    >>> prev_def = cible.défense
-    >>> mage.jeter_sort(sort, cible)
-    >>> cible.défense == prev_def*1.5
-    """
-    def activer(self, cible = Billigérant):
-        cible.défense += cible.défense * 1.5
+        Exemple
+        >>> from guerrier import Guerrier
+        >>> from mage import Mage
+        >>> cible = Guerrier("Patrick Lafrance")
+        >>> mage = Mage("Émile Brunelle")
+        >>> mage.puissance = 3
+        >>> sort = SortProtection()
+        >>> prev_def = cible.défense
+        >>> mage.jeter_sort(sort, cible)
+        >>> cible.défense == prev_def*1.5
+        True
+        """
+        cible.défense = cible.défense * 1.5

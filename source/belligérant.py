@@ -154,6 +154,15 @@ class Belligérant:
         """
         return self._défense
 
+    @défense.setter
+    def défense(self, value):
+        """
+        Mutateur de self._défense
+
+        Retour: null
+        """
+        self._défense = value
+
     @property
     def force(self):
         """

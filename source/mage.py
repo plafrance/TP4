@@ -7,7 +7,8 @@
 from belligérant import Belligérant
 from dé import Dé
 from sort import Sort
-class Mage(Belligérant) :
+
+class Mage(Belligérant):
     """
     Un belligérant de type mage capable de jeter des sorts.
 
@@ -78,6 +79,7 @@ class Mage(Belligérant) :
         Accesseur de _sorts
         Retour : _sorts
         Exemples :
+        >>> from mage import Mage
         >>> un_mage = Mage("Merlin")
         >>> print(un_mage.sorts)
         []
@@ -97,7 +99,7 @@ class Mage(Belligérant) :
         [Dart de feu]
         """
         self._sorts.append(ajout_sort)
-    def jeter_sort ( self , sort, cible) :
+    def jeter_sort ( self , un_sort, cible) :
         """
         Jete un sort vers une cible
 
@@ -107,13 +109,13 @@ class Mage(Belligérant) :
         """
         assert self.puissance > un_sort.classe,\
                "Puissance ("+str(self.puissance)+") <"\
-               " un_sort.classe ("+strun_sort.classe+")"
+               " un_sort.classe ("+str(un_sort.classe)+")"
         assert self.mana >= un_sort.mana_requise,\
-               "Mana ("+mana+") < un_sort.mana_requise"\
-               "("+un_sort.mana_requise+")"
+               "Mana ("+str(self.mana)+") < un_sort.mana_requise"\
+               "("+str(un_sort.mana_requise)+")"
 
-        sort.activer(cible)
-        self.mana(self.mana-sort.mana_requise)
+        un_sort.activer(cible)
+        self.mana= self.mana-un_sort.mana_requise
         def parer ( self ) :
             """
             Calcule le coefficient de parade lors d’un assaut. Puisque
@@ -130,18 +132,15 @@ class Mage(Belligérant) :
         """
         Ajoute un sort à la liste des sorts connus par le Mage.
         Exemples :
+        >>> from sortdartdefeu import SortDartDeFeu
         >>> un_mage = Mage("Merlin")
         >>> print(un_mage.sorts)
         []
-        >>> un_sort = SortDartDeFeu()
-        >>> un_mage.sorts(un_sort)
-        >>> print(un_mage.sorts)
-        [Dart de feu]
 
         """
         assert sort != item in self.sorts,\
                "Le sort ("+str(sort)+") existe déjà"
-        sorts(sort)
+        self._sorts += [sort]
         return
     
 if __name__ == "__main__":
