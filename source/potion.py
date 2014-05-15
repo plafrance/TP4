@@ -20,9 +20,13 @@ class Potion(item.Item):
 
         Paramètre:
             nb_part: nombre de parts initial de la potion.
-            
+
+        >>> nbparts=Potion(3)
+        >>> nbparts.parts
+        3
+        
         """
-        self._parts= nb_parts
+        self._parts= nb_part
         assert self._parts > 1, "Le nombre de part ne peut être plus petit que 1"
 
     @property
