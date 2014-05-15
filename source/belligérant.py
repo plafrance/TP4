@@ -1,7 +1,6 @@
-
 #belligérant.py
-#07/05/2104
-#Alex Thibeault                                            et peut-être Billy? QUI SAIT!
+#13/05/2014
+#Alex Thibeault
 #
 #Contient la classe Belligérant qui est necessaire pour instancier un belligérant, un magoe ou un guerrier pour le tournoi pythonesque 4
 from dé import Dé
@@ -50,7 +49,7 @@ class Belligérant:
  
     def attaquer(self):
         """
-        Calcule le coefficient d’attaque d’un assaut par la formule.
+        Calcule le coefficient d’attaque d’un assaut par la formule(self.force+Dé.lancer(12) par défaut).
         
         Retour: Le coefficient d’attaque d’un assaut calculé.
         """
@@ -58,7 +57,7 @@ class Belligérant:
 
     def parer(self):
         """
-        Calcule le coefficient de parade lors d’un assaut.
+        Calcule le coefficient de parade lors d’un assaut(self.défense+Dé.lancer()+Dé.lancer() par défaut).
         
         Retour:Le coefficient de parade lors d’un assaut calculé par la formule.
         """
