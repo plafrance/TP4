@@ -2,7 +2,7 @@
 # Benjamion Bradley roy
 #Module item
 
-class Item():#Retourne un entier sous forme de gramme
+class Item(Arme):#Retourne un entier sous forme de gramme
 
     def __init__(self,un_poids):
         """
