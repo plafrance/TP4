@@ -13,7 +13,6 @@ class Mage(Belligérant):
     Un belligérant de type mage capable de jeter des sorts.
 
     Propriétés :
-        _puissance : int, La puissance du Mage.
         _mana : int, La quantité d'énergie magique que possède le Mage.
         _sorts : list, Liste des sorts que possède le Mage.
 
@@ -32,31 +31,8 @@ class Mage(Belligérant):
         Merlin
         """
         super().__init__(un_nom)
-        self._puissance = Dé.lancer(6)
         self._mana = Dé.lancer(20) + Dé.lancer(20)
         self._sorts = []
-    @property
-    def puissance ( self ) :
-        """
-        Accesseur de _puissance
-        Retour : _puissance
-        """
-        return self._puissance
-    @puissance.setter
-    def puissance ( self, ajustement ) :
-        """
-        Mutateur de _puissance
-
-        Paramètre :
-            ajustement : int, nouvelle puissance
-        Exemples :
-        >>> un_mage = Mage("Merlin")
-        >>> un_mage.puissance(3)
-        >>> print(un_mage.puissance)
-        3
-        
-        """
-        self._puissance = ajustement
     @property
     def mana ( self ) :
         """
@@ -115,8 +91,8 @@ class Mage(Belligérant):
             un_sort : Sort, sort lancé vers la cible
             cible : Belligérant, cible du sort
         """
-        assert self.puissance > un_sort.classe,\
-               "Puissance ("+str(self.puissance)+") <"\
+        assert super().classe > un_sort.classe,\
+               "Puissance ("+str(super().classe)+") <"\
                " un_sort.classe ("+str(un_sort.classe)+")"
         assert self.mana >= un_sort.mana_requise,\
                "Mana ("+str(self.mana)+") < un_sort.mana_requise"\
@@ -134,7 +110,7 @@ class Mage(Belligérant):
             Retour : coefficient de parade lors d'un assaut d'un mage
             """
             base_parer = super().parer()
-            return round(base_parer + base_parer* 0.1 * self.puissance)
+            return round(base_parer + base_parer* 0.1 * super().classe)
         
     def ajouter_sort( self, sort):
         """
