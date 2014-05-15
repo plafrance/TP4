@@ -33,6 +33,8 @@ class Guerrier(Belligérant):
         self._force += Dé.lancer(12)
         self._défense += Dé.lancer(12)
         self._pts_vie += Dé.lancer(20) + Dé.lancer(20)
+        self._arme = None
+        self._armure = None
         
     def calculer_dégâts (self,impact):
         """
@@ -48,11 +50,11 @@ class Guerrier(Belligérant):
         >>> armure = Armure(6)
         >>> Andrew.armure = armure
         >>> Andrew.calculer_dégâts(13)
-        10.0
+        10
         
         """
         dégâts = super().calculer_dégâts(impact)
-        return dégâts - (self.armure.classe / 2)
+        return round(dégâts - (self.armure.classe / 2))
         
     def attaquer (self):
         """
@@ -79,17 +81,19 @@ class Guerrier(Belligérant):
         >>> Andrew.armure = armure
         >>> Andrew.subir_dégâts(13)
         >>> Andrew.pts_vie
-        10.0
+        10
         
         """
         dégâts = self.calculer_dégâts(impact)
         self.armure.usure = self.armure.usure - (dégâts / 5)
-        self._pts_vie = self._pts_vie - dégâts
+        self._pts_vie = round(self._pts_vie - dégâts)
 
     @property
     def armure(self) :
         """
-        Retourne le contenue de la variable _armure
+        Accesseur de _armure
+
+        Retour : _armure
 
         Exemple :
         >>> from armure import Armure
@@ -109,12 +113,14 @@ class Guerrier(Belligérant):
     @property
     def arme(self):
         """
-        Retourne le contenue de la variable _arme
+        Accesseur de _arme
+
+        Retour : _arme
 
         Exemple :
         >>> from arme import Arme
         >>> guerrier = Guerrier("Bob")
-        >>> arme = Arme(123)
+        >>> arme = Arme(1)
         >>> guerrier.arme = arme
         >>> guerrier.arme == arme
         True
@@ -124,8 +130,8 @@ class Guerrier(Belligérant):
     
     @arme.setter
     def arme(self,une_arme):
-        assert une_arme.classe == self.arme.classe
-        self._arme = une_arme, "Le Guerrier ne peut utiliser une arme dont la casse est plus grande que la sienne."
+        assert une_arme.classe <= self.classe , "Le Guerrier ne peut utiliser une arme dont la casse est plus grande que la sienne."
+        self._arme = une_arme
 
 if __name__ == "__main__":
     import doctest
