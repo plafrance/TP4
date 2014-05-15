@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-# Mage.py
+# mage.py
 # Billy Chamberland
 # 2014-05-13
 # Module du Mage et toutes ses fonctions
@@ -23,7 +23,7 @@ class Mage(Belligérant):
         Initialise un Mage. Sa puissance est donnée par un dé6
         et sa mana par 2xDé20. Initialement, il ne possède aucun sort.
 
-        Propriétés :
+        Paramètre :
             un_nom : str, nom du belligérant de type mage.
 
         Exemples :
@@ -47,6 +47,8 @@ class Mage(Belligérant):
         """
         Mutateur de _puissance
 
+        Paramètre :
+            ajustement : int, nouvelle puissance
         Exemples :
         >>> un_mage = Mage("Merlin")
         >>> un_mage.puissance(3)
@@ -66,6 +68,9 @@ class Mage(Belligérant):
     def mana ( self , ajustement ) :
         """
         Mutateur de _mana
+
+        Paramètre :
+            ajustement : int, mana après réduction
         Exemples :
         >>> un_mage = Mage("Merlin")
         >>> un_mage.mana(30)
@@ -89,6 +94,9 @@ class Mage(Belligérant):
     def sorts ( self, ajout_sort) :
         """
         Mutateur de _sorts
+
+        Paramètre :
+            ajout_sort : Sort, nouveau sort à ajouter
         Exemples :
         >>> un_mage = Mage("Merlin")
         >>> print(un_mage.sorts)
@@ -131,6 +139,9 @@ class Mage(Belligérant):
     def ajouter_sort( self, sort):
         """
         Ajoute un sort à la liste des sorts connus par le Mage.
+
+        Paramètre :
+            sort : Sort, sort à ajouter.
         Exemples :
         >>> from sortdartdefeu import SortDartDeFeu
         >>> un_mage = Mage("Merlin")
