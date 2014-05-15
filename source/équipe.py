@@ -2,7 +2,7 @@
 #13/05/2014
 #Alexandre Lambert & Andrew Caron
 #
-#Contient la classe Équipe pour faire une équipe de belligérant
+#Contient la classe Équipe pour faire une équipe de belligérant.
 
 class Équipe :
     def __init__( self , un_nom ):
