@@ -4,16 +4,13 @@
 #                                                             #
 # Jean-Philippe Mongeau                                       #
 # SortRésurrection.py                                         #
-# Version 1.3                                                 #
-# Dernière modification: 13 mai 2014                          #
+# Version 1.3.2                                               #
+# Dernière modification: 15 mai 2014                          #
 #                   Par: Jean-Philippe Mongeau                #
 #                                                             #
 # =========================================================== #
 
 from sort import Sort
-from guerrier import Guerrier
-from mage import Mage
-from belligérant import Belligérant
 from dé import Dé
 
 class SortRésurrection(Sort):
@@ -22,6 +19,7 @@ class SortRésurrection(Sort):
 
     Méthodes:
         __init__()
+        __str__()
         activer(cible)
     """
     
@@ -35,10 +33,10 @@ class SortRésurrection(Sort):
         Exemple:
             >>> sort = SortRésurrection()
             >>> print(sort)
-            Résurrection : classe 4 ; mana requise : 15
+            Résurrection : c=4;m=15
             
         """
-        super().__init__(une_classe = 4, une_mana_requise = 15)        
+        super().__init__(4, 15)        
 
     # --------------------------- #
     #          __str__()          #
@@ -53,10 +51,10 @@ class SortRésurrection(Sort):
         Exemple:
             >>> sort = SortRésurrection()
             >>> print(sort.__str__())
-            Résurrection : classe 4 ; mana requise : 15
+            Résurrection : c=4;m=15
             
         """
-        return str("Résurrection : classe 4 ; mana requise : 15")
+        return "Résurrection : " + super().__str__()
         
     # --------------------------- #
     #       activer(cible)        #
@@ -72,17 +70,21 @@ class SortRésurrection(Sort):
             Aucun
 
         Exemple:
+            >>> from guerrier import Guerrier
+            >>> from mage import Mage
             >>> cible = Guerrier("Patrick Lafrance")
             >>> résurrecteur = Mage("Émile Brunelle")
             >>> cible.pts_vie = 0
+            >>> résurrecteur.mana = 69
+            >>> résurrecteur.puissance = 5
             >>> sort = SortRésurrection()
             >>> résurrecteur.jeter_sort(sort, cible)
-            >>> print(True if cible.est_mort() and résurrecteur.mana > 15 else False)
+            >>> print(True if cible.pts_vie > 0 else False)
             True
                 
         """
         if cible.pts_vie == 0:
-            cible.pts_vie(2*Dé(20))
+            cible.pts_vie = Dé.lancer(20)+Dé.lancer(20)
         else:
             return "\n\nLa cible n'est pas morte, vous ne pouvez pas la faire revivre!\n\n"
 

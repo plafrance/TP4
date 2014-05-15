@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-# Mage.py
+# mage.py
 # Billy Chamberland
 # 2014-05-13
 # Module du Mage et toutes ses fonctions
@@ -13,7 +13,6 @@ class Mage(Belligérant):
     Un belligérant de type mage capable de jeter des sorts.
 
     Propriétés :
-        _puissance : int, La puissance du Mage.
         _mana : int, La quantité d'énergie magique que possède le Mage.
         _sorts : list, Liste des sorts que possède le Mage.
 
@@ -23,7 +22,7 @@ class Mage(Belligérant):
         Initialise un Mage. Sa puissance est donnée par un dé6
         et sa mana par 2xDé20. Initialement, il ne possède aucun sort.
 
-        Propriétés :
+        Paramètre :
             un_nom : str, nom du belligérant de type mage.
 
         Exemples :
@@ -32,29 +31,8 @@ class Mage(Belligérant):
         Merlin
         """
         super().__init__(un_nom)
-        self._puissance = Dé.lancer(6)
         self._mana = Dé.lancer(20) + Dé.lancer(20)
         self._sorts = []
-    @property
-    def puissance ( self ) :
-        """
-        Accesseur de _puissance
-        Retour : _puissance
-        """
-        return self._puissance
-    @puissance.setter
-    def puissance ( self, ajustement ) :
-        """
-        Mutateur de _puissance
-
-        Exemples :
-        >>> un_mage = Mage("Merlin")
-        >>> un_mage.puissance(3)
-        >>> print(un_mage.puissance)
-        3
-        
-        """
-        self._puissance = ajustement
     @property
     def mana ( self ) :
         """
@@ -66,6 +44,9 @@ class Mage(Belligérant):
     def mana ( self , ajustement ) :
         """
         Mutateur de _mana
+
+        Paramètre :
+            ajustement : int, mana après réduction
         Exemples :
         >>> un_mage = Mage("Merlin")
         >>> un_mage.mana(30)
@@ -89,6 +70,9 @@ class Mage(Belligérant):
     def sorts ( self, ajout_sort) :
         """
         Mutateur de _sorts
+
+        Paramètre :
+            ajout_sort : Sort, nouveau sort à ajouter
         Exemples :
         >>> un_mage = Mage("Merlin")
         >>> print(un_mage.sorts)
@@ -107,8 +91,8 @@ class Mage(Belligérant):
             un_sort : Sort, sort lancé vers la cible
             cible : Belligérant, cible du sort
         """
-        assert self.puissance > un_sort.classe,\
-               "Puissance ("+str(self.puissance)+") <"\
+        assert super().classe > un_sort.classe,\
+               "Puissance ("+str(super().classe)+") <"\
                " un_sort.classe ("+str(un_sort.classe)+")"
         assert self.mana >= un_sort.mana_requise,\
                "Mana ("+str(self.mana)+") < un_sort.mana_requise"\
@@ -126,11 +110,14 @@ class Mage(Belligérant):
             Retour : coefficient de parade lors d'un assaut d'un mage
             """
             base_parer = super().parer()
-            return round(base_parer + base_parer* 0.1 * self.puissance)
+            return round(base_parer + base_parer* 0.1 * super().classe)
         
     def ajouter_sort( self, sort):
         """
         Ajoute un sort à la liste des sorts connus par le Mage.
+
+        Paramètre :
+            sort : Sort, sort à ajouter.
         Exemples :
         >>> from sortdartdefeu import SortDartDeFeu
         >>> un_mage = Mage("Merlin")

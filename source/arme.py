@@ -26,7 +26,7 @@ class Arme():
         """
         return self._classe
     @property
-    def bonus():
+    def bonus(self):
         """
         Le bonus d’attaque accordé par l’arme.
         """
@@ -41,8 +41,11 @@ class Arme():
     def __init__(self,une_classe):
         """
         Initialise une Arme avec sa classe.
+
+        Paramètres :
+            une_classe -> int, La classe de l'arme.
         """
-        assert une_classe > 0, "La classe (" + str(une_classe) + ") est invalide"
+        assert une_classe >= 0, "La classe (" + str(une_classe) + ") est invalide"
         self._classe=une_classe
         
     ####################
@@ -51,12 +54,12 @@ class Arme():
     #                  #
     ####################
         
-    def __str__():
+    def __str__(self):
         """
         Retourne une représentation en chaîne de caractère de l’arme.
         """
         return "Type d’arme (" + str(self.classe) + ")"
-    def bonus():
+    def bonus(self):
         """
         Le bonus d’attaque accordé par l’arme.
         """
