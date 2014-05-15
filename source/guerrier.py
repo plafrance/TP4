@@ -1,7 +1,9 @@
-# Guerrier.py
+# guerrier.py
 # Andrew Caron
-# 13 may 2014
+# 13 mai 2014
 
+from armure import Armure
+from arme import Arme
 from belligérant import Belligérant
 from dé import Dé
 
@@ -21,6 +23,11 @@ class Guerrier(Belligérant):
 
         Paramètre :
             un_nom : str, le nom du guerrier
+
+        Exemple :
+        >>> Andrew = Guerrier("Andrew")
+        >>> Andrew.nom
+        'Andrew'
         """
         super().__init__(un_nom)
         self._force += Dé.lancer(12)
@@ -29,9 +36,22 @@ class Guerrier(Belligérant):
         
     def calculer_dégâts (self,impact):
         """
-        Retourne 
+        Calcule le dégâts subis par le guerrier et le retourne
+
+        Paramètre :
+            impact : int, l'impact recu par le guerrier
+
+        Retour : int, dégâts recus par le guerrier
+
+        Exemple :
+        >>> Andrew = Guerrier("Andrew")
+        >>> armure = Armure(6)
+        >>> Andrew.armure = armure
+        >>> Andrew.calculer_dégâts(13)
+        10.0
+        
         """
-        dégâts = super().__calculer_dégâts()
+        dégâts = super().calculer_dégâts(impact)
         return dégâts - (self.armure.classe / 2)
         
     def attaquer (self):
@@ -42,7 +62,7 @@ class Guerrier(Belligérant):
         Retour: int,  Le coeﬃcient d’attaque d’un assaut.
         
         """
-        attaque = super().attaquer
+        attaque = super().attaquer()
         return attaque * self.arme.classe
     
     def subir_dégâts (self,impact):
@@ -52,12 +72,19 @@ class Guerrier(Belligérant):
         Paramètres :
            impact : int, La force d’impact de l’attaque reçue.
 
-
+        Exemple :
+        >>> Andrew = Guerrier("Andrew")
+        >>> Andrew.pts_vie=20
+        >>> armure = Armure(6)
+        >>> Andrew.armure = armure
+        >>> Andrew.subir_dégâts(13)
+        >>> Andrew.pts_vie
+        10.0
         
         """
-        dégâts = self.calculer_dégats(impact)
+        dégâts = self.calculer_dégâts(impact)
         self.armure.usure = self.armure.usure - (dégâts / 5)
-        self.pts_vie = self.pts_vie - dégâts
+        self._pts_vie = self._pts_vie - dégâts
 
     @property
     def armure(self) :
