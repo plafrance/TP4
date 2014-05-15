@@ -19,6 +19,7 @@ class SortRésurrection(Sort):
 
     Méthodes:
         __init__()
+        __str__()
         activer(cible)
     """
     
