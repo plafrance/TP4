@@ -1,13 +1,19 @@
-﻿import dé
+﻿"""
+sortdartdefeu.py
+
+Jérôme Laporte
+15-05-2014
+"""
+import dé
 import sort
 
 class SortDartDeFeu (sort.Sort):
     """
     Sort qui lance un dart de feu vers un belligérant.
 
-    Méthode :
-        __init__ : SortDartDeFeu, Constructeur du sort
-        activer : int, Retourne la puissance d'attaque du sort
+    Paramètres:
+		classe: int; Classe du sort (niveau)
+		mana_requise: int; Nombre de manas requis pour invoquer le sort
     """
     def __init__ (self):
         """
@@ -25,7 +31,7 @@ class SortDartDeFeu (sort.Sort):
         Méthode str de la classe SortDartDeFeu
 
         Retourne :
-            Une description du sort selon le format : « Dart de feu : C=1; M=2 »
+            Une description du sort selon le format : « Dart de feu : c=1;m=2 »
         """
         return "Dart de feu : " + super().__str__()
 
@@ -33,7 +39,7 @@ class SortDartDeFeu (sort.Sort):
         """
         Lance le sort sur un ennemi
 
-        Attributs :
+        Paramètre:
             cible : Belligérant, Belligérant sur lequel le sort sera lancé
         """
         attaque = dé.lancer(12)
