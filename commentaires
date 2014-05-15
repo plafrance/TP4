@@ -19,10 +19,6 @@ SortDartDeFeu
  Paramètres dans la docstring
  La doc de __str__ et le test de __init__ diffèrent
 
-SortRésurrection
- Pas besoin des méthodes dans la doc de la classe. Mets les propriétés.
- test de résurrection, pas besoin du True if ..., la condition est déjà un booléen.
-
 Arme
  docstring de la classe
  teste bonus
