@@ -12,3 +12,6 @@ Guerrier
 
 Armure et Arme
   - héritent de Item
+
+Équipe
+  - ajouté la méthode est_éliminée
