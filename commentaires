@@ -1,0 +1,70 @@
+Belligérant
+ précise les types de paramètres dans la docstring
+ les noms de propriété ne prennent pas de _
+ "trimer" le nom avant de le placer dans l'attribut
+ attaquer: ne mets pas de code dans le commentaire
+ calculer_dégâts : dans la doc, mettre le retour. C,est quoi le calcul?
+ est_mort :  return self.pts_vie<=0
+ accesseur prend deux s.
+
+Guerrier
+ calculer_dégâts doit retourner un int, pas un float, arrondis.
+ subir_dégâts : la méthode de la super-classe fait déjà le travail de soustraction des pts de vie. utilise-la.
+ doc des accesseurs :  La description est "Accessseur de ..." et "Retour : tel attribut"
+ mutateur de l'arme : tu compares la classe de l'arme nouvelle à celle courante. Ce n'est pas ce qui est écrit dans la doc.
+
+SortDartDeFeu
+ en-tête avec ton nom et la date
+ Pas besoin des méthodes dans la doc de la classe. Mets les propriétés.
+ Paramètres dans la docstring
+ La doc de __str__ et le test de __init__ diffèrent
+
+SortRésurrection
+ Pas besoin des méthodes dans la doc de la classe. Mets les propriétés.
+ test de résurrection, pas besoin du True if ..., la condition est déjà un booléen.
+
+Arme
+ docstring de la classe
+ teste bonus
+ manque la doc pour le retour de __str__
+ il y a deux méthodes bonus. Une ne devrait pas être un mutateur?
+
+Armure
+ ajoute la doc pour l'accesseur de bonus
+ ajoute la doc pour __init__
+ 
+Dé
+ Il manque la doc pour la classe
+ Il manque le retour de la fonction dans la doc
+
+Mage
+ les noms de propriété ne prennent pas de _
+ ne mets pas de code dans le commentaire
+ dans les mutateurs, l'ajustement est un différentiel (e.g. : mana(-5) soustrait 5 à la mana courante.
+ Le mutateur de sort s'appelle ajouter_sort
+ jeter_sort : 
+   pas besoin du super() pour accéder à la classe du mage.
+   le mage peut lancer un sort si sa classe est plus grande ou égale à celle du sort
+ parer est mal indenté
+ je ne comprends pas ajouter_sort
+ 
+ Sort
+  Indente la docstring comme il faut
+  la doc de __init__ n'a pas rapport avec ce que fait la méthode
+  __str__ : 
+    donne la forme dans la doc
+    manque un test
+  pourquoi ne pas réutiliser la doc de l'analyse?
+  
+SortGuérison
+  inutile de mentionner les attributs hérités
+  pas de doc pour __init__
+  __str__ : donner la forme de la chaîne
+ 
+ SortProtection
+  pas de doc pour __init__
+  __str__ : 
+    retour dans la doc
+    donner la forme de la chaîne
+	"Guérison c=..."
+	tu ne fais qu'augmenter le bonue de 50%. S'il est à 0, il restera à 0.
