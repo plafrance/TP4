@@ -1,5 +1,4 @@
 ﻿import dé
-import belligérant
 import sort
 
 class SortDartDeFeu (sort.Sort):
