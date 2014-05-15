@@ -2,8 +2,8 @@
 # Andrew Caron
 # 13 may 2014
 
-import Belligérant from Belligérant
-import Dé from Dé
+from belligérant import Belligérant
+from dé import Dé
 
 class Guerrier(Belligérant):
     """
@@ -22,7 +22,7 @@ class Guerrier(Belligérant):
         Paramètre :
             un_nom : str, le nom du guerrier
         """
-        super().Belligérant.__init__()
+        super().__init__(un_nom)
         self._force += Dé.lancer(12)
         self._défense += Dé.lancer(12)
         self._pts_vie += Dé.lancer(20) + Dé.lancer(20)
@@ -31,7 +31,7 @@ class Guerrier(Belligérant):
         """
         Retourne 
         """
-        dégâts = super().Belligérant.__calculer_dégâts()
+        dégâts = super().__calculer_dégâts()
         return dégâts - (self.armure.classe / 2)
         
     def attaquer (self):
@@ -42,7 +42,7 @@ class Guerrier(Belligérant):
         Retour: int,  Le coeﬃcient d’attaque d’un assaut.
         
         """
-        attaque = super().Belligérant.attaquer
+        attaque = super().attaquer
         return attaque * self.arme.classe
     
     def subir_dégâts (self,impact):
@@ -50,7 +50,8 @@ class Guerrier(Belligérant):
         Soustrait au Guerrier le nombre de points de vie calculé par calculer_dégâts
 
         Paramètres :
-           impact : int, La force d’impact de l’attaque reçue.
+           impact : int, La force d’impact de l’attaque reçue.
+
 
         
         """
@@ -64,6 +65,7 @@ class Guerrier(Belligérant):
         Retourne le contenue de la variable _armure
 
         Exemple :
+        >>> from armure import Armure
         >>> guerrier = Guerrier("Bob")
         >>> armure = Armure(123)
         >>> guerrier.armure = armure
@@ -83,6 +85,7 @@ class Guerrier(Belligérant):
         Retourne le contenue de la variable _arme
 
         Exemple :
+        >>> from arme import Arme
         >>> guerrier = Guerrier("Bob")
         >>> arme = Arme(123)
         >>> guerrier.arme = arme

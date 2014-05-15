@@ -4,12 +4,17 @@
 #                                                             #
 # Jean-Philippe Mongeau                                       #
 # SortRésurrection.py                                         #
+# Version 1.3                                                 #
 # Dernière modification: 13 mai 2014                          #
 #                   Par: Jean-Philippe Mongeau                #
 #                                                             #
 # =========================================================== #
 
-from Sort import Sort
+from sort import Sort
+from guerrier import Guerrier
+from mage import Mage
+from belligérant import Belligérant
+from dé import Dé
 
 class SortRésurrection(Sort):
     """
@@ -20,9 +25,9 @@ class SortRésurrection(Sort):
         activer(cible)
     """
     
-    # ---------------------------
-    #         __init__()
-    # ---------------------------
+    # --------------------------- #
+    #         __init__()          #
+    # --------------------------- #
     def __init__(self):
         """
         Instancie le sort de résurrection
@@ -30,15 +35,32 @@ class SortRésurrection(Sort):
         Exemple:
             >>> sort = SortRésurrection()
             >>> print(sort)
-            Résurrection C=4 M=15
+            Résurrection : classe 4 ; mana requise : 15
             
         """
         super().__init__(une_classe = 4, une_mana_requise = 15)        
 
+    # --------------------------- #
+    #          __str__()          #
+    # --------------------------- #
+    def __str__(self):
+        """
+        Retourne une représentation de la classe sous forme de chaîne de caractère.
+        
+        Retour:
+            Une représentation du Sort sous la forme «Résurrection : classe classe ; mana requise : mana_requise».
 
-    # ---------------------------
-    #       activer(cible)
-    # ---------------------------
+        Exemple:
+            >>> sort = SortRésurrection()
+            >>> print(sort.__str__())
+            Résurrection : classe 4 ; mana requise : 15
+            
+        """
+        return str("Résurrection : classe 4 ; mana requise : 15")
+        
+    # --------------------------- #
+    #       activer(cible)        #
+    # --------------------------- #
     def activer(self, cible):
         """
         Active le sort de résurrection sur une cible.
@@ -51,15 +73,19 @@ class SortRésurrection(Sort):
 
         Exemple:
             >>> cible = Guerrier("Patrick Lafrance")
-            >>> résurecteur = Mage("Émile Brunelle")
-            >>> cible.pts_vie(0)
+            >>> résurrecteur = Mage("Émile Brunelle")
+            >>> cible.pts_vie = 0
             >>> sort = SortRésurrection()
-            >>> résurecteur.jeter_sort(sort, cible)
-            >>> return True if cible.pts_vie > 0 else return False
+            >>> résurrecteur.jeter_sort(sort, cible)
+            >>> print(True if cible.est_mort() and résurrecteur.mana > 15 else False)
             True
-            
+                
         """
         if cible.pts_vie == 0:
             cible.pts_vie(2*Dé(20))
         else:
             return "\n\nLa cible n'est pas morte, vous ne pouvez pas la faire revivre!\n\n"
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()

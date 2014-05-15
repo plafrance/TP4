@@ -6,10 +6,10 @@
 #
 #Module pour la classe guérison
 
-import Sort
-import dé
+import sort
+from dé import Dé
 
-class SortGuérison(Sort):
+class SortGuérison(sort.Sort):
     """
     Sort qui permet d'augmenter le nombre de points de vie d'un belligérant
 
@@ -45,8 +45,8 @@ class SortGuérison(Sort):
             cible: Type Belligérant. Cible qui sera affecté par le sort.
 
         Exemple:
-
-        >>> cible = Guerrier("biab")
+        >>> import guerrier
+        >>> cible = guerrier.Guerrier("biab")
         >>> vie=cible.pts_vie
         >>> sort=SortGuérison()
         >>> sort.activer(cible)

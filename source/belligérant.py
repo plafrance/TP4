@@ -1,3 +1,4 @@
+
 #belligérant.py
 #07/05/2104
 #Alex Thibeault                                            et peut-être Billy? QUI SAIT!
@@ -38,8 +39,14 @@ class Belligérant:
         Fournit une chaîne de caractère représentant le belligérant.
 
         Retour: Une chaîne représentant le belligérant de la forme <<nom (F:force D:défense V:pts_vie)>>
+        
+        Exemple:
+        >>> Alex=Belligérant("Alex")
+        >>> str_test=Alex.nom+" (F:"+str(Alex.force)+" D:"+str(Alex.défense)+" V:"+str(Alex.pts_vie)+")"
+        >>> str_test==str(Alex)
+        True
         """
-        return self.nom+" (F:"+self.force+" D:"+self.défense+" V:"+self.pts_vie+")"
+        return self.nom+" (F:"+str(self.force)+" D:"+str(self.défense)+" V:"+str(self.pts_vie)+")"
  
     def attaquer(self):
         """
@@ -60,6 +67,11 @@ class Belligérant:
     def calculer_dégâts(self,impact):
         """
         Calcule le dégât subis par le belligérant.
+
+        Exemple:
+        >>> Alex=Belligérant("Alex")
+        >>> Alex.calculer_dégâts(13)
+        13
         """
         return impact
 
@@ -70,14 +82,29 @@ class Belligérant:
         
         Paramètre:
         impact:La force d'impact de l'attaque reçue.
+
+        Exemple:
+        >>> Alex=Belligérant("Alex")
+        >>> Alex.pts_vie=20
+        >>> Alex.subir_dégâts(15)
+        >>> Alex.pts_vie
+        5
         """
-        self.pts_vie=self.pts_vie-calculer_dégâts(impact)
+        self.pts_vie=self.pts_vie-self.calculer_dégâts(impact)
 
     def est_mort(self):
         """
         détermine si un belligérant est mort.
         
         Retour:Vrai si et si seulement si pts_vie est 0 ou moins.
+
+        Exemple:
+        >>> Alex=Belligérant("Alex")
+        >>> Alex.est_mort()
+        False
+        >>> Alex.pts_vie=0
+        >>> Alex.est_mort()
+        True
         """
         if self.pts_vie<=0:
             return True
@@ -90,6 +117,11 @@ class Belligérant:
         Acceseur de self._nom
         
         Retour: Le nom du belligérant.
+
+        Exemple:
+        >>> Alex=Belligérant("Alex")
+        >>> Alex.nom
+        'Alex'
         """
         return self._nom
         
@@ -99,6 +131,10 @@ class Belligérant:
         Acceseur de self._pts_vie
         
         Retour: Le nombre de points de vie du belligérant.
+        >>> Alex=Belligérant("Alex")
+        >>> Alex.pts_vie=10
+        >>> Alex.pts_vie
+        10
         """
         return self._pts_vie
 
