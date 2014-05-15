@@ -12,15 +12,14 @@ from dé import Dé
 class SortGuérison(sort.Sort):
     """
     Sort qui permet d'augmenter le nombre de points de vie d'un belligérant
-
-    Hérite de sort
-        Attributs hérités:
-            classe: Entier qui représente la classe du sort
-            mana_requise: Entier qui représente la quantité de mana requise par le sort
             
     """
 
     def __init__(self):
+        """
+        Initialise le Sort avec sa classe (1) et sa mana (4).
+        
+        """
         super().__init__(1,4)
         
 
