@@ -4,7 +4,7 @@
 #                                                             #
 # Jean-Philippe Mongeau                                       #
 # SortRésurrection.py                                         #
-# Version 1.3.1                                               #
+# Version 1.3.2                                               #
 # Dernière modification: 13 mai 2014                          #
 #                   Par: Jean-Philippe Mongeau                #
 #                                                             #
