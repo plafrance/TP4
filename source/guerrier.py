@@ -124,7 +124,8 @@ class Guerrier(Belligérant):
     
     @arme.setter
     def arme(self,une_arme):
-        self._arme = une_arme
+        assert une_arme.classe == self.arme.classe
+        self._arme = une_arme, "Le Guerrier ne peut utiliser une arme dont la casse est plus grande que la sienne."
 
 if __name__ == "__main__":
     import doctest
