@@ -40,7 +40,7 @@ class SortProtection(Sort):
         >>> sort = SortProtection()
         >>> prev_def = cible.défense
         >>> mage.jeter_sort(sort, cible)
-        >>> cible.défense == prev_def*1.5
+        >>> cible.bounus_défense == prev_def*1.5
         True
         """
-        cible.défense = cible.défense * 1.5
+        cible.bounus_défense = cible.bonus_défense * 0.5
