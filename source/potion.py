@@ -31,6 +31,9 @@ class Potion(item.Item):
 
     @property
     def parts(self):
+        """
+        Retourne le nombre de parts.
+        """
         return self._parts
 
     def faire_boire(self, cible):
@@ -39,6 +42,13 @@ class Potion(item.Item):
 
         Paramètre:
             cible: Belligérant qui va boire la potion
+
+        >>> nbparts=Potion(3)
+        >>> nbparts.parts
+        3
+        >>> nbparts.faire_boire("Guerrier")
+        >>> nbparts.parts
+        2
         
         """
         
