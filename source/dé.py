@@ -6,7 +6,7 @@
 #=========================
 
 # --- Importe module ---
-import random
+from random import randint
 
 # --- Classe Dé ---
 class  Dé:
@@ -18,6 +18,18 @@ class  Dé:
         Paramètre:
             faces: int, le nombre de faces du dé à lancer
             
-        """
+        retour: le nombre aléatoir du dé
+        
+        Exemple:
+        >>> Dé.lancer(-7)
+        Traceback (most recent call last):
+
+		AssertionError: Le nombre de faces doit être > 1
+		"""
         assert faces > 1, "Le nombre de faces doit être > 1"
-        return random.randint(1, faces)
+        return randint(1, faces)
+
+# --- Test ---
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
