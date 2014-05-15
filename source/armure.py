@@ -54,6 +54,11 @@ class Armure :
 # --------------------- #
 
     def __init__(self, une_classe) :
+        '''
+        Si une_classe est plus petit que 0, retourne un message d'erreur
+
+        Place usure à 0
+        '''  
         assert une_classe >= 0, "La classe (une_classe) est invalide"
         self._classe = une_classe
         self._usure = 0
