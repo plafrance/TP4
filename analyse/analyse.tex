@@ -23,10 +23,15 @@
           \item Type : str
           \item Accès : lecture seule
           \end{itemize}
-    \item pts\_vies : Le nombre de points de vie du belligérant.
+    \item pts\_vies : Le nombre de points de vie courant du belligérant.
           \begin{itemize}
           \item Type : int
           \item Accès : accès complet
+          \end{itemize}
+    \item pts\_vies\_max : Le nombre de points de vie initial du belligérant.
+          \begin{itemize}
+          \item Type : int
+          \item Accès : lecture seule
           \end{itemize}
     \item défense : Le facteur de défense du belligérant. Plus ce facteur est
       élevé, plus le belligérant pourra résister aux attaques.
@@ -38,6 +43,11 @@
       élevé, plus les attaques du belligérant seront efficaces.
           \begin{itemize}
           \item Type : int
+          \item Accès : lecture seule
+          \end{itemize}
+    \item \_items : Ensemble d'Items que possède le Belligérant.
+          \begin{itemize}
+          \item Type : Ensemble d'Items
           \item Accès : lecture seule
           \end{itemize}
 
@@ -94,6 +104,7 @@ façon suivante :
         \begin{enumerate}
         \item impact (int) : La force d'impact de l'attaque reçue.
         \end{enumerate}
+      \item Retour : Le nombre de points de vie réellement enlevé au Belligérant.
       \end{itemize}
 
     \item est\_mort : détermine si un belligérant est mort.
@@ -104,8 +115,40 @@ façon suivante :
           \end{itemize}
       \end{itemize}
 
-  \end{itemize}
+    \item prendre\_item : Ajoute un item à ceux que possède le Belligérant. Le
+      poids total de ses items ne peut excéder 5Kg par point de force.
+      \begin{itemize}
+      \item Paramètres : 
+        \begin{enumerate}
+        \item un\_item (Item) : l'item à ajouter aux items du belligérant.
+        \end{enumerate}
+      \item Assertions : 
+        \begin{enumerate}
+            \item Le poids total des items (incluant celui ajouté) ne dépasse
+              pas 5kg par point de force du Belligérant.
+            Belligérants
+            \begin{itemize}
+              \item Message : «L'item est trop lourd pour être ajouté au Belligérant».
+            \end{itemize}
+        \end{enumerate}
+      \end{itemize}
 
+    \item jeter\_item : Retire un item de la liste d'items détenus par le Belligérant.
+      \begin{itemize}
+      \item Paramètres : 
+        \begin{enumerate}
+        \item un\_item (Item) : l'item à enlever. 
+        \end{enumerate}
+      \end{itemize}
+      \item Assertions : 
+        \begin{enumerate}
+            \item L'item existe dans la liste.
+            \begin{itemize}
+              \item Message : «L'item n'existe pas».
+            \end{itemize}
+
+        \end{enumerate}
+    \end{enumerate}
   \end{itemize}
 
   \section {Classe Équipe}
@@ -158,6 +201,7 @@ façon suivante :
           \end{itemize}
         \end{enumerate}
       \end{itemize}
+
     \item belligérant : Accesseur des belligérants
       \begin{itemize}
       \item Paramètres : 
@@ -173,7 +217,7 @@ façon suivante :
           \item Valeur par défaut : None
           \end{itemize}
         \end{enumerate}
-      \item Retour : Si \emp{indice} n'est pas None, retourne le belligérant numéro
+      \item Retour : Si \emph{indice} n'est pas None, retourne le belligérant numéro
         \emph{indice} dans la liste, sinon, retourne le belligérant dont le nom
         correspond à \emph{nom}. Si \emph{indice} et \emph{nom} sont None, retourne None.
           \begin{itemize}
@@ -193,9 +237,17 @@ façon suivante :
             \end{itemize}
         \end{enumerate}
       \end{itemize}
-    \end{enumerate}
 
-  \end{itemize}
+    \item est\_éliminée : Retourne Vrai si l'équipe est éliminée.
+      \begin{itemize}
+      \item Retour : Vrai si et seulement si tous les combattants de l'équipe
+        sont morts.
+          \begin{itemize}
+          \item Type de retour: bool
+          \end{itemize}
+      \end{itemize}
+
+    \end{enumerate}
   \end{itemize}
 
   \section {Classe Guerrier}
@@ -211,7 +263,8 @@ façon suivante :
           \item Type : Armure
           \item Accès : complet
           \end{itemize}
-    \item arme : L'arme qu'utilise actuellement le guerrier
+    \item arme : L'arme qu'utilise actuellement le guerrier. Le Guerrier ne peut
+      utiliser une arme dont la classe dépasse la sienne.
           \begin{itemize}
           \item Type : Arme
           \item Accès : complet
@@ -263,6 +316,24 @@ façon suivante :
           \end{itemize}
       \end{itemize}
 
+    \item arme : Mutateur de l'arme.
+      \begin{itemize}
+      \item Paramètres : 
+        \begin{enumerate}
+        \item une\_arme (Arme) : L'arme qui doit être utilisée par le
+          Guerrier. Le Guerrier ne peut utiliser une arme dont la classe dépasse
+          la sienne.
+        \end{enumerate}
+      \item Assertions : 
+        \begin{enumerate}
+            \item La classe de l'arme n'est pas plus grand que celle du Guerrier.
+            Belligérants
+            \begin{itemize}
+              \item Message : «Le Guerrier ne peut utiliser une arme dont la
+                classe est plus grande que la sienne.»
+            \end{itemize}
+        \end{enumerate}
+
     \item subir\_dégâts : Surdéfinition de la méthode
       Belligérant.subir\_dégâts(). Soustrait au Guerrier le nombre de points de
       vie calculé par calculer\_dégâts. L'armure subit ensuite autant
@@ -273,9 +344,12 @@ façon suivante :
         \item impact (int) : La force d'impact de l'attaque reçue.
         \end{enumerate}
       \end{itemize}
-    \end{enumerate}
 
+      \end{itemize}
+
+    \end{enumerate}
   \end{itemize}
+
 
   \section {Classe Mage}
 
@@ -297,7 +371,6 @@ façon suivante :
           \item Type : int
           \item Accès : complet
           \end{itemize}
-
     \end{enumerate}
 
   \item Constructeur : 
@@ -311,7 +384,6 @@ façon suivante :
       \item param (un\_nom) : Le nom du Mage.
       \end{enumerate}
     \end{itemize}
-
   \end{enumerate}
 
   \item Méthodes : 
@@ -333,7 +405,8 @@ façon suivante :
           \begin{itemize}
           \item Message : «Puissance (\emph{puissance}) < Sort.classe
             (\emph{sorte.classe})        
-        \item La man du Mage doit être au moins aussi grande que la mana requise
+          \end{itemize}
+        \item La mana du Mage doit être au moins aussi grande que la mana requise
           par le \emph{sort}
           \begin{itemize}
           \item Message : «Mana (\emph{mana}) < Sort.mana\_requise (\emph{sorte.mana\_requise})
@@ -350,7 +423,6 @@ façon suivante :
           \item Type de retour: int
           \end{itemize}
       \end{itemize}
-    \end{enumerate}
 
     \item ajouter\_sort : Ajoute un sort à la liste des sorts connus par le Mage.
       \begin{itemize}
@@ -367,6 +439,7 @@ façon suivante :
         \end{enumerate}
       \end{itemize}
 
+    \end{enumerate}
   \end{itemize}
 
   \section {Classe Sort}
@@ -392,9 +465,9 @@ façon suivante :
   \item Méthodes : 
 
     \begin{enumerate}
-    \item __str__ : Fournit une représentation en chaîne de caractères du Sort.
+    \item \_\_str\_\_ : Fournit une représentation en chaîne de caractères du Sort.
       \begin{itemize}
-      \item Retour : Une représentation du Sort sous la forme «classe \emph{classe}; mana requise : \emph{mana_requise}»
+      \item Retour : Une représentation du Sort sous la forme «classe \emph{classe}; mana requise : \emph{mana\_requise}»
       \end{itemize}
     \item activer : Méthode abstraite. Active le sort qui agit alors sur sa cible.
       \begin{itemize}
@@ -403,9 +476,11 @@ façon suivante :
         \item cible (Belligérant) : Le belligérant ciblé par le sort.
         \end{enumerate}
       \end{itemize}
+
     \end{enumerate}
 
   \end{itemize}
+
 
   \section {Classe SortDartDeFeu}
 
@@ -425,9 +500,9 @@ façon suivante :
   \item Méthodes : 
 
     \begin{enumerate}
-    \item __str__ : Fournit une représentation en chaîne de caractères du Sort.
+    \item \_\_str\_\_ : Fournit une représentation en chaîne de caractères du Sort.
       \begin{itemize}
-      \item Retour : Une représentation du Sort sous la forme «Dart de feu: classe \emph{classe}; mana requise : \emph{mana_requise}»
+      \item Retour : Une représentation du Sort sous la forme «Dart de feu: classe \emph{classe}; mana requise : \emph{mana\_requise}»
       \end{itemize}
     \item activer : Active le sort qui agit alors sur sa cible. Il porte une
       attaque de puissance de 2xDé12. La cible peut parer le sort comme
@@ -438,8 +513,8 @@ façon suivante :
         \item cible (Belligérant) : Le belligérant ciblé par le sort.
         \end{enumerate}
       \end{itemize}
-    \end{enumerate}
 
+    \end{enumerate}
   \end{itemize}
 
   \section {Classe SortGuérison}
@@ -460,9 +535,9 @@ façon suivante :
   \item Méthodes : 
 
     \begin{enumerate}
-    \item __str__ : Fournit une représentation en chaîne de caractères du Sort.
+    \item \_\_str\_\_ : Fournit une représentation en chaîne de caractères du Sort.
       \begin{itemize}
-      \item Retour : Une représentation du Sort sous la forme «Guérison : classe \emph{classe}; mana requise : \emph{mana_requise}»
+      \item Retour : Une représentation du Sort sous la forme «Guérison : classe \emph{classe}; mana requise : \emph{mana\_requise}»
       \end{itemize}
     \item activer : Active le sort qui agit alors sur sa cible. Il porte redonne
       1 dé20 de points de vie à sa cible seulement si elle n'est pas morte, sinon, elle ne fait rien.
@@ -472,8 +547,8 @@ façon suivante :
         \item cible (Belligérant) : Le belligérant ciblé par le sort.
         \end{enumerate}
       \end{itemize}
-    \end{enumerate}
 
+    \end{enumerate}
   \end{itemize}
 
   \section {Classe SortProtection}
@@ -494,9 +569,9 @@ façon suivante :
   \item Méthodes : 
 
     \begin{enumerate}
-    \item __str__ : Fournit une représentation en chaîne de caractères du Sort.
+    \item \_\_str\_\_ : Fournit une représentation en chaîne de caractères du Sort.
       \begin{itemize}
-      \item Retour : Une représentation du Sort sous la forme «Protection : classe \emph{classe}; mana requise : \emph{mana_requise}»
+      \item Retour : Une représentation du Sort sous la forme «Protection : classe \emph{classe}; mana requise : \emph{mana\_requise}»
       \end{itemize}
     \item activer : Active le sort qui agit alors sur sa cible. Il augmente la
       défense du belligérant de 50\%.
@@ -506,8 +581,8 @@ façon suivante :
         \item cible (Belligérant) : Le belligérant ciblé par le sort.
         \end{enumerate}
       \end{itemize}
-    \end{enumerate}
 
+    \end{enumerate}
   \end{itemize}
 
   \section {Classe SortRésurrection}
@@ -516,7 +591,6 @@ façon suivante :
 
   \begin{itemize}
   \item Hérite de : Sort
-
 
   \item Constructeur : 
 
@@ -528,9 +602,9 @@ façon suivante :
   \item Méthodes : 
 
     \begin{enumerate}
-    \item __str__ : Fournit une représentation en chaîne de caractères du Sort.
+    \item \_\_str\_\_ : Fournit une représentation en chaîne de caractères du Sort.
       \begin{itemize}
-      \item Retour : Une représentation du Sort sous la forme «Résurrection : classe \emph{classe}; mana requise : \emph{mana_requise}»
+      \item Retour : Une représentation du Sort sous la forme «Résurrection : classe \emph{classe}; mana requise : \emph{mana\_requise}»
       \end{itemize}
     \item activer : Active le sort qui agit alors sur sa cible. Il redonne à sa
       cible 2xDé20 points de vie.
@@ -540,8 +614,8 @@ façon suivante :
         \item cible (Belligérant) : Le belligérant ciblé par le sort.
         \end{enumerate}
       \end{itemize}
-    \end{enumerate}
 
+    \end{enumerate}
   \end{itemize}
 
   \section {Classe Arme}
@@ -549,6 +623,7 @@ façon suivante :
   Classe abstraite représentant une arme générique.
 
   \begin{itemize}
+  \item Hérite de : Item
   \item Propriétés : 
     \begin{enumerate}
     \item classe : La classe de l'arme. Plus la classe est élevée, plus elle est destructrice.
@@ -605,8 +680,8 @@ façon suivante :
           \item Type de retour: int
           \end{itemize}
       \end{itemize}
-    \end{enumerate}
 
+    \end{enumerate}
   \end{itemize}
 
   \section {Classe Armure}
@@ -614,6 +689,7 @@ façon suivante :
   Classe abstraite représentant une armure générique.
 
   \begin{itemize}
+  \item Hérite de : Item
   \item Propriétés : 
     \begin{enumerate}
     \item classe : La classe de l'armure. Plus la classe est élevée, plus elle
@@ -677,13 +753,13 @@ façon suivante :
           \item Type de retour: int
           \end{itemize}
       \end{itemize}
-    \end{enumerate}
 
+    \end{enumerate}
   \end{itemize}
 
   \section {Classe Dé}
 
-  Description
+  Simule un dé avec un nombre variable de faces.
 
   \begin{itemize}
 
@@ -711,9 +787,459 @@ façon suivante :
           \end{itemize}
         \end{enumerate}
       \end{itemize}
-    \end{enumerate}
 
+    \end{enumerate}
   \end{itemize}
 
+
+  \section {Classe Item}
+
+  Classe abstraite représentant un item générique pouvant être acquis et porté
+  par un Belligérant.
+
+  \begin{itemize}
+  \item Propriétés : 
+    \begin{enumerate}
+    \item nom : poids
+          \begin{itemize}
+          \item Type : int
+          \item Accès : lecture seule
+          \end{itemize}
+
+    \end{enumerate}
+
+  \item Constructeur : 
+
+  \begin{enumerate}
+  \item \_\_init\_\_ : Initialise l'item avec son poids.
+    \begin{itemize}
+    \item Paramètres : 
+      \begin{enumerate}
+      \item un\_poids (int) : le poids de l'item en grammes.
+      \end{enumerate}
+    \end{itemize}
+
+  \end{enumerate}
+
+  \item Méthodes : 
+
+    \begin{enumerate}
+    \item \_\_str\_\_ : Donne une représentation en chaîne de caractères de l'item sous la forme «p=\emph{poids}».
+      \begin{itemize}
+      \item Retour : La représentation en chaîne de caractères de l'item.
+          \begin{itemize}
+          \item Type de retour: str
+          \end{itemize}
+      \end{itemize}
+
+    \end{enumerate}
+  \end{itemize}
+  \section {Classe Potion}
+
+  Classe abstraite représentant une potion buvable par un Belligérant.
+
+  \begin{itemize}
+  \item Hérite de : Item
+  \item Propriétés : 
+    \begin{enumerate}
+    \item parts : Le nombre de parts que contient la fiole de potions.
+          \begin{itemize}
+          \item Type : int
+          \item Accès : lecture seule
+          \end{itemize}
+
+    \end{enumerate}
+
+  \item Constructeur : 
+
+  \begin{enumerate}
+  \item \_\_init\_\_ : Initialise la potion avec son nombre de parts.
+    \begin{itemize}
+    \item Paramètres : 
+      \begin{enumerate}
+      \item nb\_part (int) : Le nombre de parts contenues dans la fiole de potion.
+      \end{enumerate}
+    \item Assertions : 
+      \begin{enumerate}
+      \item Le nombre de parts ne peut être < 1.
+        \begin{itemize}
+          \item Message : «nb\_parts ne peut être < 1.»
+        \end{itemize}
+      \end{enumerate}
+    \end{itemize}
+  \end{enumerate}
+
+  \item Méthodes : 
+
+    \begin{enumerate}
+  \item faire\_boire : Fait boire la potion par un belligérant. Décrémente de
+    un le nombre de parts restantes. L'effet de la potion est exécutée par la méthode \emph{activer} des sous-classes.
+    \begin{itemize}
+    \item Paramètres : 
+      \begin{enumerate}
+      \item cible (Belligérant) : Le Belligérant qui doit boire la potion.
+      \end{enumerate}
+      \item Assertions : 
+        \begin{enumerate}
+        \item Le nombre de parts ne peut être < 1.
+          \begin{itemize}
+          \item Message : «nb\_parts ne peut être < 1.»
+          \end{itemize}
+        \end{enumerate}
+    \end{itemize}
+
+    \item activer : méthode abstraite qui exécute l'effet de la potion sur la cible
+      \begin{itemize}
+    \item Paramètres : 
+      \begin{enumerate}
+      \item cible (Belligérant) : Le Belligérant qui doit boire la potion.
+      \end{enumerate}
+      \item Assertions : 
+        \begin{enumerate}
+        \item Le nombre de parts ne peut être < 1.
+          \begin{itemize}
+          \item Message : «nb\_parts ne peut être < 1.»
+          \end{itemize}
+        \end{enumerate}
+    \end{itemize}
+
+    \end{enumerate}
+  \end{itemize}
+
+
+  \section {Classe PotionGuérison}
+
+  Description
+
+  \begin{itemize}
+  \item Hérite de : Potion
+  \item Propriétés : 
+    \begin{enumerate}
+    \item pts\_de\_vie\_par\_part : Le nombre de pts de vie redonnés par cette
+      potion pour chaque part bue.
+          \begin{itemize}
+          \item Type : int
+          \item Accès : lecture seule
+          \end{itemize}
+
+    \end{enumerate}
+
+  \item Constructeur : 
+
+  \begin{enumerate}
+  \item \_\_init\_\_ : Initialise la PotionGuérison avec son nombre de parts et
+    de points de vie par part.
+    \begin{itemize}
+    \item Paramètres : 
+      \begin{enumerate}
+      \item nb\_part (int) : Le nombre de parts contenues dans la fiole de potion.
+      \item pts\_de\_vie\_par\_part : Le nombre de pts de vie redonnés par cette
+      potion pour chaque part bue.
+      \end{enumerate}
+      \item Assertions : 
+        \begin{enumerate}
+        \item Le nombre de parts ne peut être < 1.
+          \begin{itemize}
+          \item Message : «nb\_parts ne peut être < 1»
+          \end{itemize}
+        \end{enumerate}
+    \end{itemize}
+  \end{enumerate}
+  \end{itemize}
+
+  \section {Classe Joueur}
+
+  Un joueur qui contrôle une équipe de Belligérants.
+
+  \begin{itemize}
+  \item Attributs :
+    \item contrôle : Un Contrôle par lequel le joueur peut interagir avec le jeu.
+          \begin{itemize}
+          \item Type : Contrôle
+          \end{itemize}
+
+  \item Propriétés : 
+    \begin{enumerate}
+    \item nom : Le peudonyme du joueur
+          \begin{itemize}
+          \item Type : str
+          \item Accès : lecture seule
+          \end{itemize}
+    \item équipe : L'équipe que contrôle le joueur
+          \begin{itemize}
+          \item Type : Équipe
+          \item Accès : lecture seule
+          \end{itemize}
+    \item actions\_par\_tour : Le nombre d'actions que peut faire le joueur à
+      chaque tour.
+          \begin{itemize}
+          \item Type : int
+          \item Accès : complet
+          \end{itemize}
+
+    \end{enumerate}
+
+  \item Constructeur : 
+
+  \begin{enumerate}
+  \item \_\_init\_\_ : Initialise le Joueur avec un nom sans espaces au début et
+    à la fin et un Contrôle.
+    \begin{itemize}
+    \item Paramètres : 
+      \begin{enumerate}
+      \item un\_nom (str) : Le pseudonyme du Joueur
+      \item un\_contrôle (Contrôle) : Le Contrôle par lequel le joueur interagira
+        avec le jeu.
+      \end{enumerate}
+      \item Assertions : 
+        \begin{enumerate}
+        \item Le nom ne peut être une chaîne vide.
+          \begin{itemize}
+          \item Message : «nom invalide»
+          \end{itemize}
+        \end{enumerate}
+    \end{itemize}
+
+  \end{enumerate}
+
+  \item Méthodes : 
+
+    \begin{enumerate}
+    \item \_\_str\_\_ : Donne une représentation en chaîne de caractères du Joueur.
+      \begin{itemize}
+      \item Retour : Le nom du joueur.
+          \begin{itemize}
+          \item Type de retour: str
+          \end{itemize}
+      \end{itemize}
+
+    \item créer\_belligérant : Crée un belligérant et l'ajoute à l'équipe du
+      joueur. Utilise le contrôle pour permettre au joueur de choisir le type et
+      le nom de son belligérant.
+
+    \item jouer : utilise le contrôle pour permettre au joueur de jouer son
+      tour. Un tour comporte les étapes suivantes :
+      \begin{enumerate}
+        \item Choisir un belligérant dans son équipe.
+        \item Choisir une action que ce belligérant doit effectuer.
+        \item Si l'action est une attaque, choisir son adversaire.
+        \item Si l'action concerne un item, choisir l'item
+        \item Si l'action est jeter un sort, choisir le sort et la cible
+        \item Effectuer l'action sur la cible.
+      \end{enumerate}
+      Ces étapes sont répétées tant que le nombre d'actions par tour du joueur
+      n'est pas atteint ou qu'il n'y pas choisit de passer son tour.
+
+    \item choisir\_belligérant : Utilise le contrôle pour permettre au joueur de
+      choisir un belligérant dans sa propre équipe.
+      \begin{itemize}
+      \item Retour : Le belligérant sélectionné.
+          \begin{itemize}
+          \item Type de retour: Belligérant
+          \end{itemize}
+      \end{itemize}
+
+    \item choisir\_action : Utilise le contrôle pour permettre au joueur de
+      choisir sa prochaine action.
+      \begin{enumerate}
+      \item Paramètres : 
+        \begin{enumerate}
+        \item un\_acteur (Belligérant) : Le belligérant qui doit faire
+          l'action. La liste des actions proposées sera construite en fonction
+          du type et des capacités de ce Belligérant.
+      \item Retour : L'action choisie par le joueur
+          \begin{itemize}
+          \item Type de retour: Action
+          \end{itemize}
+        \end{enumerate}
+    \end{enumerate}
+
+    \item choisir\_cible : Utilise le contrôle pour permettre au joueur de
+      choisir un belligérant ciblé par une action. Le belligérant peut être de
+      son équipe ou de celle d'un adversaire.
+      \begin{itemize}
+      \item Paramètres : 
+        \begin{enumerate}
+        \item les\_équipes (Liste d'Équipes) : La liste de toutes les équipes
+          parmi lesquelles le joueur peut choisir sa cible.
+        \end{enumerate}
+      \item Retour : Le belligérant sélectionné.
+          \begin{itemize}
+          \item Type de retour: Belligérant
+          \end{itemize}
+      \end{itemize}
+
+    \end{enumerate}
+  \end{itemize}
+
+
+  \section {Classe Contrôle}
+
+  Classe abstraite représentant un Contrôle capable de faire interagir le joueur
+  avec le jeu. Le Contrôle permet au joueur de faire sélectionner 
+  plusieurs types d'éléments. Des méthodes abstraites permettent de communiquer
+  directement avec le joueur (par l'écran et le clavier, par exemple).
+
+  \begin{itemize}
+
+  \item Méthodes : 
+
+    \begin{enumerate}
+    \item choisir\_Objet
+      \begin{itemize}
+      \item Paramètres : 
+        \begin{enumerate}
+        \item choix (Liste d'Objets) : Liste des objets parmi lesquels
+          choisir. (Par exemple, une liste de Belligérants ou d'Items.)
+        \end{enumerate}
+      \item Retour : L'objet sélectionné.
+          \begin{itemize}
+          \item Type de retour: Objet
+          \end{itemize}
+      \end{itemize}
+    \end{enumerate}
+  \end{itemize}
+
+
+  \section {Classe ContrôleXXX}
+
+  Classe représentant un Contrôle capable de faire interagir le joueur
+  avec le jeu. Le Contrôle permet au joueur de faire sélectionner 
+  plusieurs types d'éléments. Des méthodes abstraites permettent de communiquer
+  directement avec le joueur (par l'écran et le clavier, par exemple).
+
+  \begin{itemize}
+
+  \item Hérite de : Contrôle
+  \item Méthodes : 
+    \begin{enumerate}
+
+    \item choisir
+      \begin{itemize}
+      \item Paramètres : 
+        \begin{enumerate}
+        \item choix (Liste de str) : Liste des choix offerts au joueurs.
+        \end{enumerate}
+      \item Retour : Le numéro du choix sélectionné.
+          \begin{itemize}
+          \item Type de retour: int
+          \end{itemize}
+      \end{itemize}
+
+    \item afficher\_message : Permet d'afficher un message au joueur sans
+      attendre de réponse de sa part.
+      \begin{itemize}
+      \item Paramètres : 
+        \begin{enumerate}
+        \item un\_message (str) : Le message à afficher.
+        \item confirmation (bool) : détermine si la méthode doit attendre que le joueur
+          ait confirmé la lecture du message pour continuer.
+          \begin{itemize}
+          \item Valeur par défaut : False
+          \end{itemize}
+        \end{enumerate}
+      \end{itemize}
+
+    \item saisir : Permet au joueur de saisir un texte.
+      \begin{itemize}
+      \item Paramètres : 
+        \begin{enumerate}
+        \item question (str) : La question posée au joueur. Aucune question si
+          None.
+          \begin{itemize}
+          \item Valeur par défaut : None
+          \end{itemize}
+        \end{enumerate}
+      \item Retour : Le texte saisi par le joueur.
+          \begin{itemize}
+          \item Type de retour: str.
+          \end{itemize}
+      \end{itemize}
+
+    \end{enumerate}
+  \end{itemize}
+
+
+  \section {Classe Partie}
+
+  Une partie de Tournoi Pythonesque 4 entre deux ou plusieurs joueurs.
+
+  \begin{itemize}
+
+  \item Attributs : 
+    \begin{enumerate}
+    \item \_joueurs : Les joueurs de cette partie.
+          \begin{itemize}
+          \item Type : Liste de joueurs
+          \end{itemize}
+    \item \_tour : Le numéro du tour courant. 0 pendant la préparation du jeu
+          \begin{itemize}
+          \item Type : int
+          \end{itemize}
+    \item \_items\_épars : Les items laissés sur le champ de bataille. Lorsqu'un
+      belligérant meurt, ses items sont remis ici.
+          \begin{itemize}
+          \item Type : Liste d'Items.
+          \end{itemize}
+
+  \item Constructeur : 
+
+  \begin{enumerate}
+  \item \_\_init\_\_ : Initialise la partie.
+    \begin{itemize}
+    \item Paramètres : 
+      \begin{enumerate}
+      \item les\_joueurs (Liste de Joueurs) : Liste de tous les participants à
+        la partie.
+      \end{enumerate}
+      \item Assertions : 
+        \begin{enumerate}
+        \item La liste doit contenir au moins deux joueurs
+          \begin{itemize}
+          \item Message : «Il n'y a pas suffisamment de joueurs.»
+          \end{itemize}
+        \end{enumerate}
+    \end{itemize}
+
+  \end{enumerate}
+
+  \item Méthodes : 
+
+    \begin{enumerate}
+    \item populer\_équipes : Permet de créer tous les belligérants de toutes les
+      équipes. Tour à tour, chaque joueur est invité à créer son belligérant. Le
+      joueur qui commence est choisi au hasard.
+
+    \item créer\_belligérant : Permet de créer un belligérant. Selon le mode de
+      partie choisie, les belligérants sont créés ici au hasard ou en demandant au
+      joueur de choisir certaines caractéristiques (par sa méthode
+      créer\_belligérant).
+    \item Paramètres : 
+      \begin{enumerate}
+      \item un\_joueur (Joueur) : Le joueur pour lequel créer le belligérant. Si
+        None, le belligérant est créé au hasard.
+      \end{enumerate}
+    \item Retour : Le belligérant créé.
+
+    \item démarrer\_partie : Joue la partie jusqu'à ce que toutes les équipes
+      sauf une soient éliminées. Le premier joueur à jouer est choisi au
+      hasard. À tour de rôle, les joueurs jouent leur tour. Dès qu'une équipe
+      est éliminée, le joueur devient spectateur.
+
+    \item jouer\_tour : Joue un tour de jeu. Tous les joueurs, à tour de rôle
+      jouent leur tour.
+
+    \item répartir\_items : Après la création des belligérants, mais avant le
+      début de la partie, les items épars sont répartis entre les
+      belligérants. Le joueur qui commence est choisi au hasard puis tous, à
+      tour de rôle sélectionnent un item et un belligérant pour le
+      prendre. Jusqu'à ce qu'il n'y ait plus d'items ou que tous les
+      belligérants aient atteint la limite de ce qu'ils peuvent porter.
+
+    \end{enumerate}
+
+    \end{enumerate}
+  \end{itemize}
+  \end{itemize}
 \end{document}
 

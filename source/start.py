@@ -8,15 +8,6 @@
 import getpass
 from api import API, progress_bar_loading
 
-
-p = progress_bar_loading()
-p.start()
-
-import time
-time.sleep(5)
-p.stop(True)
-
-
 #Initialisation de l'API
 API = API()
 API.clear()
@@ -110,6 +101,8 @@ if choix_menu == "A":
 |
 +--------------------------------------------+
                 ''' % session["id"])
+                p = progress_bar_loading()
+                p.start()
 
         if choix_menu_3 == 'D':
             quit()
