@@ -1,8 +1,9 @@
-﻿#Équipe.py
-#07/05/2104
+﻿#équipe.py
+#13/05/2014
 #Alexandre Lambert
 #
 #Contient la classe Équipe pour faire une équipe de belligérant
+
 class Équipe :
     def __init__( self , un_nom ):
         """
@@ -17,7 +18,11 @@ class Équipe :
 
     def __len__( self ):
         """
-        Retourne le nombre d’éléments dans l’équipe.
+
+        Retourne le nombre d’éléments dans l’équipe. 
+       
+        Retour : Le nombre de belligérants dans l’équipe
+
 
         >>> from belligérant import Belligérant
         >>> équipe_test = Équipe("Toto")
@@ -33,6 +38,7 @@ class Équipe :
     def ajouter_belligérant( self , un_belligérant ):
         """
         Ajoute un belligérant dans une équipe
+
         """
         self._combattants += [un_belligérant]
 
@@ -77,6 +83,11 @@ class Équipe :
                     return un_combattant
     @property
     def nom( self ):
+        """
+        Accesseur de self.nom
+
+        retourne self.nom
+        """
         return self._nom
 
 if __name__ == "__main__":
