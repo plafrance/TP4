@@ -53,7 +53,7 @@ class SortRésurrection(Sort):
         Exemple:
             >>> sort = SortRésurrection()
             >>> print(sort.__str__())
-            "Résurrection : classe 4 ; mana requise : 15"
+            Résurrection : classe 4 ; mana requise : 15
             
         """
         return str("Résurrection : classe 4 ; mana requise : 15")
@@ -74,13 +74,12 @@ class SortRésurrection(Sort):
         Exemple:
             >>> cible = Guerrier("Patrick Lafrance")
             >>> résurrecteur = Mage("Émile Brunelle")
-            >>> cible.pts_vie(0)
+            >>> cible.pts_vie = 0
             >>> sort = SortRésurrection()
             >>> résurrecteur.jeter_sort(sort, cible)
-            >>> return True if résurrecteur.mana < 15
-            >>> return True if cible.pts_vie > 0 else return False
+            >>> print(True if cible.est_mort() and résurrecteur.mana > 15 else False)
             True
-            
+                
         """
         if cible.pts_vie == 0:
             cible.pts_vie(2*Dé(20))
