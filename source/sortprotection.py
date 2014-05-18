@@ -16,6 +16,9 @@ class SortProtection(Sort):
     Initialise le Sort avec sa classe et sa mana.
     """
     def __init__(self):
+        """
+        Initialisation de la classe
+        """
         super().__init__(une_classe = 2, une_mana_requise = 8)
 
     def __str__(self):
@@ -43,4 +46,9 @@ class SortProtection(Sort):
         >>> cible.bounus_défense == prev_def*1.5
         True
         """
-        cible.bounus_défense = cible.bonus_défense * 0.5
+        cible.bounus_défense = cible.défense * 0.5
+
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
