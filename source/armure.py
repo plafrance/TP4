@@ -42,7 +42,6 @@ class Armure :
         0
         >>> armure.usure = 10
         >>> print(armure.usure)
-        
         10
         
         '''
