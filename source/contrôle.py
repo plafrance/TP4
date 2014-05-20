@@ -5,8 +5,8 @@
 # Jean-Philippe Mongeau                                       #
 # Émile Brunelle                                              #
 # contrôle.py                                                 #
-# Version 1.0                                                 #
-# Dernière modification: 15 mai 2014                          #
+# Version 1.1                                                 #
+# Dernière modification: 20 mai 2014                          #
 #                   Par: Jean-Philippe Mongeau                #
 #                                                             #
 # =========================================================== #
@@ -33,11 +33,11 @@ class Contrôle:
         Retour: L'objet sélectionné.
 
         """
-        liste_de chaîne = []
+        liste_de_chaîne = []
         for i in range(0, len(choix)):
-            liste_de chaîne.append(str(choix[i]))
+            liste_de_chaîne.append(str(choix[i]))
 
-        return choix[self.choisir(liste_de chaîne)]
+        return choix[self.choisir(liste_de_chaîne)]
 
     def afficher_message(self, un_message, confirmation = False):
         """
