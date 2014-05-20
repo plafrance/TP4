@@ -4,17 +4,15 @@
 
 class Item():#Retourne un entier sous forme de gramme
 
-    def __init__(self,un_poids,une_valeur):
+    def __init__(self,un_poids):
         """
         Constructeur
 
         paramètre:
         un_poids: un entier représentant le poids.
-        valeur: représentant une valeur. 
         """
 
         self._poids = un_poids
-        self._valeur = une_valeur
 
 
     def __str__(self):
@@ -22,7 +20,7 @@ class Item():#Retourne un entier sous forme de gramme
         retourne « self._poids » en objet str.
 
         Exemple:
-        >>> démonstration = Item(5,7)
+        >>> démonstration = Item(5)
         >>> print(démonstration)
         P = 5
         """
@@ -35,36 +33,13 @@ class Item():#Retourne un entier sous forme de gramme
         retourne le poids seul.
 
         Exemple:
-        >>> démonstration = Item(5,7)
+        >>> démonstration = Item(5)
         >>> print(démonstration.poids)
         5
         """
         return str(self._poids)
 
-    @property
-    def valeur(self):
-        """
-        retourne la valeur seul.
-
-        Exemple:
-        >>> démonstration = Item(5,7)
-        >>> print(démonstration.valeur)
-        7
-
-        >>> démonstration = Item(5,7)
-        >>> démonstration.valeur = 9
-        >>> print(démonstration.valeur)
-        9
-        
-        """
-        return str(self._valeur)
-
-    @valeur.setter
-    def valeur(self,une_valeur):
-        
-        self._valeur = une_valeur
-
-
+    
 if __name__ == "__main__":
     import doctest
     doctest.testmod()

@@ -1,6 +1,6 @@
-﻿#équipe.py
+#équipe.py
 #13/05/2014
-#Alexandre Lambert
+#Alexandre Lambert & Andrew Caron
 #
 #Contient la classe Équipe pour faire une équipe de belligérant.
 
@@ -81,6 +81,48 @@ class Équipe :
             for un_combattant in self._combattants:
                 if un_combattant.nom == nom :
                     return un_combattant
+    def est_éliminée(self):
+        """
+        Retourne Vrai si l'équipe est éliminée.
+
+        Retour : bool, Vrai si et seulement si tous les combattants de l'équipe sont morts.
+
+        Exemple :
+        >>> from belligérant import Belligérant
+        >>> Ticoune = Belligérant("Ticoune")
+        >>> Alex = Belligérant("Alex")
+        >>> Andrew = Belligérant("Andrew")
+        >>> équipe1 = Équipe("Les Tatas")
+        >>> équipe1.ajouter_belligérant(Ticoune)
+        >>> équipe1.ajouter_belligérant(Alex)
+        >>> équipe1.ajouter_belligérant(Andrew)
+        >>> Andrew.pts_vie = 0
+        >>> Alex.pts_vie = 2
+        >>> Ticoune.pts_vie = 0
+        >>> équipe1.est_éliminée()
+        False
+
+        >>> Ticoune = Belligérant("Ticoune")
+        >>> Alex = Belligérant("Alex")
+        >>> Andrew = Belligérant("Andrew")
+        >>> équipe1 = Équipe("Les Tatas")
+        >>> équipe1.ajouter_belligérant(Ticoune)
+        >>> équipe1.ajouter_belligérant(Alex)
+        >>> équipe1.ajouter_belligérant(Andrew)
+        >>> Andrew.pts_vie = 0
+        >>> Alex.pts_vie = 0
+        >>> Ticoune.pts_vie = 0
+        >>> équipe1.est_éliminée()
+        True
+        """
+        nombre_morts = 0
+        #Vérifier si chaque belligérant de l'équipe est mort et si oui ajouter 1 à la variable_morts
+        for i in range(0,len(self._combattants)):
+            if self._combattants[i].pts_vie == 0 :
+                nombre_morts += 1
+        if nombre_morts == len(self._combattants):
+            return True
+        return False
     @property
     def nom( self ):
         """

@@ -97,33 +97,6 @@ class Utils:
                 reponse = input(message+"\n"+question)
         return reponse
 
-
-class progress_bar_loading(threading.Thread):
-    _stop = False
-    def run(self):
-            print('Loading....  ',sys.stdout.flush())
-            i = 0
-            while self._stop != True:
-                    if (i%4) == 0:
-                        sys.stdout.write('\b/')
-                    elif (i%4) == 1:
-                        sys.stdout.write('\b-')
-                    elif (i%4) == 2:
-                        sys.stdout.write('\b\\')
-                    elif (i%4) == 3:
-                        sys.stdout.write('\b|')
-
-                    sys.stdout.flush()
-                    time.sleep(0.2)
-                    i+=1
-
-
-            print('\b\b done!')
-
-
-    def stop(self, value):
-        self._stop = value
-
 """
     Class API
     Les différentes fonctions afin de faciliter l'utilisation de l'API
@@ -207,3 +180,32 @@ class API(Utils):
     def startGame(self, type_of_character):
         return Utils.json_decode(Utils.post("http://tournoipytonesque.tk/api/?startGame&PHPSESSID=%s" % self.SID, {"type_of_chracter": type_of_character}))
 
+    def canStart(self, game_id):
+        data = Utils.get("http://tournoipytonesque.tk/api/?canStart=%s&PHPSESSID=%s" % (game_id,self.SID))
+        data_decoded = Utils.json_decode(data)
+        return True if data_decoded["messageCode"] == 14 else False
+
+    def playerInGame(self, game_id):
+        data = Utils.get("http://tournoipytonesque.tk/api/?playerInGame=%s&PHPSESSID=%s" % (game_id,self.SID))
+        data_decoded = Utils.json_decode(data)
+        return int(data_decoded["count_players"])
+
+    def isValidGame(self, game_id):
+        data = Utils.get("http://tournoipytonesque.tk/api/?isValidGame=%s&withMessage&PHPSESSID=%s" % (game_id,self.SID))
+        data_decoded = Utils.json_decode(data)
+        return data_decoded
+
+    def joinGame(self, game_id, type_of_chracter):
+        data = Utils.post("http://tournoipytonesque.tk/api/?joinGame=%s&PHPSESSID=%s" % (game_id,self.SID), {"type_of_chracter":type_of_chracter})
+        data_decoded = Utils.json_decode(data)
+        return True if data_decoded["messageCode"] == 16 else False
+
+    def pipes(self, game_id, last_game_id):
+        data = Utils.get("http://tournoipytonesque.tk/api/?pipes=%s&last_id=%s&PHPSESSID=%s" % (game_id,last_game_id,self.SID))
+        data_decoded = Utils.json_decode(data)
+        return data_decoded
+
+    def addPipe(self, game_id, command, type):
+        data = Utils.post("http://tournoipytonesque.tk/api/?addPipe=%s&PHPSESSID=%s" % (game_id,self.SID), {"type":type,"command":command})
+        data_decoded = Utils.json_decode(data)
+        return True if data_decoded["messageCode"] == 19 else False
