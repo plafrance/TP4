@@ -129,12 +129,12 @@ class Joueur:
             action = choisir_action(mon_belligérant)
             
             if action == Action.ATTAQUER:
-                cible = choisir_cible(Partie.la_partie.équipes_actives)
+                cible = choisir_cible(Partie.la_partie().équipes_actives)
                 mon_belligérant.attaquer(cible)
                 
             elif action == Action.JETER_SORT:
                 sort = self._contrôle.choisir(mon_belligérant.sorts)
-                cible = choisir_cible(Partie.la_partie.équipes_actives)
+                cible = choisir_cible(Partie.la_partie().équipes_actives)
                 mon_belligérant.jeter_sort(sort, cible)
                 
             elif action == Action.PRENDRE_ITEM:
