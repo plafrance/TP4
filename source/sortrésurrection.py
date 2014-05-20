@@ -76,7 +76,7 @@ class SortRésurrection(Sort):
             >>> résurrecteur = Mage("Émile Brunelle")
             >>> cible.pts_vie = 0
             >>> résurrecteur.mana = 69
-            >>> résurrecteur.puissance = 5
+            >>> résurrecteur.classe = 5
             >>> sort = SortRésurrection()
             >>> résurrecteur.jeter_sort(sort, cible)
             >>> print(True if cible.pts_vie > 0 else False)
