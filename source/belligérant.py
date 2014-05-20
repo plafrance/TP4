@@ -147,10 +147,14 @@ class Belligérant:
         -un_item(Type:Item):L'item à enlever.
         
         Exemple:
-        A FAIRE 
-        ATTENDRE LE MODULE ITEM
+        >>> Excalibur=Item(4999)
+        >>> Alex=Belligérant("Alex")
+        >>> Alex.prendre_item(Excalibur)
+        >>> Alex.jeter_item(Excalibur)
+        >>> len(Alex.items)==0
+        True
         """
-        assert [x for x in self.items]==un_item,"L'item n'existe pas."
+        assert un_item in self._items,"L'item n'existe pas."
         self.items.remove(un_item)  
 
     @property
@@ -177,6 +181,7 @@ class Belligérant:
         >>> Alex.pts_vie=10
         >>> Alex.pts_vie
         10
+
         """
         return self._pts_vie
 
