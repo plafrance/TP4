@@ -68,14 +68,16 @@ class Partie:
 
     def répartir_items ( self ) :
         tour_joueur = self._premier_joueur
-        liste_joueurs = self.joueurs
+        liste_joueurs = [joueur for joueur in self.joueurs]
+        print( liste_joueurs )
+        print( self._items_épars )
         while len(self._items_épars) > 0 and len(liste_joueurs) > 0 :
             for i in range (0,len(self.joueurs)-1):
-                poid_min_requis=calculer_minimum_poid_requis(self._items_épars)
-                belligérants_dispos = belligérants_disponibles(self.joueurs[tour_joueur].équipe,poid_min_requis)
+                poids_min_requis=self.calculer_minimum_poids_requis(self._items_épars)
+                belligérants_dispos = self.belligérants_disponibles(self.joueurs[tour_joueur].équipe,poids_min_requis)
                 if len(belligérants_dispos) != 0 :
                     belligérant_choisi = self.liste_joueurs[tour_joueur].choisir(belligérants_dispos)
-                    items_dispos = items_disponibles(belligérant_choisi,self._items_épars)
+                    items_dispos = self.items_disponibles(belligérant_choisi,self._items_épars)
                     item_choisi = self.liste_joueurs[tour_joueur].choisir(items_dispos)
                     belligérant_choisi.prendre_item(item_choisi)
                 else :
@@ -84,42 +86,42 @@ class Partie:
 
                     
 
-    def belligérants_disponibles ( une_équipe, poid_requis) :
+    def belligérants_disponibles (self, une_équipe, poids_requis) :
         """
             Permet de connaître tous les belligérants pouvant équiper le plus léger des items restants
 
             Retour : liste des belligérants qui peuvent équiper l'item le plus léger restant
         """
         belligérants_dispo = []
-        total_poid_item = 0
+        total_poids_item = 0
         for x in une_équipe.combattants:
             for y in x.item :
-                total_poid_item += y.poids
-            if x.force * 5000 - total_poid_item >= poid_requis :
+                total_poids_item += y.poids
+            if x.force * 5000 - total_poids_item >= poids_requis :
                 belligérants_dispo.append(x)
         return belligérants_dispo
 
-    def items_disponibles ( un_belligérant, liste_item ) :
+    def items_disponibles (self, un_belligérant, liste_item ) :
         """
             Permet de renvoyer une liste d'items que le belligérant peut prendre
 
             Retour: Liste d'item disponible pour le belligérant
         """
         item_dispo = []
-        total_poid_item = 0
+        total_poids_item = 0
         for item in un_belligérant.item :
-            total_poid_item += item.poids
+            total_poids_item += item.poids
         for item in liste_item :
-            if un_belligérant.force * 5000 - total_poid_item >= item.poids :
+            if un_belligérant.force * 5000 - total_poids_item >= item.poids :
                 item_dispo.append(item)
         return item_dispo
 
-    def calculer_minimum_poid_requis (liste_item):
-        poid_min_requis = liste_item[0]
+    def calculer_minimum_poids_requis (self, liste_item):
+        poids_min_requis = liste_item[0].poids
         for x in liste_item :
-            if poid_min_requis < x.poids :
-                poid_min_requis = x.poids
-        return poid_min_requis
+            if poids_min_requis < x.poids :
+                poids_min_requis = x.poids
+        return poids_min_requis
 
     @property
     def équipes_actives(self):
@@ -131,6 +133,14 @@ class Partie:
         Accesseur de joueurs.
         """
         return self._joueurs
+
+    @property
+    def items_épars(self):
+        return self._items_épars
+
+    @items_épars.setter
+    def items_épars(self, items):
+        self._items_épars = items
 
 if __name__ == "__main__":
     import doctest

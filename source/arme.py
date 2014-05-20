@@ -6,7 +6,9 @@
 #Ce module contient la classe Arme.#
 ####################################
 
-class Arme():
+import item
+
+class Arme(item.Item):
 
     ####################
     #                  #
@@ -38,7 +40,7 @@ class Arme():
     #                  #
     ####################
     
-    def __init__(self,une_classe):
+    def __init__(self,une_classe,un_poids):
         """
         Initialise une Arme avec sa classe.
 
@@ -46,6 +48,7 @@ class Arme():
             une_classe -> int, La classe de l'arme.
         """
         assert une_classe >= 0, "La classe (" + str(une_classe) + ") est invalide"
+        super().__init__(un_poids)
         self._classe=une_classe
         
     ####################

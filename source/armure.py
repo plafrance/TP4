@@ -9,8 +9,9 @@
 #                                                               #
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
     
+import item
 
-class Armure :
+class Armure(item.Item) :
     '''
     Classe Armure qui est l'armure du guerrier
 
@@ -57,7 +58,7 @@ class Armure :
 #                       #
 # --------------------- #
 
-    def __init__(self, une_classe) :
+    def __init__(self, une_classe,un_poids) :
         '''
         Si une_classe est plus petit que 0, retourne un message d'erreur
 
@@ -65,6 +66,7 @@ class Armure :
         
         '''  
         assert une_classe >= 0, "La classe (une_classe) est invalide"
+        super().__init__(un_poids)
         self._classe = une_classe
         self._usure = 0
 
