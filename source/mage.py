@@ -92,7 +92,7 @@ class Mage(Belligérant):
             cible : Belligérant, cible du sort
         """
         assert super().classe > un_sort.classe,\
-               "Puissance ("+str(super().classe)+") <"\
+               "Classe ("+str(super().classe)+") <"\
                " un_sort.classe ("+str(un_sort.classe)+")"
         assert self.mana >= un_sort.mana_requise,\
                "Mana ("+str(self.mana)+") < un_sort.mana_requise"\
