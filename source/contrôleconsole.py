@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #Frédérik Dumulong
-#Module du contrôle de la console standard
+#Contrôle_Console
 #15/05/2014
 
 #from contrôle import Contrôle
@@ -11,9 +11,9 @@ class ContrôleConsole(Contrôle):
 
     Retourne les différents actions utilisable par la console
 
-    Propriétés:
+    Méthodes:
     afficher_message:bool,affiche un message envoyé via la console interactive
-    choisir:int,donne une liste de choix à la disposition,composé de nombres entier
+    choisir:int,donne une liste de choix à la disposition,composé de chaînes de caractères
     saisir:str,saisir un texte selectionné par le joueur
     """
     def choisir(self,choix):
@@ -22,11 +22,11 @@ class ContrôleConsole(Contrôle):
 
         Retourne les choix proposés en une liste de string
 
-        Propriété:
-        choix:int,chiffre correspondant au choix approprié
+        Paramètre:
+        choix:int,chaînes de caractères correspondant aux choix appropriés
         """
         valide=False
-        while valide != True:
+        while  not valide:
             compteur=1
             for i in choix:
                 print (compteur,"-",i)
@@ -44,13 +44,11 @@ class ContrôleConsole(Contrôle):
         return int(réponse)-1
     def afficher_message(self,un_message,confirmation=False):
         """
-        Module permettant d'afficher un message envoyé par un utilisateur
+        Méthode permettant d'afficher un message envoyé par un utilisateur
 
-        Retourne le message affiché et sélectionné
-
-        Propriétés:
+        Paramètres:
         un_message:str,le message affiché à l'écran
-        confirmation:bool,retourne un booléen représentant si l'utilisateur confirme son choix
+        confirmation:bool, un booléen représentant si l'utilisateur confirme son choix
         """
         print (un_message)
         if confirmation:
@@ -58,7 +56,7 @@ class ContrôleConsole(Contrôle):
             
     def saisir(self,question=None):
         """
-        Module représentant des messages à saisir
+        Méthode représentant des messages à saisir
 
         Retourne un message sélectionné par l'utilisateur
 
