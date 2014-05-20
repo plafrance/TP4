@@ -19,6 +19,16 @@ class Joueur:
         return str(self._nom)
 
     def choisir_belligérant( self ):
+        choisir_cible(self._équipe)
+
+    def choisir_action( self , un_acteur ):
+
+        choix = self._contrôle.choisir([action for action in enumerate(Action)])
+
+        if not isinstance( un_acteur , Mage ):
+            choix.delete(Action.JETER_SORT)
+        
+    def choisir_cible( self , _équipe ):
         liste_belligérant = []
         liste_belligérant_possible = []
 
@@ -31,21 +41,17 @@ class Joueur:
 
         return contrôle.choisir_objet(liste_belligérant_possible)
 
-    def choisir_action( self , un_acteur ):
+    def créer_belligérant(self):
+        return belligérant.Belligérant(contrôle.saisir("Choissez le nom de votre belligérant"))
 
-        choix = self._contrôle.choisir([action for action in enumerate(Action)])
-
-        if not isinstance( un_acteur , Mage ):
-            choix.delete(Action.JETER_SORT)
-        
-    def choisir_cible( self , _équipe ):
-        pass
-
-    def créer_belligérant():
-         return belligérant.Belligérant(contrôle.saisir("Choissez le nom de votre belligérant"))
-
-    def jouer():
-        pass
+    def jouer(self):
+        mon_belligérant = choisir_belligérant()
+        action = choisir_action(mon_belligérant)
+        if action == Action.ATTAQUER:
+            cible = choisir_cible(self._équipe)
+        elif action == Action.JETER_SORT:
+            sort = self._contrôle.choisir(mon_belligérant.sorts)
+            cible = choisir_cible(self._équipe)
 
     def actions_par_tour():
         pass
