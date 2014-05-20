@@ -42,7 +42,7 @@ class PotionGuérison:
 		self.pts_vie_par_parts = pts_vie_par_parts
 		
 		# --- Validation du nombre de part ---
-		assert nb_parts > 1, "Le nombre de part ne peut être plus petit que 1 "
+		assert nb_parts < 1, "Le nombre de part ne peut être plus petit que 1 "
 	
 	# --- Fonction activer ---
 	def activer(self, cible):
