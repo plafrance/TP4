@@ -3,31 +3,29 @@
 #Alex Thibeault, Dan Doroga et BillyGérantDuMaxi
 #
 #Une partie de Tournoi Pythonesque 4 entre deux ou plusieurs joueurs.
-class Partie:
-    from random import randint
-     _la_partie = None
+from random import randint
 
-    def __init__(self, les_joueurs):
+class Partie:
+    _la_partie = None
+
+    def __init__(self, les_joueurs, nb_belligérants):
         """
         Initialise la partie.
         """
-        assert les_joueurs > 1, "Il n'y a pas suffisamment de joueurs."
+        assert len(les_joueurs) > 1, "Il n'y a pas suffisamment de joueurs."
         self._joueurs = les_joueurs
         self._tour = 0
-        self._premier_joueur = randint(0,len(joueurs)-1)
+        self._premier_joueur = randint(0,len(les_joueurs)-1)
         self._items_épars = []
+        self._nb_belligérants_par_équipe = nb_belligérants
 
     def populer_équipes(self):
         """
         Permet de créer tous les belligérants de toutes les équipes. Tour à tour,chaque joueur est invité à créer son belligérant. Le joueur qui commencer est choisi au hasard.
         
-        Exemple:
-        >>> NouvellePartie=Partie([Alex, Billy, Dan], 5)
-        >>> NouvellePartie.populer_équipes()
-        >>> Alex.
         """
-        i = premier_joueur
-        for j in range (0,nb_belligérant_par_équipe):
+        i = self._premier_joueur
+        for j in range (0,self._nb_belligérants_par_équipe):
             #la première boucle s'assure d'ajouter tout les belligérant
             for k in range (0,len(self.joueurs)):
                 #le deuxième boucle parcoure la liste de joueur
@@ -41,15 +39,14 @@ class Partie:
         """
            Joue un tour de jeu. Tous les joueurs, à tour de rôle jouent leur tour.
         """
-        i = premier_joueur
+        i = self._premier_joueur
         for j in range (0,len(self.joueurs)):
             self.joueurs[i].jouer()
             i = (i+1)%len(self.joueurs)
         
     def __new__(cls, *args, **kwargs):
         if not cls._la_partie:
-            cls._la_partie = super(Partie, cls).__new__(
-                                cls, *args, **kwargs)
+            cls._la_partie = super().__new__(cls)
         return cls._la_partie
             
 
@@ -60,25 +57,25 @@ class Partie:
         Exemple :
         >>> Partie.la_partie() is Partie.la_partie()
         True
-        >>> Partie() is Partie.la_partie()
+        >>> #Partie() is Partie.la_partie()
         True
         """
-        return Partie()
+        return Partie._la_partie
 
     def démarrer_partie  ( self ) :
         while len([x for x in self.joueurs if not x.équipe.est_éliminée()])> 1:
             self.jouer_tour()
 
     def répartir_items ( self ) :
-        tour_joueur = self.premier_joueur
+        tour_joueur = self._premier_joueur
         liste_joueurs = self.joueurs
-        while len(self.items_épars) > 0 and len(liste_joueurs) > 0 :
+        while len(self._items_épars) > 0 and len(liste_joueurs) > 0 :
             for i in range (0,len(self.joueurs)-1):
-                poid_min_requis=calculer_minimum_poid_requis(self.items_épars)
+                poid_min_requis=calculer_minimum_poid_requis(self._items_épars)
                 belligérants_dispos = belligérants_disponibles(self.joueurs[tour_joueur].équipe,poid_min_requis)
                 if len(belligérants_dispos) != 0 :
                     belligérant_choisi = self.liste_joueurs[tour_joueur].choisir(belligérants_dispos)
-                    items_dispos = items_disponibles(belligérant_choisi,self.items_épars)
+                    items_dispos = items_disponibles(belligérant_choisi,self._items_épars)
                     item_choisi = self.liste_joueurs[tour_joueur].choisir(items_dispos)
                     belligérant_choisi.prendre_item(item_choisi)
                 else :
@@ -124,7 +121,9 @@ class Partie:
                 poid_min_requis = x.poids
         return poid_min_requis
 
-                    
+    @property
+    def équipes_actives(self):
+        return [ joueur.équipe for joueur in self._joueurs if not joueur.équipe.est_éliminée() ]
 
     @property
     def joueurs (self):

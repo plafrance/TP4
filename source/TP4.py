@@ -5,13 +5,13 @@ import arme
 import armure
 
 
-joueur1=joueur.Joueur("Bob", ContrôleConsole())
-joueur2=joueur.Joueur("Roger", ContrôleConsole())
+joueur1=joueur.Joueur("Bob", contrôleconsole.ContrôleConsole())
+joueur2=joueur.Joueur("Roger", contrôleconsole.ContrôleConsole())
 
-items=(Arme(1), Arme(2), Armure(1), Armure(2))
+#items=[arme.Arme(1), arme.Arme(2), armure.Armure(1), armure.Armure(2)]
 
-partie=Partie((joueur1, joueur2),2)
-partie.items=items
+partie=partie.Partie((joueur1, joueur2),1)
+#partie.items=items
 
 partie.populer_équipes()
 partie.répartir_items()

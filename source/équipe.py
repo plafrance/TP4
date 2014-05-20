@@ -16,6 +16,9 @@ class Équipe :
         self._nom = un_nom
         self._combattants = []
 
+    def __str__(self):
+        return self._nom
+
     def __len__( self ):
         """
 
@@ -72,12 +75,12 @@ class Équipe :
         if nom == None and indice == None:
             return None
 
-        assert (indice != None and indice < len(self._combattants)) or nom, "«indice { " + str(indice) + " } invalide»"
-        assert(nom in [un_combattant.nom for un_combattant in self._combattants]), "«nom ' { " + nom + " }' est invalide»"
 
         if indice != None :
+            assert indice != None and indice < len(self._combattants), "«indice { " + str(indice) + " } invalide»"
             return self._combattants[indice]
         if nom != None :
+            assert nom in [un_combattant.nom for un_combattant in self._combattants], "«nom ' { " + nom + " }' est invalide»"
             for un_combattant in self._combattants:
                 if un_combattant.nom == nom :
                     return un_combattant

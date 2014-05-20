@@ -54,7 +54,7 @@ class Guerrier(Belligérant):
         
         """
         dégâts = super().calculer_dégâts(impact)
-        return round(dégâts - (self.armure.classe / 2))
+        return dégâts if self.armure is None else round(dégâts - self.armure.classe/2) 
         
     def attaquer (self):
         """
@@ -65,7 +65,7 @@ class Guerrier(Belligérant):
         
         """
         attaque = super().attaquer()
-        return attaque * self.arme.classe
+        return attaque if self.arme is None else attaque * self.arme.classe
     
     def subir_dégâts (self,impact):
         """
@@ -85,7 +85,9 @@ class Guerrier(Belligérant):
         
         """
         dégâts = self.calculer_dégâts(impact)
-        self.armure.usure = self.armure.usure - (dégâts / 5)
+        if self.armure is not None :
+            self.armure.usure = self.armure.usure - (dégâts / 5)
+
         self._pts_vie = round(self._pts_vie - dégâts)
 
     @property

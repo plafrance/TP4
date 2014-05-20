@@ -5,7 +5,11 @@
 #Contient la classe Joueur
 
 import belligérant
+import guerrier
+import mage
 import contrôle
+import contrôleconsole
+import contrôlestub
 import équipe
 import action
 import partie
@@ -31,15 +35,15 @@ class Joueur:
            _un_contrôle: Contrôle, Le Contrôle par lequel le joueur interagira avec le jeu.
            
         Exemple :
-        >>> Joueur1 = Joueur("Andrew",contrôleconsole.ContrôleConsole.Choisir)
+        >>> Joueur1 = Joueur("Andrew",contrôlestub.ContrôleStub())
         >>> print(Joueur1.nom)
         Andrew
         """
         self._nom = un_nom.strip()
         self._contrôle = un_contrôle
         self._actions_par_tour = nombre_actions_par_tour
-        self._équipe = équipe.Équipe(contrôle.saisir("Entrez un nom d'équipe : ")
-        assert( self._nom == '' or self._nom == None) , " nom invalide "
+        self._équipe = équipe.Équipe(self._contrôle.saisir("Entrez un nom d'équipe : "))
+        assert not (self._nom == '' or self._nom == None), " nom invalide "
 
     def __str__( self ):
         """
@@ -48,7 +52,7 @@ class Joueur:
         Retour : str, Le nom du joueur
 
         Exemple :
-        >>> Joueur1 = Joueur("Andrew",contrôleconsole.ContrôleConsole.Choisir)
+        >>> Joueur1 = Joueur("Andrew",contrôlestub.ContrôleStub())
         >>> print(Joueur1)
         Andrew
         
@@ -62,7 +66,13 @@ class Joueur:
         Retour : Belligérant, Le belligérant selectionné.
 
         """
-        choisir_cible(self._équipe)
+        liste_belligérant_possible=[]
+        for i in range(len(self._équipe)) :
+            if self._équipe.belligérant(i).pts_vie > 0:
+                liste_belligérant_possible += [self._équipe.belligérant(i)]
+
+        return self._contrôle.choisir_objet(liste_belligérant_possible)
+
 
     def choisir_action( self , un_acteur ):
         """
@@ -73,14 +83,14 @@ class Joueur:
 
         Retour : Action, L'action choisie par le joueur
         """
-        liste_actions = [action for action in enumerate(Action)]
+        liste_actions = [action[1] for action in enumerate(action.Action)]
 
-        if not isinstance( un_acteur , Mage ):
-            liste_actions.delete(Action.JETER_SORT)
+        if not isinstance( un_acteur , mage.Mage ):
+            liste_actions.remove(action.Action.JETER_SORT)
             
-        choix = self._contrôle.choisir(liste_actions)
+        return liste_actions[self._contrôle.choisir(liste_actions)]
         
-    def choisir_cible( self , _équipe ):
+    def choisir_cible( self , équipes ):
         """
         Utilise le contrôle pour permettre au joueur de choisir un belligérant ciblé par une action. Le belligérant peut être de son équipe ou de celle d'un adversaire.
 
@@ -90,16 +100,18 @@ class Joueur:
         Retour : Belligérant, Le belligérant sélectionné.
         """
         liste_belligérant = []
-        liste_belligérant_possible = []
 
-        for i in range(len(self._équipe)):
-            liste_belligérant += [self._équipe.belligérant(i)]
+        équipe_choisie = self._contrôle.choisir_objet(équipes)
 
-        for un_belligérant in liste_belligérant :
-            if un_belligérant.pts_vie >= 1:
-                liste_belligérant_possible += [un_belligérant]
+        for i in range(len(équipe_choisie)):
+            liste_belligérant += [équipe_choisie.belligérant(i)]
 
-        return contrôle.choisir_objet(liste_belligérant_possible)
+        liste_belligérant_possible=[]
+        for i in range(len(self._équipe)) :
+            if équipe_choisie.belligérant(i).pts_vie > 0:
+                liste_belligérant_possible += [équipe_choisie.belligérant(i)]
+
+        return self._contrôle.choisir_objet(liste_belligérant_possible)
 
     def créer_belligérant(self):
         """
@@ -107,11 +119,11 @@ class Joueur:
 
         Retour : None
         """
-        choix = contrôle.choisir(["Guerrier", "Mage"])
+        choix = self._contrôle.choisir(["Guerrier", "Mage"])
         if choix == 0:
-            self._équipe.add(belligérant.Guerrier(contrôle.saisir("Choissez le nom de votre Guerrier")))
+            self._équipe.ajouter_belligérant(guerrier.Guerrier(self._contrôle.saisir("Choissez le nom de votre Guerrier")))
         elif choix == 1:
-            self._équipe.add(belligérant.Mage(contrôle.saisir("Choissez le nom de votre Mage")))
+            self._équipe.ajouter_belligérant(mage.Mage(self._contrôle.saisir("Choissez le nom de votre Mage")))
     def jouer(self):
         """
         Utilise le contrôle pour permettre au joueur de jouer son tour.
@@ -126,37 +138,44 @@ class Joueur:
         """
         for i in range(0, self.actions_par_tour):
             
-            mon_belligérant = choisir_belligérant()
-            action = choisir_action(mon_belligérant)
-            
-            if action == Action.ATTAQUER:
-                cible = choisir_cible(Partie.la_partie().équipes_actives)
-                mon_belligérant.attaquer(cible)
+            mon_belligérant = self.choisir_belligérant()
+            action_choisie = self.choisir_action(mon_belligérant)
+
+            if action_choisie == action.Action.ATTAQUER:
+                self._contrôle.afficher_message("Choisissez une cible")
+                cible = self.choisir_cible(partie.Partie.la_partie().équipes_actives)
+                attaque = mon_belligérant.attaquer()
+                self._contrôle.afficher_message("Attaque de "+str(attaque))
+                défense = cible.parer()
+                self._contrôle.afficher_message("Défense de "+str(défense))
+                if attaque > défense :
+                    self._contrôle.afficher_message("Impact de " + str(attaque-défense))
+                    cible.subir_dégâts(attaque-défense)
                 
-            elif action == Action.JETER_SORT:
+            elif action_choisie == action.Action.JETER_SORT:
                 sort = self._contrôle.choisir(mon_belligérant.sorts)
-                cible = choisir_cible(Partie.la_partie().équipes_actives)
+                cible = self.choisir_cible(partie.Partie.la_partie().équipes_actives)
                 mon_belligérant.jeter_sort(sort, cible)
                 
-            elif action == Action.PRENDRE_ITEM:
-                mon_belligérant.prendre_item(self.choisir_item(Partie.items_épars))
+            elif action_choisie == action.Action.PRENDRE_ITEM:
+                mon_belligérant.prendre_item(self.choisir_item(partie.Partie.items_épars))
                 
-            elif action == Action.JETER_ITEM:
+            elif action_choisie == action.Action.JETER_ITEM:
                 item = self.choisir_item(mon_belligérant.items())
                 mon_belligérant.jeter_item(item)
                 Partie.la_partie().items_épars.append(self.choisir_item(mon_belligérant.items()))
                 
-            elif action == Action.UTILISER_ITEM:
+            elif action_choisie == action.Action.UTILISER_ITEM:
                 mon_belligérant.utiliser_item(self.choisir_item(mon_belligérant.items()))
                 
-            elif action == Action.RIEN:
+            elif action_choisie == action.Action.RIEN:
                 pass
             
             else:
-                print("Le choix entré n'est pas valide, vous perdez une action")
+                self._contrôle.afficher_message("Le choix entré n'est pas valide, vous perdez une action")
 
     def choisir_item(self, une_liste):
-        return Contrôle.choisir(une_liste)
+        return self._choisir(une_liste)
 
     @property
     def nom( self ):
@@ -166,8 +185,8 @@ class Joueur:
         Retour : _nom
 
         Exemple :
-        >>> Joueur1 = Joueur("Andrew",contrôleconsole.ContrôleConsole.Choisir)
-        >>> Joueur1.nom
+        >>> Joueur1 = Joueur("Andrew",contrôlestub.ContrôleStub())
+        >>> print(Joueur1.nom)
         Andrew
         """
         return self._nom
@@ -181,14 +200,13 @@ class Joueur:
 
         Exemple :
         from Équipe import équipe
-        >>> Joueur1 = Joueur("Andrew",contrôleconsole.ContrôleConsole.Choisir)
-        >>> équipe1 = Équipe("1")
+        >>> Joueur1 = Joueur("Andrew",contrôlestub.ContrôleStub())
+        >>> équipe1 = équipe.Équipe("1")
         >>> Joueur1._équipe = équipe1
         >>> print(Joueur1.équipe)
         1
         """
-        return self.équipe
-        
+        return self._équipe        
 
     @property
     def actions_par_tour( self ):
@@ -198,7 +216,7 @@ class Joueur:
         Retour : _actions_par_tour
 
         Exemple:
-        >>> Joueur1 = Joueur("Andrew",contrôleconsole.ContrôleConsole.Choisir)
+        >>> Joueur1 = Joueur("Andrew",contrôlestub.ContrôleStub())
         >>> Joueur1.actions_par_tour = 3
         >>> print(Joueur1.actions_par_tour)
         3
@@ -208,3 +226,7 @@ class Joueur:
     @actions_par_tour.setter
     def actions_par_tour( self , nb_actions):
         self._actions_par_tour = nb_actions
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-#Frédérik Dumulong
+#Patrick Lafrance d'après Frédérik Dumulong
 #Module du contrôle de la console standard
-#15/05/2014
+#20/05/2014
 
 from contrôle import Contrôle
 
-class ContrôleConsole(Contrôle):
+class ContrôleStub(Contrôle):
     """
     Console interactive permettant différentes actions a effectuer
 
@@ -29,16 +29,16 @@ class ContrôleConsole(Contrôle):
         while valide != True:
             compteur=1
             for i in choix:
-                print (compteur,"-",i)
+                #print (compteur,"-",i)
                 compteur+=1
             réponse=self.saisir("Veuillez choisir une option:")
             valide=True
             if not str.isdigit(réponse):
-                print("Ceci n'est pas un nombre entier.")
+                #print("Ceci n'est pas un nombre entier.")
                 valide=False
             
             if int(réponse)>len(choix):
-                print("Votre choix est invalide.Veuillez entrer un nombre correspondant")
+                #print("Votre choix est invalide.Veuillez entrer un nombre correspondant")
                 valide=False
                 
         return int(réponse)-1
@@ -52,9 +52,7 @@ class ContrôleConsole(Contrôle):
         un_message:str,le message affiché à l'écran
         confirmation:bool,retourne un booléen représentant si l'utilisateur confirme son choix
         """
-        print (un_message)
-        if confirmation:
-            input()
+        pass
             
     def saisir(self,question=None):
         """
@@ -66,10 +64,10 @@ class ContrôleConsole(Contrôle):
         question:str,la question qui est posée au joeur s'il veut saisir un texte   
         """
         if question==None:
-            return input()
+            return "Réponse"
         else:
             print (question)
-            return input()
+            return "Réponse"
         
 if __name__ == "__main__":
     import doctest
