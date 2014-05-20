@@ -46,7 +46,7 @@ class PotionGuérison(potion.Potion):
 		self._pts_vie_par_part = pts_vie_par_part
 	
 	# --- Fonction activer ---
-	def activer(cible):
+	def activer(self, cible):
 		"""
 		Active l'éffet de la potion
 			
@@ -60,10 +60,10 @@ class PotionGuérison(potion.Potion):
 		"""
 
 		if randint(1, 100) < 6:
-			cible.pts_vie = (cible.pts_vie - self.pts_vie_par_part)
+			cible.pts_vie = (cible.pts_vie - self._pts_vie_par_part)
 			
 		else:
-			cible.pts_vie = (cible.pts_vie + self.pts_vie_par_part)
+			cible.pts_vie = (cible.pts_vie + self._pts_vie_par_part)
 
 
 	
