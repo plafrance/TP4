@@ -6,8 +6,10 @@
 
 import belligérant
 import contrôle
-import contrôleconsole
 import équipe
+import action
+import partie
+
 class Joueur:
     """
     Un joueur
@@ -35,6 +37,7 @@ class Joueur:
         """
         self._nom = un_nom.strip()
         self._contrôle = un_contrôle
+        self._actions_par_tour = nombre_actions_par_tour
         assert( self._nom == '' or self._nom == None) , " nom invalide "
 
     def __str__( self ):
@@ -115,17 +118,38 @@ class Joueur:
         6.Effectuer l'action sur la cible.
         
         """
-        mon_belligérant = choisir_belligérant()
-        action = choisir_action(mon_belligérant)
-        if action == Action.ATTAQUER:
-            cible = choisir_cible(self._équipe)
-        elif action == Action.JETER_SORT:
-            sort = self._contrôle.choisir(mon_belligérant.sorts)
-            cible = choisir_cible(self._équipe)
+        actions_par_tour = actions_par_tour()
+        while actions_par_tour != 0:
+            
+            mon_belligérant = choisir_belligérant()
+            action = choisir_action(mon_belligérant)
+            
+            if action == Action.ATTAQUER:
+                cible = choisir_cible(Partie.la_partie.équipes_actives)
+                
+            elif action == Action.JETER_SORT:
+                sort = self._contrôle.choisir(mon_belligérant.sorts)
+                cible = choisir_cible(Partie.la_partie.équipes_actives)
+                
+            elif action == Action.PRENDRE_ITEM:
+                belligérant.prendre_item(self.choisir_item(Partie.items_épars))
+                
+            elif action == Action.JETER_ITEM:
+                belligérant.jeter_item(self.choisir_item(Belligérant.items()))
+                
+            elif action == Action.UTILISER_ITEM:
+                belligérant.utiliser_item(self.choisir_item(Belligérant.items()))
+                
+            elif action == Action.RIEN:
+                pass
+            
+            else:
+                print("Le choix entré n'est pas valide, vous perdez une action")
+                
+            actions_par_tour -= 1
 
-    def actions_par_tour():
-        
-        pass
+    def choisir_item(self, une_liste):
+        return Contrôle.choisir(une_liste)
 
     @property
     def nom( self ):
