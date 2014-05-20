@@ -4,17 +4,18 @@
 #
 #Contient la classe Belligérant qui est necessaire pour instancier un belligérant, un magoe ou un guerrier pour le tournoi pythonesque 4
 from dé import Dé
+from item import Item
 class Belligérant:
     """
     Un belligérant capable de combattre à mains nues (et en pagne).
 
-    Propriétés:
-    _nom(Type:str):Le nom du belligérant.
-    _pts_vies(Type:int):Le nombre de points de vie du belligérant.
-    _pts_vie_max(Type:int): Le nombre de point de vie maximal du belligérant.
-    _défense(Type:int):Le facteur de défense du belligérant. Plus ce facteur est élevé, plus le belligérant pourra résister aux attaques.
-    _force(Type:int):Le facteur de force du belligérant. Plus ce facteur est élevé, plus les attaques du belligérant seront efficaces.
-    _items(Type:Ensemble d'Items): Ensemble d'Items que possède le Belligérant.
+    Propriétés :
+    nom(Type:str):Le nom du belligérant.
+    pts_vies(Type:int):Le nombre de points de vie du belligérant.
+    pts_vie_max(Type:int): Le nombre de point de vie maximal du belligérant.
+    défense(Type:int):Le facteur de défense du belligérant. Plus ce facteur est élevé, plus le belligérant pourra résister aux attaques.
+    force(Type:int):Le facteur de force du belligérant. Plus ce facteur est élevé, plus les attaques du belligérant seront efficaces.
+    items(Type:Ensemble d'Items): Ensemble d'Items que possède le Belligérant.
     
     """
     def __init__(self,un_nom):
@@ -37,6 +38,7 @@ class Belligérant:
         self._pts_vie_max=self.pts_vie
         self._items=[]
         self._classe=1
+        self._bonus_défense=0.0
 
     def __str__(self):
         """
@@ -56,7 +58,7 @@ class Belligérant:
         """
         Calcule le coefficient d’attaque d’un assaut.
         
-        Retour: Le coefficient d’attaque d’un assaut calculé.
+        Retour: Le coefficient d’attaque d’un assaut calculé (force+ un dé 12).
         """
         return self.force+Dé.lancer(12)
 
@@ -64,13 +66,13 @@ class Belligérant:
         """
         Calcule le coefficient de parade lors d’un assaut.
         
-        Retour:Le coefficient de parade lors d’un assaut calculé par la formule.
+        Retour:Le coefficient de parade lors d’un assaut calculé par la formule (défense+ deux dé 6).
         """
         return self.défense+Dé.lancer()+Dé.lancer()
         
     def calculer_dégâts(self,impact):
         """
-        Calcule le dégât subis par le belligérant.
+        Calcule le dégât subis par le belligérant (l'impact dans le cas échéant).
         
         Retour:l'impact de l'assaut.
 
@@ -84,7 +86,7 @@ class Belligérant:
     def subir_dégâts(self,impact):
         """
         Après avoir reçu une attaque, cette méthode calcule les dégâts subis 
-        par le belligérant et les déduit de ses points de vie selon la formule.
+        par le belligérant et les déduit de ses points de vie selon la formule(pts_vie-dégâts).
         
         Paramètre:
         impact(Type:int):La force d'impact de l'attaque reçue.
@@ -95,6 +97,7 @@ class Belligérant:
         >>> Alex=Belligérant("Alex")
         >>> Alex.pts_vie=20
         >>> Alex.subir_dégâts(15)
+        15
         >>> Alex.pts_vie
         5
         """
@@ -126,11 +129,15 @@ class Belligérant:
         -un_item(Type:Item): l'item à ajouter aux items du belligérant.
         
         Exemple:
-        A FAIRE 
-        ATTENDRE MODULE ITEM
+        >>> Excalibur=Item(4999)
+        >>> Alex=Belligérant("Alex")
+        >>> Alex.prendre_item(Excalibur)
+        >>> Alex.items[0] is Excalibur
+        True
+
         """
-        assert sum([x.poids for x in self.items])+un_item.poids<5*self.force, "L'item est trop lourd pour être ajouté au Belligérant."
-        self.items+=[un_item]
+        assert sum([x.poids for x in self.items])+un_item.poids<5000*self.force, "L'item est trop lourd pour être ajouté au Belligérant."
+        self.items.append(un_item)
 
     def jeter_item(self,un_item):
         """
@@ -140,11 +147,15 @@ class Belligérant:
         -un_item(Type:Item):L'item à enlever.
         
         Exemple:
-        A FAIRE 
-        ATTENDRE LE MODULE ITEM
+        >>> Excalibur=Item(4999)
+        >>> Alex=Belligérant("Alex")
+        >>> Alex.prendre_item(Excalibur)
+        >>> Alex.jeter_item(Excalibur)
+        >>> len(Alex.items)==0
+        True
         """
-        assert [x for x in self.items]==un_item,"L'item n'existe pas."
-        self.items.remove(un_item)                
+        assert un_item in self._items,"L'item n'existe pas."
+        self.items.remove(un_item)  
 
     @property
     def nom(self):
@@ -170,13 +181,14 @@ class Belligérant:
         >>> Alex.pts_vie=10
         >>> Alex.pts_vie
         10
+
         """
         return self._pts_vie
 
     @pts_vie.setter
     def pts_vie(self,un_nombre):
         """
-        Mutateur de self._pts_vie
+        Mutateur de pts_vie
 
         Paramètre:
         -un_nombre(type:int):la nouvelle valeur de pts_vie.
@@ -187,7 +199,7 @@ class Belligérant:
     @property
     def pts_vie_max(self):
         """
-        Accesseur de self._pts_vie_max
+        Accesseur de pts_vie_max
         
         Retour: Les points de vie max du belligérant
         """
@@ -196,16 +208,16 @@ class Belligérant:
     @property
     def défense(self):
         """
-        Accesseur de self._défense
+        Accesseur de défense
 
         Retour: Le facteur de défense du belligérant.
         """
-        return self._défense
+        return self._défense+self._bonus_défense
 
     @property
     def force(self):
         """
-        Accesseur de self._force
+        Accesseur de force
         
         Retour: Le facteur de force du belligérant.
         """
@@ -214,7 +226,7 @@ class Belligérant:
     @property 
     def classe(self):
         """
-        Accesseur de self._classe
+        Accesseur de classe
         
         Retour: Le niveau du personnage 
         """
@@ -223,13 +235,46 @@ class Belligérant:
     @classe.setter
     def classe(self,une_classe):
         """
-        Mutateur de self._classe
+-        Mutateur de classe
         
         Paramètre:
         -une_classe(Type:int):La nouvelle classe de l'attribut classe.
         """
         self._classe=une_classe
+    
+    @property
+    def items(self):
+        """
+        Acceseur de items
+        
+        Retour: La liste d'items
+        """
+        return self._items
 
+    @property
+    def bonus_défense(self):
+        """
+        Accesseur de bonus_défense
+
+        Retour: Le bonus de défense
+        """
+        return self._bonus_défense
+
+    @bonus_défense.setter
+    def bonus_défense(self,un_bonus_défense):
+        """
+        Mutateur de bonus_défense
+
+        Paramètre:
+        -un_bonus_défense(float): le bonus de défense
+        
+        Exemple:
+        >>> Alex=Belligérant("Alex")
+        >>> Alex.bonus_défense(6.5)
+        >>> Alex.défense==Alex._défense+6.5
+        True
+        """
+        self._bonus_défense=un_bonus_défense
 
 if __name__ == "__main__":
     import doctest
