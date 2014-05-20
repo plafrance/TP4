@@ -1,15 +1,19 @@
 # -*- encoding:utf-8 -*-
 # Benjamion Bradley roy
-#Module item
+# 20 mai 2014
+# Module item
 
-class Item():#Retourne un entier sous forme de gramme
+class Item:
+    """
+    Retourne un objet poig(gramme).
+    """
 
     def __init__(self,un_poids):
         """
         Constructeur
 
         paramètre:
-        un_poids: un entier représentant le poids.
+        un_poids: un entier représentant le gramme.
         """
 
         self._poids = un_poids
@@ -17,7 +21,7 @@ class Item():#Retourne un entier sous forme de gramme
 
     def __str__(self):
         """
-        retourne « self._poids » en objet str.
+        retourne le poig sous format p = un entier
 
         Exemple:
         >>> démonstration = Item(5)
@@ -37,7 +41,7 @@ class Item():#Retourne un entier sous forme de gramme
         >>> print(démonstration.poids)
         5
         """
-        return str(self._poids)
+        return self._poids
 
     
 if __name__ == "__main__":
