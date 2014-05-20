@@ -23,7 +23,9 @@ class SortProtection(Sort):
 
     def __str__(self):
         """
-        Un retour en string
+        Le retour lors de l'appel de la classe en str()
+
+        Retour: Guérison c=...
         """
         return "SortProtection: " + super().__str__()
 
@@ -39,11 +41,11 @@ class SortProtection(Sort):
         >>> from mage import Mage
         >>> cible = Guerrier("Patrick Lafrance")
         >>> mage = Mage("Émile Brunelle")
-        >>> mage.puissance = 3
+        >>> mage.classe = 3
         >>> sort = SortProtection()
         >>> prev_def = cible.défense
         >>> mage.jeter_sort(sort, cible)
-        >>> cible.bounus_défense == prev_def*1.5
+        >>> cible.défense == prev_def*1.5
         True
         """
         cible.bounus_défense = cible.défense * 0.5
