@@ -38,6 +38,7 @@ class Joueur:
         self._nom = un_nom.strip()
         self._contrôle = un_contrôle
         self._actions_par_tour = nombre_actions_par_tour
+        self._équipe = équipe.Équipe(contrôle.saisir("Entrez un nom d'équipe : ")
         assert( self._nom == '' or self._nom == None) , " nom invalide "
 
     def __str__( self ):
@@ -141,7 +142,9 @@ class Joueur:
                 mon_belligérant.prendre_item(self.choisir_item(Partie.items_épars))
                 
             elif action == Action.JETER_ITEM:
-                mon_belligérant.jeter_item(self.choisir_item(mon_belligérant.items()))
+                item = self.choisir_item(mon_belligérant.items())
+                mon_belligérant.jeter_item(item)
+                Partie.la_partie().items_épars.append(self.choisir_item(mon_belligérant.items()))
                 
             elif action == Action.UTILISER_ITEM:
                 mon_belligérant.utiliser_item(self.choisir_item(mon_belligérant.items()))
