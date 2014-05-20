@@ -2,7 +2,7 @@
 #                                                               #
 #               Émile Brunelle                                  #
 #               Début : 13 mai 2014                             #
-#               Dernière modification : 15 mai 2014             #
+#               Dernière modification : 20 mai 2014             #
 #               Classe Armure                                   #
 #               utf-8                                           #
 #               armure.py                                       #

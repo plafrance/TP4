@@ -5,12 +5,44 @@
 #
 # Fichier principale
 
-import getpass
-from api import API, progress_bar_loading
+import getpass, time, random
+from api import API
 
 #Initialisation de l'API
 API = API()
 API.clear()
+
+def wait_for_game(game_id):
+    global API
+    while not API.canStart(game_id):
+        API.clear()
+        print("Loading...")
+        print("""
++--------------------------------------------+
+|
+| Il y a acctuellement %i/4 personne(s) dans la partie #%s
+|
++--------------------------------------------+
+        """ % (API.playerInGame(game_id), game_id))
+        time.sleep(3)
+    API.addPipe(game_id, "print('%s est pret')" % API.user()["username"], 0)
+    main_game(game_id)
+
+def main_game(game_id):
+    global API
+    API.clear()
+    last_command_id = 0
+    end = False
+    data_user = API.user()
+    while not end:
+        pipes = API.pipes(game_id, last_command_id)
+        last_command_id = pipes["last_id"]
+        for command in pipes["commands"]:
+            if command["type"] == "1" and command["user_id"] == data_user["id"] or command["type"] == "0":
+                exec(command["command"])
+        if not pipes["commands"]:
+            time.sleep(1)
+
 #Debut du programme
 print('''
 +--------------------------------------------+
@@ -94,15 +126,50 @@ if choix_menu == "A":
             if session["messageCode"] != 13:
                 print("ERROR: %s" % session["message"])
             else:
+                game_id = session["id"]
                 print('''
 +--------------------------------------------+
 |
 | Le numéro de votre partie est: #%s
 |
 +--------------------------------------------+
-                ''' % session["id"])
-                p = progress_bar_loading()
-                p.start()
+                ''' % game_id)
+
+                wait_for_game(game_id)
+
+        if choix_menu_3 == 'C':
+            API.clear()
+            print("""
++--------------------------------------------+
+|
+| Rejoindre une partie
+|
++--------------------------------------------+
+                """)
+            game_id = input("Le numéro de la parite: ")
+            valid_data = API.isValidGame(game_id)
+            valid = True if valid_data["messageCode"] == 17 else False
+            while not game_id.isdigit() or not valid:
+                API.clear()
+                if not valid:
+                    print("*** %s ***" % valid_data["message"])
+                game_id = input("*Le numéro de la parite: ")
+                valid_data = API.isValidGame(game_id)
+                valid = True if valid_data["messageCode"] == 17 else False
+
+            API.clear()
+            print('''
++--------------------------------------------+
+| Choissisez votre personnage
+|
+| a. Un mage
+| b. Un guerrier
++--------------------------------------------+
+            ''')
+            choix_personnage = API.choix_menu(['A', 'B'])
+
+            if API.joinGame(game_id,choix_personnage):
+                wait_for_game(game_id)
 
         if choix_menu_3 == 'D':
             quit()
@@ -156,4 +223,3 @@ if choix_menu == "B":
     if(data["messageCode"] == -1):
         raise Exception("Veuillez redemarrer le programme et essayer de nouveau, car il y a eu un probleme cote serveur lors tu traitement de votre demande")
     print(data["message"])
-
