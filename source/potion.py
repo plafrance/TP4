@@ -1,6 +1,7 @@
 # coding : utf-8
 #potion.py
 #Médard Jonathas
+#15/05/2014
 #
 #Module pour la classe potion
 
@@ -27,7 +28,7 @@ class Potion(item.Item):
         
         """
         self._parts= nb_part
-        assert self._parts > 1, "Le nombre de part ne peut être plus petit que 1"
+        assert self._parts > 0, "Le nombre de part ne peut être plus petit que 1"
 
     @property
     def parts(self):
@@ -44,8 +45,6 @@ class Potion(item.Item):
             cible: Belligérant qui va boire la potion
 
         >>> nbparts=Potion(3)
-        >>> nbparts.parts
-        3
         >>> nbparts.faire_boire("Guerrier")
         >>> nbparts.parts
         2
@@ -58,9 +57,12 @@ class Potion(item.Item):
     def activer(self, cible):
         """
         Méthode abstraite qui exécute l'effet de la potion sur la cible
+
+        Paramètres:
+            cible: Bélligérant qui va consommer la potion.
         
         """
-        assert self._parts > 1, "Le nombre de part ne peut être plus petit que 1"
+        pass
 
 
 if __name__ == "__main__":
