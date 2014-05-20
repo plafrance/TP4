@@ -1,5 +1,5 @@
 #=================================
-# Nom du fichier: potionGérison.py
+# Nom du fichier: potionguérison.py
 # Auteur: Alexandre S. & Jessy B.
 # Date: 2014-05-15
 # Encodage: Encodage(UTF-8)
@@ -7,9 +7,11 @@
 
 # --- Importation des modules ---
 from random import randint
+import potion
+import item
 
 # --- Classe Potion Guérison ---
-class PotionGuérison:
+class PotionGuérison(potion.Potion):
 	"""
 	Potion permettant de rétablir des points de vie
 	
@@ -20,12 +22,12 @@ class PotionGuérison:
 	
 	"""
 	
-	# --- Initialise les paramèteres ---
-	def __init__(self, nb_parts, pts_vie_par_parts):
+	# --- Initialise les paramètres ---
+	def __init__(self, nb_parts, pts_vie_par_part):
 		"""
 		Paramètres:
 			nb_parts: int, nombre d'utilisation possible
-			pts_vie_par_parts int, nombre de vie affecter
+			pts_vie_par_part: int, nombre de vie affecter
 			
 		Exemple:
 		>>> from belligérant import Belligérant
@@ -38,31 +40,30 @@ class PotionGuérison:
 		True
 		
 		"""
-		self.nb_parts = nb_parts
-		self.pts_vie_par_parts = pts_vie_par_parts
 		
-		# --- Validation du nombre de part ---
-		assert nb_parts > 1, "Le nombre de part ne peut être plus petit que 1 "
+		super().__init__(nb_parts)
+		self._nb_parts = nb_parts
+		self._pts_vie_par_part = pts_vie_par_part
 	
 	# --- Fonction activer ---
 	def activer(self, cible):
 		"""
 		Active l'éffet de la potion
 			
+			
+		--- Condition pour guérison ---
+		0-5%   = Endomage Belligérant
+		6-100% = Guérit le Belligérant
+		
 		Paramètre:
 			cible: Belligérant affecte par la potion 
 		"""
 
-		# --- Condition pour guérison ---
-		# 0-5%   = Endomage Belligérant
-		# 6-100% = Guérie le Belligérant
-		if randint(0, 100) < 6:
-			cible.pts_vie = (cible.pts_vie - self.pts_vie_par_parts)
-			self.nb_parts -= 1
+		if randint(1, 100) < 6:
+			cible.pts_vie = (cible.pts_vie - self._pts_vie_par_part)
 			
 		else:
-			cible.pts_vie = (cible.pts_vie + self.pts_vie_par_parts)
-			self.nb_parts -= 1
+			cible.pts_vie = (cible.pts_vie + self._pts_vie_par_part)
 
 
 	

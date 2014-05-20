@@ -3,7 +3,7 @@
 #Contrôle_Console
 #15/05/2014
 
-#from contrôle import Contrôle
+from contrôle import Contrôle
 
 class ContrôleConsole(Contrôle):
     """

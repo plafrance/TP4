@@ -23,9 +23,8 @@ class  Dé:
         Exemple:
         >>> Dé.lancer(-7)
         Traceback (most recent call last):
-
-		AssertionError: Le nombre de faces doit être > 1
-		"""
+        AssertionError: Le nombre de faces doit être > 1
+        """
         assert faces > 1, "Le nombre de faces doit être > 1"
         return randint(1, faces)
 

@@ -9,12 +9,12 @@ class Belligérant:
     Un belligérant capable de combattre à mains nues (et en pagne).
 
     Propriétés:
-    _nom:Le nom du belligérant.
-    _pts_vies:Le nombre de points de vie du belligérant.
-    _pts_vie_max: Le nombre de point de vie maximal du belligérant.
-    _défense:Le facteur de défense du belligérant. Plus ce facteur est élevé, plus le belligérant pourra résister aux attaques.
-    _force:Le facteur de force du belligérant. Plus ce facteur est élevé, plus les attaques du belligérant seront efficaces.
-    _items: Ensemble d'Items que possède le Belligérant.
+    _nom(Type:str):Le nom du belligérant.
+    _pts_vies(Type:int):Le nombre de points de vie du belligérant.
+    _pts_vie_max(Type:int): Le nombre de point de vie maximal du belligérant.
+    _défense(Type:int):Le facteur de défense du belligérant. Plus ce facteur est élevé, plus le belligérant pourra résister aux attaques.
+    _force(Type:int):Le facteur de force du belligérant. Plus ce facteur est élevé, plus les attaques du belligérant seront efficaces.
+    _items(Type:Ensemble d'Items): Ensemble d'Items que possède le Belligérant.
     
     """
     def __init__(self,un_nom):
@@ -22,7 +22,7 @@ class Belligérant:
         Initialise un belligérant. 
         
         Paramètre:
-        un_nom:Nom qui sera attibué au belligérant.
+        un_nom(Type:str):Nom qui sera attibué au belligérant.
 
         Exemple:
         >>> Alex=Belligérant("Alex")
@@ -30,7 +30,7 @@ class Belligérant:
         'Alex'
         """
         assert un_nom!=None or un_nom.trim()!="","Le nom du béligérant ne peut pas être vide"
-        self._nom=un_nom
+        self._nom=un_nom.strip()
         self._force=Dé.lancer(12)
         self._défense=Dé.lancer(12)
         self._pts_vie=Dé.lancer(12)+Dé.lancer(12)+20
@@ -54,7 +54,7 @@ class Belligérant:
  
     def attaquer(self):
         """
-        Calcule le coefficient d’attaque d’un assaut par la formule(self.force+Dé.lancer(12) par défaut).
+        Calcule le coefficient d’attaque d’un assaut.
         
         Retour: Le coefficient d’attaque d’un assaut calculé.
         """
@@ -62,7 +62,7 @@ class Belligérant:
 
     def parer(self):
         """
-        Calcule le coefficient de parade lors d’un assaut(self.défense+Dé.lancer()+Dé.lancer() par défaut).
+        Calcule le coefficient de parade lors d’un assaut.
         
         Retour:Le coefficient de parade lors d’un assaut calculé par la formule.
         """
@@ -71,6 +71,8 @@ class Belligérant:
     def calculer_dégâts(self,impact):
         """
         Calcule le dégât subis par le belligérant.
+        
+        Retour:l'impact de l'assaut.
 
         Exemple:
         >>> Alex=Belligérant("Alex")
@@ -85,7 +87,7 @@ class Belligérant:
         par le belligérant et les déduit de ses points de vie selon la formule.
         
         Paramètre:
-        impact:La force d'impact de l'attaque reçue.
+        impact(Type:int):La force d'impact de l'attaque reçue.
 
         Retour: le dégâts subi.
         
@@ -114,23 +116,20 @@ class Belligérant:
         >>> Alex.est_mort()
         True
         """
-        if self.pts_vie<=0:
-            return True
-        else:
-            return False
+        return  self.pts_vie<=0
             
     def prendre_item(self,un_item):
         """
         Ajoute un item à ceux que possède le Belligérant. Le poids total de ses items ne peut excéder 5Kg par point de force.
         
         Paramètre:
-        -un_item: l'item à ajouter aux items du belligérant.
+        -un_item(Type:Item): l'item à ajouter aux items du belligérant.
         
         Exemple:
         A FAIRE 
         ATTENDRE MODULE ITEM
         """
-        assert sum([x.poids for x in self.items])+un_item.poids<5, "L'item est trop lourd pour être ajouté au Belligérant."
+        assert sum([x.poids for x in self.items])+un_item.poids<5*self.force, "L'item est trop lourd pour être ajouté au Belligérant."
         self.items+=[un_item]
 
     def jeter_item(self,un_item):
@@ -138,7 +137,7 @@ class Belligérant:
         Retire un item de la liste d'items détenus pas le Belligérant.
         
         Paramètre:
-        -un_item:L'item à enlever.
+        -un_item(Type:Item):L'item à enlever.
         
         Exemple:
         A FAIRE 
@@ -150,7 +149,7 @@ class Belligérant:
     @property
     def nom(self):
         """
-        Acceseur de self._nom
+        Accesseur de self._nom
         
         Retour: Le nom du belligérant.
 
@@ -164,7 +163,7 @@ class Belligérant:
     @property
     def pts_vie(self):
         """
-        Acceseur de self._pts_vie
+        Accesseur de self._pts_vie
         
         Retour: Le nombre de points de vie du belligérant.
         >>> Alex=Belligérant("Alex")
@@ -178,6 +177,10 @@ class Belligérant:
     def pts_vie(self,un_nombre):
         """
         Mutateur de self._pts_vie
+
+        Paramètre:
+        -un_nombre(type:int):la nouvelle valeur de pts_vie.
+        
         """
         self._pts_vie=un_nombre
 
@@ -193,7 +196,7 @@ class Belligérant:
     @property
     def défense(self):
         """
-        Acceseur de self._défense
+        Accesseur de self._défense
 
         Retour: Le facteur de défense du belligérant.
         """
@@ -202,7 +205,7 @@ class Belligérant:
     @property
     def force(self):
         """
-        Acceseur de self._force
+        Accesseur de self._force
         
         Retour: Le facteur de force du belligérant.
         """
@@ -221,6 +224,9 @@ class Belligérant:
     def classe(self,une_classe):
         """
         Mutateur de self._classe
+        
+        Paramètre:
+        -une_classe(Type:int):La nouvelle classe de l'attribut classe.
         """
         self._classe=une_classe
 

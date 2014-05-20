@@ -5,8 +5,8 @@
 # Jean-Philippe Mongeau                                       #
 # Émile Brunelle                                              #
 # contrôle.py                                                 #
-# Version 1.0                                                 #
-# Dernière modification: 15 mai 2014                          #
+# Version 1.1                                                 #
+# Dernière modification: 20 mai 2014                          #
 #                   Par: Jean-Philippe Mongeau                #
 #                                                             #
 # =========================================================== #
@@ -25,7 +25,7 @@ class Contrôle:
     """
     def choisir_objet(self, choix):
         """
-        Reçois une liste d'objet pour faire sélectionner un objet par l'utilisateur
+        Reçoit une liste d'objet pour faire sélectionner un objet par l'utilisateur
 
         Paramètres:
             choix: Liste des objets parmi lesquels choisir. (Par exemple, une liste de Belligérants ou d'Items.)
@@ -33,15 +33,15 @@ class Contrôle:
         Retour: L'objet sélectionné.
 
         """
-        ma_liste = []
+        liste_de_chaîne = []
         for i in range(0, len(choix)):
-            ma_liste.append(str(choix[i]))
+            liste_de_chaîne.append(str(choix[i]))
 
-        return choix[self.choisir(ma_liste)]
+        return choix[self.choisir(liste_de_chaîne)]
 
-    def afficher_message(self, un_message, confirmation):
+    def afficher_message(self, un_message, confirmation = False):
         """
-        Méthode abstraite qui permet d'afficher un message au joueur sansattendre de réponse de sa part.
+        Méthode abstraite qui permet d'afficher un message au joueur sans attendre de réponse de sa part.
 
         Paramètres:
             un_message: Chaîne de caractère contenant le message à afficher
@@ -61,7 +61,7 @@ class Contrôle:
         """
         pass
 
-    def saisir(self, question):
+    def saisir(self, question = None):
         """
         Méthode abstraite qui permet au joueur de saisir un texte.
 
