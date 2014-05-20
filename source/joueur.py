@@ -38,8 +38,8 @@ class Joueur:
         self._nom = un_nom.strip()
         self._contrôle = un_contrôle
         self._actions_par_tour = nombre_actions_par_tour
-        self._équipe = équipe.Équipe(contrôle.saisir("Entrez un nom d'équipe : ")
-        assert( self._nom == '' or self._nom == None) , " nom invalide "
+        self._équipe = équipe.Équipe(contrôle.saisir("Entrez un nom d'équipe : "))
+        assert self._nom == '' or self._nom == None, "nom invalide"
 
     def __str__( self ):
         """
