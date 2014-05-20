@@ -6,9 +6,8 @@
 
 import belligérant
 import contrôle
+import contrôleconsole
 import équipe
-import action
-
 class Joueur:
     """
     Un joueur
@@ -19,7 +18,7 @@ class Joueur:
     Paramètres :
         _nom : str, le nom du joueur
         _équipe : Équipe, L'équipe que contrôle le joueur
-        _actions_par_tour L int, Le nombre d'action que le joueur peut faire
+        _actions_par_tour : int, Le nombre d'action que le joueur peut faire
     """
     def __init__( self , un_nom , un_contrôle ):
         """
@@ -29,6 +28,10 @@ class Joueur:
            _un_nom : str, le pseudonyme du Joueur
            _un_contrôle: Contrôle, Le Contrôle par lequel le joueur interagira avec le jeu.
            
+        Exemple :
+        >>> Joueur1 = Joueur("Andrew",contrôleconsole.ContrôleConsole.Choisir)
+        >>> print(Joueur1.nom)
+        Andrew
         """
         self._nom = un_nom.strip()
         self._contrôle = un_contrôle
@@ -39,6 +42,12 @@ class Joueur:
         Donne une représentation en chaîne de caractères du Joueur
 
         Retour : str, Le nom du joueur
+
+        Exemple :
+        >>> Joueur1 = Joueur("Andrew",contrôleconsole.ContrôleConsole.Choisir)
+        >>> print(Joueur1)
+        Andrew
+        
         """
         return str(self._nom)
 
@@ -47,6 +56,7 @@ class Joueur:
         Utilise le contrôle pour permettre au joueur de choisir un belligérant dans sa propre équipe.
 
         Retour : Belligérant, Le belligérant selectionné.
+
         """
         choisir_cible(self._équipe)
 
@@ -114,18 +124,54 @@ class Joueur:
             cible = choisir_cible(self._équipe)
 
     def actions_par_tour():
+        
         pass
 
     @property
     def nom( self ):
+        """
+        Accesseur de _nom
+
+        Retour : _nom
+
+        Exemple :
+        >>> Joueur1 = Joueur("Andrew",contrôleconsole.ContrôleConsole.Choisir)
+        >>> Joueur1.nom
+        Andrew
+        """
         return self._nom
 
     @property
     def équipe( self ):
+        """
+        Accesseur de _équipe
+
+        Retour : _équipe
+
+        Exemple :
+        from Équipe import équipe
+        >>> Joueur1 = Joueur("Andrew",contrôleconsole.ContrôleConsole.Choisir)
+        >>> équipe1 = Équipe("1")
+        >>> Joueur1._équipe = équipe1
+        >>> print(Joueur1.équipe)
+        1
+        """
         return self.équipe
+        
 
     @property
     def actions_par_tour( self ):
+        """
+        Accesseur de _actions_par_tour
+
+        Retour : _actions_par_tour
+
+        Exemple:
+        >>> Joueur1 = Joueur("Andrew",contrôleconsole.ContrôleConsole.Choisir)
+        >>> Joueur1.actions_par_tour = 3
+        >>> print(Joueur1.actions_par_tour)
+        3
+        """
         return self._actions_par_tour
 
     @actions_par_tour.setter
