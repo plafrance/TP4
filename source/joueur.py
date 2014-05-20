@@ -22,7 +22,7 @@ class Joueur:
         _équipe : Équipe, L'équipe que contrôle le joueur
         _actions_par_tour : int, Le nombre d'action que le joueur peut faire
     """
-    def __init__( self , un_nom , un_contrôle ):
+    def __init__( self , un_nom , un_contrôle , nombre_actions_par_tour = 3 ):
         """
         Initialise le Joueur avec un nom sans espaces au début et à la fin et un Contrôle.
 
@@ -72,10 +72,12 @@ class Joueur:
 
         Retour : Action, L'action choisie par le joueur
         """
-        choix = self._contrôle.choisir([action for action in enumerate(Action)])
+        liste_actions = [action for action in enumerate(Action)]
 
         if not isinstance( un_acteur , Mage ):
-            choix.delete(Action.JETER_SORT)
+            liste_actions.delete(Action.JETER_SORT)
+            
+        choix = self._contrôle.choisir(liste_actions)
         
     def choisir_cible( self , _équipe ):
         """
@@ -104,8 +106,11 @@ class Joueur:
 
         Retour : None
         """
-        _équipe.add(belligérant.Belligérant(contrôle.saisir("Choissez le nom de votre belligérant")))
-
+        choix = contrôle.choisir(["Guerrier", "Mage"])
+        if choix == 0:
+            self._équipe.add(belligérant.Guerrier(contrôle.saisir("Choissez le nom de votre Guerrier")))
+        elif choix == 1:
+            self._équipe.add(belligérant.Mage(contrôle.saisir("Choissez le nom de votre Mage")))
     def jouer(self):
         """
         Utilise le contrôle pour permettre au joueur de jouer son tour.
@@ -118,35 +123,34 @@ class Joueur:
         6.Effectuer l'action sur la cible.
         
         """
-        actions_par_tour = actions_par_tour()
-        while actions_par_tour != 0:
+        for i in range(0, self.actions_par_tour):
             
             mon_belligérant = choisir_belligérant()
             action = choisir_action(mon_belligérant)
             
             if action == Action.ATTAQUER:
                 cible = choisir_cible(Partie.la_partie.équipes_actives)
+                mon_belligérant.attaquer(cible)
                 
             elif action == Action.JETER_SORT:
                 sort = self._contrôle.choisir(mon_belligérant.sorts)
                 cible = choisir_cible(Partie.la_partie.équipes_actives)
+                mon_belligérant.jeter_sort(sort, cible)
                 
             elif action == Action.PRENDRE_ITEM:
-                belligérant.prendre_item(self.choisir_item(Partie.items_épars))
+                mon_belligérant.prendre_item(self.choisir_item(Partie.items_épars))
                 
             elif action == Action.JETER_ITEM:
-                belligérant.jeter_item(self.choisir_item(Belligérant.items()))
+                mon_belligérant.jeter_item(self.choisir_item(mon_belligérant.items()))
                 
             elif action == Action.UTILISER_ITEM:
-                belligérant.utiliser_item(self.choisir_item(Belligérant.items()))
+                mon_belligérant.utiliser_item(self.choisir_item(mon_belligérant.items()))
                 
             elif action == Action.RIEN:
                 pass
             
             else:
                 print("Le choix entré n'est pas valide, vous perdez une action")
-                
-            actions_par_tour -= 1
 
     def choisir_item(self, une_liste):
         return Contrôle.choisir(une_liste)
