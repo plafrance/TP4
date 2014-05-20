@@ -22,6 +22,9 @@ class Armure :
     def classe(self) :
         '''
         La classe de l'armure
+
+        Retourne la classe elle-même
+        
         '''
         return self._classe
 
@@ -39,7 +42,9 @@ class Armure :
         0
         >>> armure.usure = 10
         >>> print(armure.usure)
+        
         10
+        
         '''
         return self._usure
 
@@ -58,6 +63,7 @@ class Armure :
         Si une_classe est plus petit que 0, retourne un message d'erreur
 
         Place usure à 0
+        
         '''  
         assert une_classe >= 0, "La classe (une_classe) est invalide"
         self._classe = une_classe
@@ -74,6 +80,7 @@ class Armure :
         >>> armure = Armure(5)
         >>> print(armure)
         Armure 5
+        
         '''
         return "Armure " + str(self._classe)
 
@@ -85,7 +92,6 @@ class Armure :
         Paramètres :
 
         ajustement(int) Ajustement de l'usure de l'armure
-
         
         '''
         self._usure += ajustement
